@@ -4,7 +4,7 @@ import BlogSection from './blog/BlogSection'
 const Home = () => {
   return (
     <>
-    {/* <BlogSection/> */}
+    <BlogSection/>
     </>
   )
 }
