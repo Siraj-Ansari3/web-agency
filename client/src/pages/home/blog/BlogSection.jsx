@@ -1,40 +1,24 @@
 import React from "react";
 import blogCardsData from "../../../data/blogs/cardsData";
 import { FaUser, FaComments } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import BlogCard from "../../../components/BlogCard";
 
 const Home = () => {
+  const lastThreeBlogs=blogCardsData.filter((blog)=>(blog.id>=blogCardsData.length-3))
   return (
     <section className="relative bg-gray-100 pb-0 ">
       {/* Heading */}
       <div className="text-center py-16 text-black">
-        <h2 className="text-3xl md:text-4xl font-bold ">Latest News</h2>
+        <h2 className="text-3xl md:text-4xl font-bold ">Latest Blog</h2>
         <p className="max-w-xl mx-auto mt-4  text-sm md:text-base">
-          Outlived no dwelling denoting in peculiar as he believed. Behaviour excellent middleton be as it curiosity.
+          Outlived no dwelling denoting in peculiar as he believed. Behaviour
+          excellent middleton be as it curiosity.
         </p>
       </div>
 
       {/* Cards Container */}
       <div className="relative bg-green-00 z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {blogCardsData.map((item) => (
-          <div key={item.id} className="bg-white rounded-lg shadow-md p-5 flex flex-col gap-3">
-            <div className="rounded overflow-hidden">
-              <img src={item.imgSrc} alt={item.title} className="w-full h-48 object-cover rounded" />
-            </div>
-            <div className="flex items-center justify-between text-sm text-blue-500">
-              <div className="flex items-center gap-1">
-                <FaUser /> <span>{item.auther}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <FaComments /> <span>{item.comments} comments</span>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-gray-600 text-sm mt-1">{item.disc}</p>
-            </div>
-          </div>
-        ))}
+        <BlogCard data={lastThreeBlogs} />
       </div>
 
       {/* Wave SVG */}

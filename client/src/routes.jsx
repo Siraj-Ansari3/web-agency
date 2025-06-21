@@ -6,6 +6,7 @@ import Contact from "./pages/contact/Contact";
 import Portfolio from "./pages/portfolio/Portfolio";
 import Blog from "./pages/blog/Blog";
 import AdminSigninPage from "./components/navbar/AdminSigninPage";
+import BlogContent from "./pages/blog/BlogContent";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -13,6 +14,7 @@ const routes = [
   { path: "/services", element: <Services /> },
   { path: "/portfolio", element: <Portfolio /> },
   { path: "/blog", element: <Blog /> },
+  { path: "/blog/:id", element: <BlogContent /> },
   { path: "/contact", element: <Contact /> },
   { path: "/admin-signin-portal", element: <AdminSigninPage /> },
 ];

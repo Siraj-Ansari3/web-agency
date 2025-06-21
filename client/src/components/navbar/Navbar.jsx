@@ -37,7 +37,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="bg-green-00  py-4  flex justify-center sm:justify-between  items-center md:max-w-[80%] mx-auto">
+    <nav className="bg-green-00  py-4  flex justify-center sm:justify-between  items-center max-w-7xl mx-auto">
       {/* Mobile menu button (hidden on larger screens) */}
       <button className="lg:hidden text-gray-600 focus:outline-none bg-amber-00"
       onClick={()=>setisOpen(!isOpen)}
