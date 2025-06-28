@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+/* Hide scrollbar while maintaining scroll functionality */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Additional scrollbar hiding class for portfolio */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+.ql-font-sans-serif {
+  font-family: 'sans-serif';
+}
+body{
+  background-color: black;
+  padding-top: 80px; /* Account for fixed navbar */
+}
+.ql-font-serif {
+  font-family: 'serif';
+}
+.ql-font-monospace {
+  font-family: 'monospace';
+}
+.ql-font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.ql-font-arial {
+  font-family: 'Arial', sans-serif;
+}
+.ql-font-times-new-roman {
+  font-family: 'Times New Roman', serif;
+}
+.ql-font-courier-new {
+  font-family: 'Courier New', monospace;
+}
+.ql-font-georgia {
+  font-family: 'Georgia', serif;
+}
+.ql-font-tahoma {
+  font-family: 'Tahoma', sans-serif;
+}
+.ql-font-verdana {
+  font-family: 'Verdana', sans-serif;
+}
+
+
+body, * {
+  cursor: none !important;
+}

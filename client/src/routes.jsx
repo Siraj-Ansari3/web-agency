@@ -1,0 +1,54 @@
+// routes.jsx
+import Services from "./pages/services/Services";
+import About from "./pages/about/About";
+import Home from "./pages/home/Home";
+import Contact from "./pages/contact/Contact";
+import Portfolio from "./pages/portfolio/Portfolio";
+import Blog from "./pages/blog/Blog";
+import AdminSignupPage from "./pages/AdminSignupPage";
+import AdminSigninPage from "./pages/AdminSigninPage";
+import BlogContent from "./pages/blog/BlogContent";
+import DashboardLayout from "./pages/adminDashboard/DashboardLayout";
+import DashboardHome from "./pages/adminDashboard/DashboardHome";
+import DashboardBlogs from "./pages/adminDashboard/DashboardBlogs";
+import DashboardWriteBlog from "./pages/adminDashboard/DashboardWriteBlog";
+import DashboardUsers from "./pages/adminDashboard/DashboardUsers";
+import DashboardSettings from "./pages/adminDashboard/DashboardSettings";
+import PageBuilder from "./pages/adminDashboard/pageBuilder/PageBuilder";
+import EditHomePage from "./pages/adminDashboard/pageBuilder/EditHomePage";
+import EditAboutPage from "./pages/adminDashboard/pageBuilder/EditAboutPage";
+import EditServicesPage from "./pages/adminDashboard/pageBuilder/EditServicesPage";
+import ServiceDetail from "./pages/services/ServiceDetail";
+import PortfolioDetail from "./pages/portfolio/PortfolioDetail";
+
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <About /> },
+  { path: "/services", element: <Services /> },
+  { path: "/services/:id", element: <ServiceDetail /> },
+  { path: "/portfolio", element: <Portfolio /> },
+  { path: "/portfolio/:id", element: <PortfolioDetail/>},
+  { path: "/blog", element: <Blog /> },
+  { path: "/blog/:id", element: <BlogContent /> },
+  { path: "/contact", element: <Contact /> },
+  
+  { path: "/admin-sign-up-portal", element: <AdminSignupPage /> },
+  { path: "/admin-sign-in-portal", element: <AdminSigninPage /> },
+  {
+    path: "/admin/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "blogs", element: <DashboardBlogs /> },
+      { path: "write-blog", element: <DashboardWriteBlog /> },
+      { path: "users", element: <DashboardUsers /> },
+      { path: "settings", element: <DashboardSettings /> },
+      { path: "page-builder", element: <PageBuilder /> },
+      { path: "page-builder/home", element: <EditHomePage /> },
+      { path: "page-builder/about", element: <EditAboutPage /> },
+      { path: "page-builder/services", element: <EditServicesPage /> },
+    ]
+  }
+];
+
+export default routes;
