@@ -6,29 +6,25 @@ const DashboardWriteBlog = () => {
   const navigate = useNavigate();
   const [blogData, setBlogData] = useState({
     title: '',
-    content: '',
+    content: { html: '', text: '', metadata: {} },
+    category: 'General',
     status: 'draft',
-    featuredImage: null
+    image: null,
+    tags: []
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBlogData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleFileChange = (e) => {
-    setBlogData(prev => ({ ...prev, featuredImage: e.target.files[0] }));
-  };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // Handle data updates from BlogEditor
+  const handleBlogDataUpdate = async (updatedData) => {
+    setBlogData(prev => ({ ...prev, ...updatedData }));
+    
+    // Log the complete blog data object
+    console.log('Complete Blog Data:', { ...blogData, ...updatedData });
     
     // Simulate API call
+    setIsSubmitting(true);
     setTimeout(() => {
-      console.log('Blog submitted:', blogData);
       setIsSubmitting(false);
       navigate('/admin/dashboard/blogs');
     }, 1500);
@@ -49,74 +45,11 @@ const DashboardWriteBlog = () => {
         </button>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-            Blog Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={blogData.title}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-            required
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="featuredImage" className="block text-sm font-medium text-gray-700 mb-1">
-            Featured Image
-          </label>
-          <input
-            type="file"
-            id="featuredImage"
-            name="featuredImage"
-            onChange={handleFileChange}
-            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-            Content
-          </label>
-          <BlogEditor name='content' onChange={handleChange}/>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row justify-between gap-4">
-          <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-              Status
-            </label>
-            <select
-              id="status"
-              name="status"
-              value={blogData.status}
-              onChange={handleChange}
-              className="border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="draft">Draft</option>
-              <option value="published">Publish</option>
-            </select>
-          </div>
-          
-          <div className="flex items-end">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`px-6 py-2 rounded-md text-white ${
-                isSubmitting 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700'
-              }`}
-            >
-              {isSubmitting ? 'Publishing...' : 'Publish Blog'}
-            </button>
-          </div>
-        </div>
-      </form>
+      {/* Use BlogEditor for all blog content */}
+      <BlogEditor 
+        initialData={blogData}
+        onSave={handleBlogDataUpdate}
+      />
     </div>
   );
 };

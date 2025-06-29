@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
+
 import './editor.css';
 import Quill from 'quill';
 
-const BlockEmbed = Quill.import('blots/block/embed');
-class HrBlot extends BlockEmbed {
-  static create() {
-    const node = super.create();
-    node.setAttribute('style', 'border: none; border-top: 2px solid #e5e7eb; margin: 1.5em 0;');
-    return node;
-  }
-}
-HrBlot.blotName = 'hr';
-HrBlot.tagName = 'hr';
-Quill.register(HrBlot);
+
 
 // Register font family whitelist
 const Font = Quill.import('formats/font');
@@ -59,19 +50,21 @@ function imageHandler() {
 }
 
 const quillModules = {
-  toolbar: [
-    [{ 'font': [] }, { 'size': [] }],
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ 'color': [] }, { 'background': [] }],
-    ['blockquote', 'code'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-    [{ 'align': [] }],
-    ['link', 'image'],
-    ['clean']
-  ],
-  handlers: {
-    image: imageHandler
+  toolbar: {
+    container: [
+      [{ 'font': [] }, { 'size': [] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      ['blockquote', 'code'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['link', 'image'],
+      ['clean']
+    ],
+    handlers: {
+      image: imageHandler
+    }
   }
 };
 
@@ -80,16 +73,16 @@ const quillFormats = [
   'header',
   'bold', 'italic', 'underline', 'strike', 'color', 'background',
   'blockquote', 'code',
-  'list', 'bullet', 'indent',
+  'list', 'indent',
   'align',
-  'link', 'image',
-  'clean'
+  'link', 'image'
+  // Do NOT include 'bullet' or 'clean' here
 ];
 
 const BlogEditor = ({ initialData = {}, onSave }) => {
   const [title, setTitle] = useState(initialData.title || '');
   const [category, setCategory] = useState(initialData.category || 'General');
-  const [content, setContent] = useState(initialData.content || '');
+  const [content, setContent] = useState(initialData.content || { html: '', text: '', metadata: {} });
   const [image, setImage] = useState(initialData.image || null);
   const [status, setStatus] = useState(initialData.status || 'published');
   const [tags, setTags] = useState(initialData.tags || []);
@@ -97,17 +90,64 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    if (onSave) {
-      onSave({ title, category, content, image, status, tags });
-    }
-    // eslint-disable-next-line
-  }, [title, category, content, image, status, tags]);
-
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
     }
+  };
+
+  const handleContentChange = (htmlContent) => {
+    // Extract plain text from HTML content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    
+    // Calculate reading time (average 200 words per minute)
+    const wordCount = textContent.split(/\s+/).filter(word => word.length > 0).length;
+    const readingTime = Math.ceil(wordCount / 200);
+    
+    // Detect content type based on HTML structure
+    const hasHeadings = htmlContent.includes('<h1>') || htmlContent.includes('<h2>') || htmlContent.includes('<h3>');
+    const hasImages = htmlContent.includes('<img');
+    const hasLinks = htmlContent.includes('<a href');
+    const hasLists = htmlContent.includes('<ul>') || htmlContent.includes('<ol>');
+    const hasCode = htmlContent.includes('<code>') || htmlContent.includes('<pre>');
+    const hasBlockquotes = htmlContent.includes('<blockquote>');
+    
+    let contentType = 'text';
+    if (hasImages && hasHeadings) contentType = 'article';
+    else if (hasImages) contentType = 'image-post';
+    else if (hasCode) contentType = 'tutorial';
+    else if (hasLists) contentType = 'list';
+    else if (hasBlockquotes) contentType = 'quote';
+    
+    // Create content object with HTML, text, and comprehensive metadata
+    const contentObject = {
+      html: htmlContent,
+      text: textContent,
+      metadata: {
+        wordCount: wordCount,
+        characterCount: textContent.length,
+        readingTime: readingTime,
+        lastModified: new Date().toISOString(),
+        contentType: contentType,
+        hasImages: hasImages,
+        hasLinks: hasLinks,
+        hasLists: hasLists,
+        hasCode: hasCode,
+        hasHeadings: hasHeadings,
+        hasBlockquotes: hasBlockquotes,
+        formatting: {
+          boldCount: (htmlContent.match(/<strong>/g) || []).length,
+          italicCount: (htmlContent.match(/<em>/g) || []).length,
+          linkCount: (htmlContent.match(/<a href/g) || []).length,
+          imageCount: (htmlContent.match(/<img/g) || []).length,
+          listCount: (htmlContent.match(/<[uo]l>/g) || []).length
+        }
+      }
+    };
+    
+    setContent(contentObject);
   };
 
   const handleTagInputChange = (e) => {
@@ -131,18 +171,29 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
     setTags(tags.filter((_, idx) => idx !== removeIdx));
   };
 
-  // Save button is now optional (for parent-driven publish)
+  // Save function that collects all data and sends it to parent
   const handleSave = async (e) => {
     e.preventDefault();
     setError('');
-    if (!title.trim() || !content.trim()) {
+    if (!title.trim() || !content.html.trim()) {
       setError('Title and content are required.');
       return;
     }
     setSaving(true);
+    
+    const blogData = { 
+      title, 
+      category, 
+      content, // Now content is an object
+      image, 
+      status, 
+      tags 
+    };
+    
     if (onSave) {
-      await onSave({ title, category, content, image, status, tags });
+      await onSave(blogData);
     }
+    
     setSaving(false);
   };
 
@@ -198,12 +249,44 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
         <label className="block text-sm font-semibold mb-1">Content *</label>
         <ReactQuill
           theme="snow"
-          value={content}
-          onChange={setContent}
+          value={content.html || ''}
+          onChange={handleContentChange}
           className="bg-white"
           modules={quillModules}
           formats={quillFormats}
         />
+        {/* Display content metadata */}
+        {content.metadata && (
+          <div className="mt-2 p-3 bg-gray-50 rounded-lg">
+            <div className="text-xs text-gray-600 font-semibold mb-2">Content Analysis:</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-gray-500">
+              <div>
+                <span className="font-medium">Words:</span> {content.metadata.wordCount}
+              </div>
+              <div>
+                <span className="font-medium">Reading Time:</span> {content.metadata.readingTime} min
+              </div>
+              <div>
+                <span className="font-medium">Type:</span> {content.metadata.contentType}
+              </div>
+              <div>
+                <span className="font-medium">Images:</span> {content.metadata.formatting?.imageCount || 0}
+              </div>
+              <div>
+                <span className="font-medium">Links:</span> {content.metadata.formatting?.linkCount || 0}
+              </div>
+              <div>
+                <span className="font-medium">Lists:</span> {content.metadata.formatting?.listCount || 0}
+              </div>
+              <div>
+                <span className="font-medium">Bold:</span> {content.metadata.formatting?.boldCount || 0}
+              </div>
+              <div>
+                <span className="font-medium">Italic:</span> {content.metadata.formatting?.italicCount || 0}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div>
         <label className="block text-sm font-semibold mb-1">Status</label>
@@ -237,6 +320,21 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
         />
       </div>
       {error && <div className="text-red-500 text-sm">{error}</div>}
+      
+      {/* Add a save button to the editor */}
+      <div className="flex justify-end pt-4">
+        <button
+          type="submit"
+          disabled={saving}
+          className={`px-6 py-2 rounded-md text-white ${
+            saving 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-green-600 hover:bg-green-700'
+          }`}
+        >
+          {saving ? 'Saving...' : 'Save Blog Data'}
+        </button>
+      </div>
     </form>
   );
 };
