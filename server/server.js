@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { nanoid } from "nanoid";
 import adminAuth from "./routes/adminAuth.js";
 import pageEdit from "./routes/pageEdit.js"
+import blogRoute from "./routes/blogRoute.js"
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 import aws from 'aws-sdk';
@@ -70,6 +71,7 @@ app.get('/get-upload-url', async (req, res) => {
 // Routes
 app.use("/admin", adminAuth);
 app.use("/admin/edit-page", pageEdit)
+app.use("/blog", blogRoute)
 
 
 mongoose.connect(process.env.MONGO_URI)

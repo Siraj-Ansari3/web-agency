@@ -1,23 +1,49 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import cardsData from "../data/blogs/cardsData";
 import raza from '../assets/autherImg/raza.jpg'
+import axios from "axios";
 
 const ReadBlog = ({ id }) => {
-  const blog = cardsData.find((blog) => blog.id == id);
+  // const blog = cardsData.find((blog) => blog.id == id);
+  const [blog, setBlog] = useState({
+    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: ""
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setIsLoading(true)
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blog/?id=${id}`);
+        setBlog(response.data.blog)
+        console.log(response.data.blog)
+        setIsLoading(false)
+
+      } catch (error) {
+        console.log(error)
+        setIsLoading(false)
+      }
+
+    }
+
+    fetchBlog();
+
+  }, [])
   return (
     <>
       <section className="py-5 relative  bg-gray-50">
         <div className="bg-white max-w-6xl mx-auto rounded-2xl">
           <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-8  ">
             <img
-              src={blog.imgSrc}
-              alt=""
+              src={blog.image}
+              alt={blog.title}
               className="h-[500px] w-full object-cover rounded-t-2xl"
             />
             <div className="px-10 grid lg:grid-cols-3 gap-8">
               <div className="col-span-2 bg-amber-00 text-justify flex flex-col gap-5 ">
                 <h1 className=" text-2xl font-bold">{blog.title}</h1>
-                <p>{blog.disc}</p>
+                 <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
               </div>
               <div className="border h-fit p-5 flex flex-col gap-5">
                 <div className="flex gap-3 items-center">

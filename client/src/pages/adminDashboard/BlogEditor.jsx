@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
 import './editor.css';
 import Quill from 'quill';
+import { uploadImage } from '../../common/aws';
 
 
 
@@ -49,6 +50,7 @@ function imageHandler() {
   };
 }
 
+
 const quillModules = {
   toolbar: {
     container: [
@@ -79,6 +81,8 @@ const quillFormats = [
   // Do NOT include 'bullet' or 'clean' here
 ];
 
+
+
 const BlogEditor = ({ initialData = {}, onSave }) => {
   const [title, setTitle] = useState(initialData.title || '');
   const [category, setCategory] = useState(initialData.category || 'General');
@@ -89,6 +93,9 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
   const [tagInput, setTagInput] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [base64Images, setBase64Images] = useState([]);
+  // const formRef = useRef();
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -101,11 +108,11 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlContent;
     const textContent = tempDiv.textContent || tempDiv.innerText || '';
-    
+
     // Calculate reading time (average 200 words per minute)
     const wordCount = textContent.split(/\s+/).filter(word => word.length > 0).length;
     const readingTime = Math.ceil(wordCount / 200);
-    
+
     // Detect content type based on HTML structure
     const hasHeadings = htmlContent.includes('<h1>') || htmlContent.includes('<h2>') || htmlContent.includes('<h3>');
     const hasImages = htmlContent.includes('<img');
@@ -113,14 +120,14 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
     const hasLists = htmlContent.includes('<ul>') || htmlContent.includes('<ol>');
     const hasCode = htmlContent.includes('<code>') || htmlContent.includes('<pre>');
     const hasBlockquotes = htmlContent.includes('<blockquote>');
-    
+
     let contentType = 'text';
     if (hasImages && hasHeadings) contentType = 'article';
     else if (hasImages) contentType = 'image-post';
     else if (hasCode) contentType = 'tutorial';
     else if (hasLists) contentType = 'list';
     else if (hasBlockquotes) contentType = 'quote';
-    
+
     // Create content object with HTML, text, and comprehensive metadata
     const contentObject = {
       html: htmlContent,
@@ -146,7 +153,18 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
         }
       }
     };
-    
+
+
+    const base64Regex = /src="(data:image\/[^;]+;base64[^"]+)"/g;
+    const images = [];
+    let match;
+
+    while ((match = base64Regex.exec(htmlContent)) !== null) {
+      images.push(match[1]);
+    }
+
+    setBase64Images(images);
+
     setContent(contentObject);
   };
 
@@ -171,34 +189,108 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
     setTags(tags.filter((_, idx) => idx !== removeIdx));
   };
 
+
   // Save function that collects all data and sends it to parent
-  const handleSave = async (e) => {
+ const handleSave = async (e) => {
     e.preventDefault();
     setError('');
     if (!title.trim() || !content.html.trim()) {
       setError('Title and content are required.');
       return;
     }
-    setSaving(true);
     
-    const blogData = { 
-      title, 
-      category, 
-      content, // Now content is an object
-      image, 
-      status, 
-      tags 
-    };
+    setIsSaving(true);
     
-    if (onSave) {
-      await onSave(blogData);
+    try {
+      // 1. Upload featured image
+      let imageUrl = image;
+      if (image instanceof File) {
+        imageUrl = await uploadImage(image);
+      }
+
+      // 2. Upload content images
+      const uploadedImageUrls = await Promise.all(
+        base64Images.map(async (base64) => {
+          try {
+            return await uploadBase64Image(base64);
+          } catch (error) {
+            console.error('Image upload failed:', error);
+            return base64; // Return original as fallback
+          }
+        })
+      );
+
+      // 3. Replace base64 with URLs in content
+      let updatedHtml = content.html;
+      base64Images.forEach((base64, index) => {
+        updatedHtml = updatedHtml.replace(base64, uploadedImageUrls[index]);
+      });
+
+      // 4. Create content object with updated HTML
+      const contentObject = {
+        ...content,
+        html: updatedHtml,
+        metadata: {
+          ...content.metadata,
+          hasImages: updatedHtml.includes('<img'),
+          imageCount: (updatedHtml.match(/<img/g) || []).length
+        }
+      };
+      
+      // 5. Prepare blog data
+      const blogData = { 
+        title, 
+        category, 
+        content: contentObject, // Updated content with URLs
+        image: imageUrl, // URL string
+        status, 
+        tags 
+      };
+      
+      // 6. Send to parent
+      if (onSave) {
+        await onSave(blogData);
+      }
+    } catch (error) {
+      console.error('Error saving blog:', error);
+      setError('Failed to save blog. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Upload base64 image to AWS
+  const uploadBase64Image = async (base64Data) => {
+    const contentType = base64Data.match(/data:(image\/\w+);base64/)[1];
+    const file = base64ToFile(base64Data, `image_${Date.now()}`, contentType);
+    return await uploadImage(file);
+  };
+
+  // Convert base64 to File object
+  const base64ToFile = (base64Data, filename, contentType) => {
+    const byteCharacters = atob(base64Data.split(',')[1]);
+    const byteArrays = [];
+    
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
     }
     
-    setSaving(false);
+    const blob = new Blob(byteArrays, { type: contentType });
+    return new File([blob], filename, { type: contentType });
   };
 
   return (
-    <form className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6" onSubmit={handleSave}>
+    <form
+      // ref={formRef}
+      className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6" onSubmit={handleSave}>
       <h2 className="text-2xl font-bold mb-4">Blog Editor</h2>
       <div>
         <label className="block text-sm font-semibold mb-1">Title *</label>
@@ -320,19 +412,18 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
         />
       </div>
       {error && <div className="text-red-500 text-sm">{error}</div>}
-      
+
       {/* Add a save button to the editor */}
       <div className="flex justify-end pt-4">
         <button
           type="submit"
-          disabled={saving}
-          className={`px-6 py-2 rounded-md text-white ${
-            saving 
-              ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-green-600 hover:bg-green-700'
-          }`}
+          disabled={isSaving}
+          className={`px-6 py-2 rounded-md text-white ${isSaving
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-green-600 hover:bg-green-700'
+            }`}
         >
-          {saving ? 'Saving...' : 'Save Blog Data'}
+          {isSaving ? 'Saving...' : 'Save Blog Data'}
         </button>
       </div>
     </form>
