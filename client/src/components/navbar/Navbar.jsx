@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../../assets/logo/softera.png";
@@ -10,6 +10,7 @@ const Navbar = () => {
   const { admin, signOut } = useAuth();
   const [isOpen, setisOpen] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -203,6 +204,7 @@ const Navbar = () => {
                 className={`bg-gradient-to-r from-red-600 to-red-700 cursor-pointer rounded-full text-white font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-500/25 py-4 px-6 text-base`}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/contact')}
               >
                 Get In Touch
               </motion.button>
