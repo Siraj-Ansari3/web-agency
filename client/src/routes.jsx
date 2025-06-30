@@ -41,6 +41,7 @@ const routes = [
       { index: true, element: <DashboardHome /> },
       { path: "blogs", element: <DashboardBlogs /> },
       { path: "write-blog", element: <DashboardWriteBlog /> },
+      { path: "edit-blog/:id", element: <DashboardWriteBlog />},
       { path: "users", element: <DashboardUsers /> },
       { path: "settings", element: <DashboardSettings /> },
       { path: "page-builder", element: <PageBuilder /> },

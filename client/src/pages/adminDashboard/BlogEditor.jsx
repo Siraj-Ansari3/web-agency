@@ -97,6 +97,17 @@ const BlogEditor = ({ initialData = {}, onSave }) => {
   const [base64Images, setBase64Images] = useState([]);
   // const formRef = useRef();
 
+  useEffect(() => {
+  if (initialData) {
+    setTitle(initialData.title || '');
+    setCategory(initialData.category || 'General');
+    setContent(initialData.content || { html: '', text: '', metadata: {} });
+    setImage(initialData.image || null);
+    setStatus(initialData.status || 'published');
+    setTags(initialData.tags || []);
+  }
+}, [initialData]);
+
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);

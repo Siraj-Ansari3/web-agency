@@ -108,4 +108,48 @@ router.get("/get-blog", async (req, res) => {
 })
 
 
+router.put("/update/:id", async (req, res) => {
+  const blogId = req.params.id;
+  const updateData = req.body;
+  
+  try {
+    // Find and update the blog
+    const updatedBlog = await Blog.findOneAndUpdate(
+      { blog_id: blogId },
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedBlog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    return res.status(200).json({ 
+      message: "Blog updated successfully",
+      blog: updatedBlog
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/delete-blog/:id", async (req, res) => {
+    const {id} = req.params;
+    
+    try {
+        // Find and delete the blog
+        const result = await Blog.deleteOne({ blog_id: id });
+        
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ error: "Blog not found" });
+        }
+        
+        return res.status(200).json({ message: "Blog deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 export default router;

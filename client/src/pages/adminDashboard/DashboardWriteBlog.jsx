@@ -1,9 +1,11 @@
 // DashboardWriteBlog.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BlogEditor from './BlogEditor';
 import axios from 'axios';
+import { useEffect } from 'react';
 const DashboardWriteBlog = () => {
+  const { id } = useParams()
   const navigate = useNavigate();
   const [blogData, setBlogData] = useState({
     title: '',
@@ -14,39 +16,86 @@ const DashboardWriteBlog = () => {
     tags: []
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      setIsEditMode(true);
+      fetchBlogData();
+    }
+  }, [id]);
+
+
+  const fetchBlogData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_DOMAIN}/blog/get-blog?id=${id}`,
+        { withCredentials: true }
+      );
+      
+      const blog = response.data.blog;
+      setBlogData({
+        title: blog.title,
+        content: blog.content,
+        category: blog.category,
+        status: blog.status,
+        image: blog.imageUrl, // URL string
+        tags: blog.tags
+      });
+    } catch (error) {
+      console.error('Error fetching blog:', error);
+      setSaveMessage(`Failed to load blog: ${error.response?.data?.error || error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   // Handle data updates from BlogEditor
   const handleBlogDataUpdate = async (blogData) => {
     setIsSubmitting(true);
-    setSaveMessage('Publishing blog...');
+    setSaveMessage(isEditMode ? 'Updating blog...' : 'Publishing blog...');
 
     try {
-      // Send to backend
-      const response = await axios.post(
-        import.meta.env.VITE_SERVER_DOMAIN + "/blog/add",
-        blogData,
-        { withCredentials: true }
-      );
-      console.log(response)
+      if (isEditMode) {
+        // Update existing blog
+        await axios.put(
+          `${import.meta.env.VITE_SERVER_DOMAIN}/blog/update/${id}`,
+          blogData,
+          { withCredentials: true }
+        );
+        setSaveMessage('Blog updated successfully! Redirecting...');
+      } else {
+        // Create new blog
+        await axios.post(
+          `${import.meta.env.VITE_SERVER_DOMAIN}/blog/add`,
+          blogData,
+          { withCredentials: true }
+        );
+        setSaveMessage('Blog published successfully! Redirecting...');
+      }
 
-      setSaveMessage('Blog published successfully! Redirecting...');
       setTimeout(() => {
         navigate('/admin/dashboard/blogs');
       }, 1500);
     } catch (error) {
-      console.error('Error publishing blog:', error);
-      setSaveMessage(`Failed to publish blog: ${error.response?.data?.error || error.message}`);
+      console.error('Error saving blog:', error);
+      setSaveMessage(`Failed to save blog: ${error.response?.data?.error || error.message}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
+ return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Write New Blog</h1>
+        <h1 className="text-2xl font-bold">
+          {isEditMode ? 'Edit Blog' : 'Write New Blog'}
+        </h1>
         <button
           onClick={() => navigate('/admin/dashboard/blogs')}
           className="text-gray-600 hover:text-gray-900 flex items-center"
@@ -59,24 +108,33 @@ const DashboardWriteBlog = () => {
         </button>
       </div>
 
-      {saveMessage && (
-        <div className={`mb-4 p-3 rounded-md ${saveMessage.includes('success')
-          ? 'bg-green-100 text-green-800'
-          : saveMessage.includes('publishing')
-            ? 'bg-blue-100 text-blue-800'
-            : 'bg-red-100 text-red-800'
-          }`}>
-          {saveMessage}
+      {isLoading ? (
+        <div className="text-center py-10">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading blog data...</p>
         </div>
+      ) : (
+        <>
+          {saveMessage && (
+            <div className={`mb-4 p-3 rounded-md ${saveMessage.includes('success')
+              ? 'bg-green-100 text-green-800'
+              : saveMessage.includes('publishing') || saveMessage.includes('updating')
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-red-100 text-red-800'
+              }`}>
+              {saveMessage}
+            </div>
+          )}
+
+          <BlogEditor
+            initialData={blogData}
+            onSave={handleBlogDataUpdate}
+          />
+        </>
       )}
-
-      {/* Use BlogEditor for all blog content */}
-      <BlogEditor
-        onSave={handleBlogDataUpdate}
-      />
     </div>
-
   );
 };
+
 
 export default DashboardWriteBlog;

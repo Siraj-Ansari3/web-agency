@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Toaster, toast } from "react-hot-toast"
 
 const DashboardBlogs = () => {
   const navigate = useNavigate();
@@ -12,23 +13,23 @@ const DashboardBlogs = () => {
 
   const [filter, setFilter] = useState('all');
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
-        setBlogs(response.data.blogs)
-        setIsLoading(false)
-        console.log(response.data.blogs)
-      } catch (error) {
-        console.log(error)
-        setIsLoading(false)
 
-      }
+  const fetchBlogs = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
+      setBlogs(response.data.blogs)
+      setIsLoading(false)
+      console.log(response.data.blogs)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+
     }
+  }
 
+  useEffect(() => {
     fetchBlogs();
-
   }, [])
 
   const filteredBlogs = blogs.filter(blog => {
@@ -36,12 +37,28 @@ const DashboardBlogs = () => {
     return blog.status.toLowerCase() === filter;
   });
 
-  const deleteBlog = (id) => {
-    setBlogs(blogs.filter(blog => blog.id !== id));
+  const deleteBlog = async (id) => {
+    try {
+      // Use DELETE method and include ID in URL
+      await axios.delete(
+        `${import.meta.env.VITE_SERVER_DOMAIN}/blog/delete-blog/${id}`,
+        { withCredentials: true }
+      );
+
+      // Update UI immediately
+      setTimeout(() => {
+        fetchBlogs();
+
+        toast.success("Blog deleted successfully");
+      }, 600);
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Failed to delete blog");
+    }
   };
 
   return (
     <div>
+      <Toaster />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h1 className="text-2xl font-bold">Blog Management</h1>
 
@@ -93,9 +110,11 @@ const DashboardBlogs = () => {
               (filteredBlogs.map((blog, index) => (
                 <tr className="cursor-pointer hover:bg-gray-100 transition"
                   key={index}
-                  onClick={() => navigate(`/blog/${blog.blog_id}`)
-
-                  }
+                  onClick={(e) => {
+                    if (!e.target.closest('.action-button')) {
+                      navigate(`/blog/${blog.blog_id}`);
+                    }
+                  }}
                 >
                   <td className="px-6 py-4">
                     <div className="text-sm font-medium text-gray-900">{blog.title}</div>
@@ -115,13 +134,17 @@ const DashboardBlogs = () => {
                     <div className="flex space-x-2">
                       <Link
                         to={`/admin/dashboard/edit-blog/${blog.blog_id}`}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="p-1 text-blue-600 hover:text-blue-900"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         Edit
                       </Link>
                       <button
-                        onClick={() => deleteBlog(blog.id)}
-                        className="text-red-600 hover:text-red-900"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteBlog(blog.blog_id);
+                        }}
+                        className=" p-1 text-red-600 hover:text-red-900"
                       >
                         Delete
                       </button>
