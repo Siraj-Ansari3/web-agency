@@ -1,5 +1,6 @@
 import React from 'react';
 import services from '../data/services/servicesData';
+import logo from '../assets/logo/softera.png';
 
 const Footer = () => {
   const handleSubmit = (e) => {
@@ -16,13 +17,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About - Full width on mobile, then normal */}
           <div className="md:col-span-2 lg:col-span-1">
-            <div className="flex items-center mb-6">
-              <svg className="w-10 h-10 text-red-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 8V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="ml-3 text-2xl font-bold">WEG Agency</span>
+            <div className="flex items-center">
+              <img src={logo} alt="Agency Logo" className="w-30 object-contain" />
+              <span className="text-2xl font-bold">SoftEra</span>
             </div>
             <p className="text-gray-400 mb-6">
               We create digital experiences that matter. Our team delivers innovative solutions.
@@ -105,23 +102,22 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter - minimal, modern, flat input and button */}
-        <div className="mt-12 mb-4 flex flex-col items-center justify-center w-full">
-          <div className="w-full max-w-2xl bg-gradient-to-r from-red-600 to-red-400 rounded-2xl shadow-xl px-6 py-8 flex flex-col items-center">
-            <h3 className="text-2xl font-bold text-white mb-2 text-center">Stay in the Loop!</h3>
-            <p className="text-white text-opacity-90 text-center mb-6 text-base max-w-lg">Subscribe to our newsletter for the latest updates, insights, and exclusive offers from WEG Agency.</p>
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-xl items-center">
+        {/* Newsletter Subscription - Full width at the bottom */}
+        <div className="w-full flex justify-center mt-12">
+          <div className="bg-black border-2 border-red-600 rounded-2xl shadow-lg p-6 flex flex-col items-center w-full max-w-2xl mx-auto">
+            <h3 className="text-lg font-semibold mb-2 text-white">Subscribe to our Newsletter</h3>
+            <p className="text-gray-400 text-sm mb-4 text-center">Get the latest updates, news, and offers straight to your inbox.</p>
+            <form className="w-full flex flex-col sm:flex-row gap-2" onSubmit={handleSubmit}>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
-                className="flex-1 bg-white text-black placeholder-gray-500 px-4 py-2 border-0 border-b-2 border-red-500 focus:outline-none focus:border-white text-base transition-all duration-200 rounded-none shadow-none"
                 required
+                placeholder="Your email address"
+                className="flex-1 px-4 py-2 rounded-l-lg sm:rounded-lg bg-gray-900 text-white border border-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
               />
               <button
                 type="submit"
-                className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 transition-all duration-200 shadow-none text-base active:scale-100 focus:outline-none focus:ring-2 focus:ring-white rounded-none"
-                style={{ minWidth: '120px' }}
+                className="px-6 py-2 bg-red-600 text-white font-semibold rounded-r-lg sm:rounded-lg hover:bg-red-700 transition-all shadow-md"
               >
                 Subscribe
               </button>

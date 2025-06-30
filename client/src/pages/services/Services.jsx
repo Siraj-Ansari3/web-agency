@@ -19,7 +19,7 @@ const iconMap = {
 
 const Services = () => {
   const [activeService, setActiveService] = useState(0);
-  const [hoverAngle, setHoverAngle] = useState(null);
+  const [hoveredService, setHoveredService] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([
@@ -28,13 +28,6 @@ const Services = () => {
   ]);
 
   const navigate = useNavigate();
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width/2;
-    const y = e.clientY - rect.top - rect.height/2;
-    setHoverAngle(Math.atan2(y, x) * (180/Math.PI));
-  };
 
   const handleAddComment = () => {
     if (newComment.trim() && activeService !== null) {
@@ -72,7 +65,7 @@ const Services = () => {
       />
 
       {/* Services Content */}
-      <div className="relative py-20 bg-gradient-to-b from-black to-gray-900 overflow-hidden">
+      <div className="relative py-20 bg-black  to-gray-900 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-5">
           {[...Array(12)].map((_, i) => (
@@ -95,8 +88,8 @@ const Services = () => {
           <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
             {/* Radial menu */}
             <div 
-              className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center"
-              onMouseLeave={() => setHoverAngle(null)}
+              className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center bg-black rounded-full shadow-lg"
+              onMouseLeave={() => setHoveredService(null)}
             >
               {servicesData.map((service, index) => {
                 const angle = (index * 360) / servicesData.length;
@@ -104,9 +97,8 @@ const Services = () => {
                 const radius = 120;
                 const x = radius * Math.cos(radian);
                 const y = radius * Math.sin(radian);
-                
-                const isHighlighted = hoverAngle !== null && 
-                Math.abs((angle - hoverAngle + 360) % 360) < 30;
+
+                const isHighlighted = hoveredService === index;
 
                 return (
                   <button
@@ -124,7 +116,8 @@ const Services = () => {
                       transform: activeService === index ? 'scale(1.1)' : '',
                       zIndex: activeService === index ? 10 : isHighlighted ? 5 : 1
                     }}
-                    onMouseMove={(e) => handleMouseMove(e)}
+                    onMouseEnter={() => setHoveredService(index)}
+                    onMouseLeave={() => setHoveredService(null)}
                     onClick={() => {
                       setActiveService(index);
                       setShowComments(false);
@@ -262,11 +255,11 @@ const Services = () => {
         </div>
         <h2 className="text-4xl font-extrabold text-center mb-4 text-white tracking-tight">All Our Services</h2>
         <p className="text-lg text-gray-300 text-center max-w-2xl mx-auto mb-12">Discover the full range of solutions we offer to help your business grow and succeed in the digital world.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 border-white lg:grid-cols-3 gap-8">
           {servicesData.map((service, idx) => (
             <div
               key={service.id}
-              className="relative bg-black/70 backdrop-blur-lg border border-black/30 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:scale-[1.03] transition-all duration-500 flex flex-col items-center group overflow-hidden opacity-0 translate-y-6 animate-fadein"
+              className="relative bg-black/70 backdrop-blur-lg border-2 border-red-600 rounded-2xl p-8 shadow-sm hover:shadow-[0_0_32px_8px_rgba(220,38,38,0.5)]  hover:scale-[1.03] transition-all duration-500 flex flex-col items-center group overflow-hidden opacity-0 translate-y-6 animate-fadein"
               style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'forwards' }}
             >
               {/* Popular Badge Example */}
