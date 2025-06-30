@@ -18,7 +18,7 @@ const DashboardLayout = () => {
   const navItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: <HiHome size={20} /> },
     { path: '/admin/dashboard/blogs', label: 'Blogs', icon: <HiBookOpen size={20} /> },
-    { path: '/admin/dashboard/users', label: 'Users', icon: <HiUserGroup size={20} /> },
+    { path: '/admin/dashboard/admins', label: 'Admins', icon: <HiUserGroup size={20} /> },
     { path: '/admin/dashboard/settings', label: 'Settings', icon: <HiCog size={20} /> },
     { path: '/admin/dashboard/page-builder', label: 'Page Builder', icon: <HiTemplate size={20} /> }
   ];

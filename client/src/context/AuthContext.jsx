@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
           { withCredentials: true }
         );
         setAdmin(response.data);
+        
       } catch (error) {
         setAdmin(null);
       } finally {

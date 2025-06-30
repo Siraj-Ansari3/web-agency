@@ -16,6 +16,11 @@ const blogSchema = new mongoose.Schema({
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     image: String,
     tags: [String],
+      author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    required: true
+  },
 }, {
     timestamps: {
         createdAt: 'publishedAt'

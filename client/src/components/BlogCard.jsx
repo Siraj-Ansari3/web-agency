@@ -44,7 +44,7 @@ const BlogCard = ({ data }) => {
       <div className="relative flex flex-col justify-between p-6 sm:w-3/5 w-full bg-black">
         {/* Author avatar top-right */}
         <div className="absolute top-4 right-4 w-10 h-10 rounded-full border-2 border-black shadow bg-gradient-to-tr from-red-900/30 to-black/80 flex items-center justify-center z-20">
-          <img src={raza} alt="Author: Raza" className="object-cover w-8 h-8 rounded-full" />
+          <img src={item?.author?.image} alt={item?.author?.firstName} className="object-cover w-8 h-8 rounded-full" />
         </div>
         <div className="pr-12">
           <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">{item.title}</h3>

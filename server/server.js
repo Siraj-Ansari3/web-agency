@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { nanoid } from "nanoid";
-import adminAuth from "./routes/adminAuth.js";
+import adminRoute from "./routes/adminRoute.js";
 import pageEdit from "./routes/pageEdit.js"
 import blogRoute from "./routes/blogRoute.js"
 import cors from "cors";
@@ -69,7 +69,7 @@ app.get('/get-upload-url', async (req, res) => {
 
 
 // Routes
-app.use("/admin", adminAuth);
+app.use("/admin", adminRoute);
 app.use("/admin/edit-page", pageEdit)
 app.use("/blog", blogRoute)
 

@@ -8,13 +8,35 @@ import { useState } from "react";
 
 
 
-const BlogSection = ({blogMeta}) => {
-  const [blogs, setBlogs] = useState([])
+const BlogSection = ({ blogMeta }) => {
+  const [blogs, setBlogs] = useState([
+    {
+      blog_id: "loading1",
+      title: "Loading blog title...",
+      content: {
+        html: "<p>Loading content...</p>",
+        text: "Loading content...",
+        metadata: {
+          wordCount: 0,
+          readingTime: "0 min read"
+        }
+      },
+      category: "Loading",
+      status: "published",
+      image: "", // Optional placeholder image URL
+      tags: ["loading"],
+      author: {
+        firstName: "Loading author...",
+        image: ""
+      },
+    }
+  ]);
 
   useEffect(() => {
-    const fetchAllBlogs = async() => {
+    const fetchAllBlogs = async () => {
       const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + '/blog/get-last-three-blogs');
       setBlogs(response.data.blogs)
+      console.log(response.data.blogs)
     }
 
     fetchAllBlogs();

@@ -1,4 +1,3 @@
-// routes/adminAuth.js
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -99,7 +98,7 @@ router.post("/signin", verifyKey, async (req, res) => {
         lastName: admin.lastName,
         email: admin.email
       }
-    }); 
+    });
 
   } catch (err) {
     console.error("Signin error:", err);
@@ -112,7 +111,6 @@ router.post("/signout", (req, res) => {
   res.clearCookie("adminToken");
   res.json({ message: "Signed out successfully" });
 });
-
 
 // Check if admin is authenticated
 router.get("/me", async (req, res) => {
@@ -138,5 +136,80 @@ router.get("/me", async (req, res) => {
     res.status(401).json({ error: "Invalid token" });
   }
 });
+
+router.get("/get-admins", async (req, res) => {
+  try {
+    const admins = await Admin.find({});
+    if (!admins.length) {
+      return res.status(401).json({ error: "No admins found" })
+    }
+
+    return res.status(200).json({ message: "admins found successfully", admins })
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" })
+  }
+})
+
+router.get("/get-admin/:email", async (req, res) => {
+  const email = req.params.email;
+  console.log(email)
+  try {
+    const admin = await Admin.findOne({ email: email });
+    if (!admin) {
+      return res.status(404).json({ error: "No Admin Found" });
+    }
+
+    return res.status(200).json({ admin });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" })
+  }
+})
+
+router.put("/update-admin/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params.id;
+
+  try {
+    const { id } = req.params;
+    const { firstName, lastName, password, image } = req.body;
+
+    // Find the admin first to check if they exist
+    const admin = await Admin.findById(id);
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+
+    // Prepare update data
+    const updateData = { firstName, lastName };
+
+    // Update image if provided
+    if (image) {
+      updateData.image = image;
+    }
+
+    // Update password if provided
+    if (password && password.trim() !== "") {
+      updateData.password = await bcrypt.hash(password, 12);
+    }
+
+    // Perform the update
+    const updatedAdmin = await Admin.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    res.status(200).json({
+      message: "Admin updated successfully",
+      admin: updatedAdmin,
+    });
+  } catch (error) {
+    console.error("Error updating admin:", error);
+
+
+    res.status(500).json({ error: "Server error" });
+  }
+
+})
+
 
 export default router;

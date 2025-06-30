@@ -8,7 +8,7 @@ import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
 
 const ReadBlog = ({ id }) => {
   const [blog, setBlog] = useState({
-    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: ""
+    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: ""}
   });
   const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +24,10 @@ const ReadBlog = ({ id }) => {
         setBlog(response.data.blog);
         
         // Fetch related blogs based on category
-        const relatedResponse = await axios.get(
-          import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blogs/?category=${response.data.blog.category}&limit=3`
-        );
-        setRelatedBlogs(relatedResponse.data.blogs.filter(b => b.blog_id !== id));
+        // const relatedResponse = await axios.get(
+        //   import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blogs/?category=${response.data.blog.category}&limit=3`
+        // );
+        // setRelatedBlogs(relatedResponse.data.blogs.filter(b => b.blog_id !== id));
         
         setIsLoading(false);
       } catch (error) {
@@ -101,12 +101,12 @@ const ReadBlog = ({ id }) => {
             </h1>
             <div className="flex items-center gap-4 flex-wrap">
               <img 
-                src={raza} 
-                alt="Author" 
+                src={blog?.author?.image} 
+                alt={blog?.author?.firstName} 
                 className="w-10 h-10 rounded-full border-2 border-red-500" 
               />
               <div>
-                <div className="font-medium text-white">Raza Abbas</div>
+                <div className="font-medium text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</div>
                 <div className="text-xs text-gray-300 flex items-center gap-2">
                   <FiClock className="text-red-400" />
                   {formatReadingTime(blog.content)}
@@ -142,14 +142,14 @@ const ReadBlog = ({ id }) => {
             <div className="relative flex-shrink-0">
               <span className="absolute -inset-1 rounded-full bg-gradient-to-tr from-red-600 to-red-900 blur-sm opacity-70"></span>
               <img 
-                src={raza} 
-                alt="Author" 
+                src={blog?.author?.image} 
+                alt={blog?.author.firstName} 
                 className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-4 border-red-600 shadow-lg z-10 bg-black object-cover" 
               />
             </div>
             <div className="flex-1 text-center sm:text-left w-full">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 justify-center sm:justify-start">
-                <span className="text-xl sm:text-2xl font-extrabold text-white">Raza Abbas</span>
+                <span className="text-xl sm:text-2xl font-extrabold text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</span>
                 <span className="inline-block bg-red-700 text-white text-xs font-semibold px-3 py-1 rounded-full ml-0 sm:ml-3">Full Stack Developer</span>
               </div>
               <p className="text-gray-300 mb-4 text-xs sm:text-sm md:text-base max-w-xl mx-auto sm:mx-0">Passionate about building modern web experiences and sharing knowledge with the world. Always exploring new technologies and creative solutions.</p>
