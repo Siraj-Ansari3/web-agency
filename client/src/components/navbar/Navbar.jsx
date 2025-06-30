@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-import logo from "../../media/general/logo.png";
+import logo from "../../assets/logo/softera.png";
 import SideBar from "./SideBar";
 import { useAuth } from '../../context/AuthContext';
 
@@ -10,18 +10,6 @@ const Navbar = () => {
   const { admin, signOut } = useAuth();
   const [isOpen, setisOpen] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     {
@@ -58,27 +46,24 @@ const Navbar = () => {
 
   return (
     <motion.nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-black/95 backdrop-blur-md shadow-lg border-b border-red-700/50 py-2' 
-          : 'bg-black py-4 shadow-lg border-b border-red-700'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-20 bg-black/95 backdrop-blur-md shadow-lg border-b border-red-700/50`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 h-full`}>
+        <div className="flex items-center justify-between h-full">
           {/* Logo - Left */}
-          <div className="flex items-center">
+          <div className="flex items-center h-full">
             <Link to="/">
               <motion.img 
                 src={logo} 
                 alt="logo" 
-                className="cursor-pointer transition-all duration-300"
+                className="cursor-pointer transition-all duration-300 object-contain"
                 style={{
-                  width: isScrolled ? '32px' : '40px',
-                  height: isScrolled ? '32px' : '40px'
+                  width: '100px',
+                  height: '100px',
+                  maxHeight: '100%'
                 }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
@@ -88,33 +73,31 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <motion.button 
-            className="lg:hidden text-white focus:outline-none relative z-50"
+            className={`lg:hidden text-white focus:outline-none relative z-50 p-3`}
             onClick={() => setisOpen(!isOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className={`flex items-center justify-center bg-gradient-to-r from-red-600/20 to-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-xl hover:from-red-600/30 hover:to-red-500/30 transition-all duration-300 ${
-              isScrolled ? 'w-10 h-10' : 'w-12 h-12'
-            }`}>
+            <div className={`flex items-center justify-center bg-gradient-to-r from-red-600/20 to-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-xl hover:from-red-600/30 hover:to-red-500/30 transition-all duration-300 w-12 h-12`}>
               <motion.div
                 animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
                 transition={{ duration: 0.3 }}
                 className="relative"
               >
                 {isOpen ? (
-                  <FiX className={`text-red-400 transition-all duration-300 ${isScrolled ? "w-5 h-5" : "w-6 h-6"}`} />
+                  <FiX className={`text-red-400 transition-all duration-300 w-6 h-6`} />
                 ) : (
                   <div className="flex flex-col items-center justify-center space-y-1">
                     <motion.div 
-                      className={`bg-red-400 rounded-full transition-all duration-300 ${isScrolled ? "w-4 h-0.5" : "w-5 h-0.5"}`}
+                      className={`bg-red-400 rounded-full transition-all duration-300 w-5 h-0.5`}
                       animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 6 : 0 }}
                     />
                     <motion.div 
-                      className={`bg-red-400 rounded-full transition-all duration-300 ${isScrolled ? "w-4 h-0.5" : "w-5 h-0.5"}`}
+                      className={`bg-red-400 rounded-full transition-all duration-300 w-5 h-0.5`}
                       animate={{ opacity: isOpen ? 0 : 1 }}
                     />
                     <motion.div 
-                      className={`bg-red-400 rounded-full transition-all duration-300 ${isScrolled ? "w-4 h-0.5" : "w-5 h-0.5"}`}
+                      className={`bg-red-400 rounded-full transition-all duration-300 w-5 h-0.5`}
                       animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -6 : 0 }}
                     />
                   </div>
@@ -125,7 +108,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation links - Center */}
           <div className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-6 xl:space-x-8">
+            <div className="flex items-center space-x-4 xl:space-x-6">
               {navItems.map((item) => {
                 return (
                   <motion.div
@@ -135,11 +118,7 @@ const Navbar = () => {
                   >
                     <Link
                       to={item.path}
-                      className={`font-medium uppercase transition-all duration-300 relative group ${
-                        isScrolled 
-                          ? 'text-white/90 hover:text-red-400 text-sm' 
-                          : 'text-white hover:text-red-500'
-                      }`}
+                      className={`font-medium uppercase transition-all duration-300 relative group text-white hover:text-red-500 text-base px-2 py-2`}
                     >
                       {item.name}
                       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
@@ -162,9 +141,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   {/* SVG Profile Icon */}
-                  <span className={`flex items-center justify-center rounded-full border-2 border-red-500 bg-black hover:bg-red-600/20 transition-all duration-300 ${
-                    isScrolled ? 'w-8 h-8' : 'w-10 h-10'
-                  }`}>
+                  <span className={`flex items-center justify-center rounded-full border-2 border-red-500 bg-black hover:bg-red-600/20 transition-all duration-300 w-10 h-10`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -173,18 +150,14 @@ const Navbar = () => {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className={`text-white transition-all duration-300 ${
-                        isScrolled ? 'w-6 h-6' : 'w-8 h-8'
-                      }`}
+                      className={`text-white transition-all duration-300 w-8 h-8`}
                     >
                       <circle cx="12" cy="8" r="4" />
                       <path d="M4 20c0-4 4-7 8-7s8 3 8 7" />
                     </svg>
                   </span>
                   <motion.svg 
-                    className={`ml-1 text-white transition-all duration-300 ${
-                      isScrolled ? 'w-4 h-4' : 'w-5 h-5'
-                    }`}
+                    className={`ml-1 text-white transition-all duration-300 w-5 h-5`}
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24" 
@@ -227,9 +200,7 @@ const Navbar = () => {
               </div>
             ) : (
               <motion.button 
-                className={`bg-gradient-to-r from-red-600 to-red-700 cursor-pointer rounded-full text-white font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-500/25 ${
-                  isScrolled ? 'py-2 px-4 text-sm' : 'py-4 px-6'
-                }`}
+                className={`bg-gradient-to-r from-red-600 to-red-700 cursor-pointer rounded-full text-white font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-500/25 py-4 px-6 text-base`}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >

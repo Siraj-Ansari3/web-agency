@@ -20,7 +20,7 @@ const StepsComponent = ({ steps, page = "undefined" }) => {
 
 
 
-          {steps.steps?.map((step, i) => {
+          {steps.steps?.map((step) => {
             return (
               <div className="relative flex w-full mb-8 md:mb-12 pl-4">
                 <div className="absolute -left-4 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black rounded-full border-4 border-red-600 z-10">
@@ -47,7 +47,9 @@ const StepsComponent = ({ steps, page = "undefined" }) => {
               {/* Animated background circle */}
               <circle cx="250" cy="250" r="230" fill="#18181b" stroke="#991b1b" strokeWidth="2" />
               {/* Circular path (static, no animation or scale) */}
-              <circle cx="250" cy="250" r="180" fill="none" stroke="#991b1b" strokeWidth="2" strokeDasharray="5,5" />
+              <circle cx="250" cy="250" r="180" fill="none" stroke="#991b1b" strokeWidth="2" />
+              {/* Innermost white dashed circle */}
+              <circle cx="250" cy="250" r="130" fill="none" stroke="#fff" strokeWidth="2" strokeDasharray="5,5" />
 
               {/* Planning section */}
               <g transform="translate(250, 80)">
@@ -93,19 +95,9 @@ const StepsComponent = ({ steps, page = "undefined" }) => {
                 </circle>
               </g>
 
-              {/* Connecting arrows - animated */}
-              <path d="M250,130 A180,180 0 0,1 400,250" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="5,5">
-                <animate attributeName="stroke-dashoffset" from="500" to="0" dur="2s" fill="freeze" />
-              </path>
-              <path d="M400,270 A180,180 0 0,1 250,390" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="5,5">
-                <animate attributeName="stroke-dashoffset" from="500" to="0" dur="2s" begin="0.5s" fill="freeze" />
-              </path>
-              <path d="M250,410 A180,180 0 0,1 100,250" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="5,5">
-                <animate attributeName="stroke-dashoffset" from="500" to="0" dur="2s" begin="1s" fill="freeze" />
-              </path>
-              <path d="M100,230 A180,180 0 0,1 250,110" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="5,5">
-                <animate attributeName="stroke-dashoffset" from="500" to="0" dur="2s" begin="1.5s" fill="freeze" />
-              </path>
+          
+             
+          
             </svg>
           </div>
         </div>
