@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiFilter, FiX, FiChevronDown } from "react-icons/fi";
 import BlogCard from "../../components/BlogCard";
-// import blogCardsData from "../../data/blogs/cardsData";
 import PageHeader from "../../components/PageHeader";
 import axios from "axios";
 
@@ -14,10 +13,8 @@ const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [blogCardsData, setBlogCardsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
       const fetchBlogs = async () => {
@@ -39,17 +36,25 @@ const Blog = () => {
   
     }, [])
 
-  // Get unique categories from data
+  // Get unique categories from data (normalize for display)
   const categories = useMemo(() => {
-    const cats = blogCardsData?.map((b) => b.category || "General");
-    return ["All", ...Array.from(new Set(cats))];
-  }, []);
+    const cats = blogCardsData?.map((b) => (b.category || "General").trim());
+    // Remove duplicates, ignore case/whitespace
+    return [
+      "All",
+      ...Array.from(new Set(cats.map((c) => c.toLowerCase()))).map(
+        (c) => cats.find((cat) => cat.toLowerCase() === c) || c
+      ),
+    ];
+  }, [blogCardsData]);
 
-  // Filter blogs by search and category
+  // Filter blogs by search and category (normalize for filter)
   const filteredBlogs = useMemo(() => {
     return blogCardsData?.filter((blog) => {
+      const blogCategory = (blog.category || "General").trim().toLowerCase();
+      const selectedCat = selectedCategory.trim().toLowerCase();
       const matchesCategory =
-        selectedCategory === "All" || blog.category === selectedCategory;
+        selectedCat === "all" || blogCategory === selectedCat;
       const matchesSearch =
         blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (blog.content?.text && blog.content.text.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -105,7 +110,7 @@ const Blog = () => {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl p-2">
+              <div className="bg-black border-2 border-gray-700 rounded-2xl shadow-2xl p-2">
                 <div className="flex items-center gap-3">
                   {/* Search Input */}
                   <div className="flex-1 relative">
@@ -114,7 +119,7 @@ const Blog = () => {
                     </div>
                     <input
                       type="text"
-                      className="w-full pl-12 pr-4 py-4 bg-transparent border-none text-white placeholder-gray-400 focus:outline-none focus:ring-0 text-lg"
+                      className="w-full pl-12 pr-4 py-4 bg-transparent border-none text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600 text-lg rounded-xl"
                       placeholder="Search articles, topics, or authors..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -125,8 +130,9 @@ const Blog = () => {
                       <button
                         onClick={clearSearch}
                         className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        tabIndex={-1}
                       >
-                        <FiX className="h-5 w-5 text-gray-400 hover:text-white transition-colors" />
+                        <FiX className="h-5 w-5 text-red-400 hover:text-white transition-colors" />
                       </button>
                     )}
                   </div>
@@ -136,10 +142,10 @@ const Blog = () => {
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="appearance-none bg-white/10 backdrop-blur-sm border border-white/20 text-white px-6 py-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-300 cursor-pointer hover:bg-white/15"
+                      className="appearance-none bg-black border-2 border-gray-700 text-white px-6 py-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all duration-300 cursor-pointer hover:bg-red-900"
                     >
                       {categories.map((cat) => (
-                        <option key={cat} value={cat} className="bg-gray-900 text-white">
+                        <option key={cat} value={cat} className="bg-black text-white">
                           {cat}
                         </option>
                       ))}
@@ -162,12 +168,12 @@ const Blog = () => {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
+              <div className="bg-black border-2 border-gray-700 rounded-xl shadow-lg">
                 <div className="flex items-center px-4 py-3">
                   <FiSearch className="h-5 w-5 text-gray-400 mr-3" />
                   <input
                     type="text"
-                    className="flex-1 bg-transparent border-none text-white placeholder-gray-400 focus:outline-none focus:ring-0"
+                    className="flex-1 bg-transparent border-none text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-lg"
                     placeholder="Search articles..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -178,6 +184,7 @@ const Blog = () => {
                     <button
                       onClick={clearSearch}
                       className="ml-2"
+                      tabIndex={-1}
                     >
                       <FiX className="h-5 w-5 text-gray-400 hover:text-white transition-colors" />
                     </button>
@@ -192,7 +199,7 @@ const Blog = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-3 rounded-xl flex items-center justify-between hover:bg-white/15 transition-all duration-300"
+              className="w-full bg-black border-2 border-gray-700 text-white px-4 py-3 rounded-xl flex items-center justify-between hover:bg-red-900 transition-all duration-300"
             >
               <span className="flex items-center">
                 <FiFilter className="h-4 w-4 mr-2" />
@@ -209,7 +216,7 @@ const Blog = () => {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden"
+                  className="bg-black border-2 border-red-700 rounded-xl overflow-hidden"
                 >
                   <div className="p-2 space-y-1">
                     {categories.map((cat) => (
@@ -221,8 +228,8 @@ const Blog = () => {
                         }}
                         className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
                           selectedCategory === cat
-                            ? 'bg-red-600/20 text-red-400 border border-red-500/30'
-                            : 'text-white hover:bg-white/10'
+                            ? 'bg-red-700 text-white border border-red-500'
+                            : 'text-white hover:bg-red-900'
                         }`}
                       >
                         {cat}

@@ -65,7 +65,21 @@ body, * {
 
 .ql-editor a {
   color: #2563eb; /* blue-600 */
-  text-decoration: underline;
+  text-decoration: none;
+}
+.ql-editor code {
+  color: red; /* blue-600 */
+  display: block;
+}
+
+.ql-editor h1 {
+  font-size: 2rem;
+}
+.ql-editor h2 {
+  font-size: 1.5rem;
+}
+.ql-editor h1 {
+  font-size: 2rem;
 }
 
 .ql-editor blockquote {
