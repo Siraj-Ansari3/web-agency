@@ -49,7 +49,7 @@ const FeaturesSection = ({
 
   return (
 
-    <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+    <section className="relative py-16 md:py-20 bg-black overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -59,21 +59,21 @@ const FeaturesSection = ({
           className="text-center mb-12 md:mb-16"
         >
           {tagline && (
-            <span className="inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full mb-4">
+            <span className="inline-block px-3 py-1 text-sm font-semibold text-red-600 bg-red-100 rounded-full mb-4">
               {tagline}
             </span>
           )}
 
           {title && (
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               {title}
             </h2>
           )}
 
-          <div className="w-20 h-1 bg-blue-500 mx-auto mb-6"></div>
+          <div className="w-20 h-1 bg-red-500 mx-auto mb-6"></div>
 
           {description && (
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-200 max-w-2xl mx-auto">
               {description}
             </p>
           )}
@@ -94,19 +94,19 @@ const FeaturesSection = ({
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group bg-white p-6 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-blue-100"
+                className="group bg-black p-6 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-2 border border-red-100 hover:border-red-200"
               >
-                <div className="text-blue-500 group-hover:text-blue-600 flex justify-center mb-4 md:mb-6 transition-colors duration-300">
-                  <div className="p-3 md:p-4 bg-blue-50 rounded-full group-hover:bg-blue-100">
+                <div className="text-red-500 group-hover:text-red-600 flex justify-center mb-4 md:mb-6 transition-colors duration-300">
+                  <div className="p-3 md:p-4 bg-red-50 rounded-full group-hover:bg-red-100">
                     <Icon className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-semibold text-gray-800 text-center mb-3 md:mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-xl font-semibold text-white text-center mb-3 md:mb-4 group-hover:text-red-600 transition-colors duration-300">
                   {feature.title}
                 </h3>
 
-                <p className="text-gray-600 text-center text-sm md:text-base">
+                <p className="text-gray-200 text-center text-sm md:text-base">
                   {feature.description}
                 </p>
               </motion.div>

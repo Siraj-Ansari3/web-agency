@@ -113,7 +113,7 @@ const Home = () => {
 
   return (
 
-    <section className="relative  bg-white overflow-hidden lg:px-20 sm:px-10">
+    <section className="relative bg-black overflow-hidden lg:px-20 sm:px-10">
       <Hero data={homeData.hero} />
       <AboutSection data={homeData.about} />
       <FeaturesSection features={homeData.features} />
