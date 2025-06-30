@@ -94,7 +94,7 @@ const FeaturesSection = ({
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group bg-black p-6 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-2 border border-red-100 hover:border-red-200"
+                className="group bg-black p-6 md:p-8 rounded-xl hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 hover:-translate-y-2 border border-red-600 hover:border-red-400 relative"
               >
                 <div className="text-red-500 group-hover:text-red-600 flex justify-center mb-4 md:mb-6 transition-colors duration-300">
                   <div className="p-3 md:p-4 bg-red-50 rounded-full group-hover:bg-red-100">

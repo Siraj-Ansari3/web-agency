@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Services.css';
-import servicesData from '../../../data/services/servicesData';
 import { MdWeb, MdBusiness, MdPhotoLibrary, MdShoppingBasket, MdDashboard, MdBuild } from 'react-icons/md';
 
 const iconMap = {
@@ -22,15 +21,12 @@ export default function ServicesScroll({services}) {
     if (!container) return;
     const card = container.querySelector('.service-card');
     if (card) {
-      const containerWidth = container.offsetWidth;
-      const cardWidth = card.offsetWidth;
-      const gap = parseInt(getComputedStyle(container).gap) || 0;
-      container.scrollLeft = (cardWidth + gap) / 2 - containerWidth / 2 + cardWidth / 2;
+      container.scrollLeft = card.offsetLeft - (container.offsetWidth / 2) + (card.offsetWidth / 2);
     }
   }, []);
 
   return (
-    <section className="relative py-12 bg-black overflow-hidden services-section">
+    <section className="relative py-12  bg-black overflow-hidden services-section">
       <div className="services-container" >
         <div className="services-header">
           <h2 className="services-title">Professional Web Solutions</h2>
@@ -40,7 +36,7 @@ export default function ServicesScroll({services}) {
         </div>
         <div className="services-scroll-container">
 
-          <div className="services-list p-10" style={{padding: '0 1rem 4rem 1rem'}} ref={scrollRef}>
+          <div className="services-list p-10 flex flex-row" style={{padding: '3rem'}} ref={scrollRef}>
             {services.items.map((item, idx) => (
               <div key={item.id + '-' + idx} className="service-card">
                 <div className="service-icon">
