@@ -23,12 +23,12 @@ const StepsComponent = ({ steps, page = "undefined" }) => {
           {steps.steps?.map((step, i) => {
             return (
               <div className="relative flex w-full mb-8 md:mb-12 pl-4">
-                <div className="absolute -left-4 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white rounded-full border-4 border-red-600 z-10">
-                  <span className="text-red-600 font-bold text-xl md:text-2xl">{step.stepNumber}</span>
+                <div className="absolute -left-4 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black rounded-full border-4 border-red-600 z-10">
+                  <span className="text-white font-bold text-xl md:text-2xl">{step.stepNumber}</span>
                 </div>
-                <div className="ml-12 md:ml-16 p-4 md:p-6 rounded-lg shadow-md bg-white w-full">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">{step.title}</h3>
-                  <p className="text-gray-700 text-sm md:text-base mb-1 md:mb-2">
+                <div className="ml-12 md:ml-16 p-4 md:p-6 rounded-lg shadow-md w-full border border-white" style={{ background: 'linear-gradient(135deg, #18181b 70%, #991b1b 100%)' }}>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-white">{step.title}</h3>
+                  <p className="text-white text-sm md:text-base mb-1 md:mb-2">
                     {step.description}
                   </p>
                 </div>
