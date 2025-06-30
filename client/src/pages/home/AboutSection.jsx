@@ -23,11 +23,10 @@ const AboutSection = ({ data }) => {
             className="inline-flex items-center px-4 py-2 bg-black/80 backdrop-blur-md border border-red-200 rounded-full mb-6 shadow-sm hover:shadow-md transition-all"
           >
             <TbSparkles className="w-4 h-4 text-yellow-500 mr-2" />
-
-            <span className="text-sm font-medium text-blue-800">{data.tagline}</span>
+            <span className="text-sm font-medium text-red-600">{data.tagline}</span>
           </motion.div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">{data.title}</span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">{data.title}</span>
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-red-400 to-red-600 mx-auto mb-6 rounded-full"></div>
         </motion.div>
@@ -41,8 +40,8 @@ const AboutSection = ({ data }) => {
             viewport={{ once: true }}
             className="lg:w-2/3"
           >
-            <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-blue-100 shadow-lg hover:shadow-xl transition-all">
-              <p className="text-gray-700 text-lg leading-relaxed mb-6">
+            <div className="bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-100 shadow-lg hover:shadow-xl transition-all">
+              <p className="text-white text-lg leading-relaxed mb-6">
                {data.description}
                </p>
 
@@ -75,11 +74,11 @@ const AboutSection = ({ data }) => {
                   <FiLayers className="w-5 h-5" />
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold text-white bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
                   {data.whatWeBuild.title}
                 </h3>
               </div>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-200 mb-4">
                 {data.whatWeBuild.description}</p>
               <div className="grid grid-cols-2 gap-3">
                 {data.whatWeBuild.items.map((item, i) => (
@@ -104,17 +103,17 @@ const AboutSection = ({ data }) => {
                   <FiCheckCircle className="w-5 h-5" />
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold text-white bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
                   {data.ourApproach.title}
                 </h3>
               </div>
               <ul className="space-y-3 pl-2">
                 {data.ourApproach.items.map((item, i) => (
                   <li className="flex items-start">
-                  <div className="bg-blue-100 text-blue-600 p-1 rounded-full mr-3 mt-1">
+                  <div className="bg-red-100 text-red-600 p-1 rounded-full mr-3 mt-1">
                     <FiCheckCircle className="w-3 h-3" />
                   </div>
-                  <span className="text-gray-600">{item}</span>
+                  <span className="text-gray-200">{item}</span>
                   </li>
                 ))}
               </ul>
