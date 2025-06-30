@@ -2,27 +2,52 @@ import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiFilter, FiX, FiChevronDown } from "react-icons/fi";
 import BlogCard from "../../components/BlogCard";
-import blogCardsData from "../../data/blogs/cardsData";
+// import blogCardsData from "../../data/blogs/cardsData";
 import PageHeader from "../../components/PageHeader";
+import axios from "axios";
 
 const CARDS_PER_PAGE = 6;
 
 const Blog = () => {
+
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [blogCardsData, setBlogCardsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchBlogs = async () => {
+        try {
+          setIsLoading(true);
+          const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
+          setBlogCardsData(response.data.blogs)
+          
+          setIsLoading(false)
+          console.log(response.data.blogs)
+        } catch (error) {
+          console.log(error)
+          setIsLoading(false)
+  
+        }
+      }
+  
+      fetchBlogs();
+  
+    }, [])
 
   // Get unique categories from data
   const categories = useMemo(() => {
-    const cats = blogCardsData.map((b) => b.category || "General");
+    const cats = blogCardsData?.map((b) => b.category || "General");
     return ["All", ...Array.from(new Set(cats))];
   }, []);
 
   // Filter blogs by search and category
   const filteredBlogs = useMemo(() => {
-    return blogCardsData.filter((blog) => {
+    return blogCardsData?.filter((blog) => {
       const matchesCategory =
         selectedCategory === "All" || blog.category === selectedCategory;
       const matchesSearch =
@@ -42,11 +67,12 @@ const Blog = () => {
     setVisibleCount((prev) => prev + CARDS_PER_PAGE);
   };
 
-  const canLoadMore = visibleCount < filteredBlogs.length;
+  const canLoadMore = visibleCount < filteredBlogs?.length;
 
   const clearSearch = () => {
     setSearchQuery("");
   };
+
 
   return (
     <div className="bg-black">
@@ -62,7 +88,7 @@ const Blog = () => {
         variant="gradient"
         showStats={true}
         stats={[
-          { value: blogCardsData.length, label: "Articles" },
+          { value: blogCardsData?.length, label: "Articles" },
           { value: categories.length - 1, label: "Categories" },
           { value: "10K+", label: "Readers" },
           { value: "Weekly", label: "Updates" }
@@ -218,7 +244,7 @@ const Blog = () => {
           >
             <div className="inline-flex items-center gap-4 px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
               <span className="text-gray-300 text-sm">
-                Showing {Math.min(visibleCount, filteredBlogs.length)} of {filteredBlogs.length} articles
+                Showing {Math.min(visibleCount, filteredBlogs?.length)} of {filteredBlogs?.length} articles
               </span>
               {(searchQuery || selectedCategory !== "All") && (
                 <div className="flex items-center gap-2">
@@ -238,10 +264,10 @@ const Blog = () => {
       {/* Magazine/Masonry Blog Grid */}
       <section className="bg-black min-h-[60vh] pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-20">
-          {filteredBlogs.length > 0 ? (
+          {filteredBlogs?.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <BlogCard data={filteredBlogs.slice(0, visibleCount)} />
+                <BlogCard data={filteredBlogs?.slice(0, visibleCount)} />
               </div>
               {canLoadMore && (
                 <motion.div

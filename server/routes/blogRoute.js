@@ -14,7 +14,7 @@ const slugify = (text) =>
         .toString()
         .toLowerCase()
         .trim()
-        .replace(/[\s\W-]+/g, '-') // replace spaces & special chars with dash
+        .replace(/[\s\W-]+/g, '-') 
 
 
 
@@ -61,7 +61,7 @@ router.post('/add', authMiddleware, async (req, res) => {
 
 router.get("/get-all-blogs", async (req, res) => {
     try {
-        const allBlogs = await Blog.find({}).sort({ createdAt: -1 }); // optional: sort by newest first
+        const allBlogs = await Blog.find({}).sort({ createdAt: -1 }); 
 
         return res.status(200).json({
             message: "All blogs fetched successfully",
@@ -71,6 +71,24 @@ router.get("/get-all-blogs", async (req, res) => {
         console.error(err);
         return res.status(500).json({ error: "Internal server error" });
     }
+});
+
+
+router.get("/get-last-three-blogs", async (req, res) => {
+  try {
+    const lastThree = await Blog
+      .find({})
+      .sort({ publishedAt: -1 })  // newest first
+      .limit(3);                // only 3 docs
+
+    return res.status(200).json({
+      message: "Last three blogs fetched successfully",
+      blogs: lastThree,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 

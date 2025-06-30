@@ -21,7 +21,7 @@ const DashboardBlogs = () => {
         setIsLoading(false)
         console.log(response.data.blogs)
       } catch (error) {
-        console.log(err)
+        console.log(error)
         setIsLoading(false)
 
       }

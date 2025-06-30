@@ -16,20 +16,20 @@ const BlogCard = ({ data }) => {
     <>
       {reversedArray.map((item) => (
         <div
-          key={item.id}
+          key={item._id}
           className="relative flex flex-col sm:flex-row bg-black rounded-2xl shadow-lg border border-gray-900 overflow-hidden my-8 mx-auto max-w-2xl transition-all duration-300 group hover:shadow-red-900 hover:border-red-600 hover:-translate-y-1 hover:scale-[1.02]"
         >
           {/* Left: Blog image with date badge */}
           <div className="relative sm:w-2/5 w-full h-48 sm:h-auto flex-shrink-0 overflow-hidden">
             <img
-              src={item.imgSrc}
+              src={item.image}
               alt={item.title}
               className="w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105 group-hover:brightness-110 rounded-2xl sm:rounded-none sm:rounded-l-2xl"
             />
             {/* Date badge */}
             <div className="absolute bottom-3 left-3 bg-black/90 px-3 py-1 rounded-lg shadow text-center flex flex-col items-center border border-red-900 z-20">
-              <span className="text-red-400 text-base font-bold leading-none">{item.date}</span>
-              <span className="text-xs font-semibold uppercase tracking-widest text-red-400">{item.month}</span>
+              <span className="text-red-400 text-base font-bold leading-none">{item.publishedAt}</span>
+              {/* <span className="text-xs font-semibold uppercase tracking-widest text-red-400">{item.month}</span> */}
             </div>
           </div>
           {/* Right: Content */}
@@ -40,10 +40,10 @@ const BlogCard = ({ data }) => {
             </div>
             <div className="pr-12">
               <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">{item.title}</h3>
-              <p className="text-gray-300 text-sm  line-clamp-3 mb-4">{getFirstWords(item.disc)}</p>
+              <p className="text-gray-300 text-sm  line-clamp-3 mb-4">{getFirstWords(item.content.text)}</p>
             </div>
             <div className="flex justify-start mt-2">
-              <Link to={`/blog/${item.id}`} onClick={e => e.stopPropagation()}>
+              <Link to={`/blog/${item.blog_id}`} onClick={e => e.stopPropagation()}>
                 <button className="px-6 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-red-500 to-red-700 shadow transition-all duration-300 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 text-sm">
                   Read More
                 </button>
