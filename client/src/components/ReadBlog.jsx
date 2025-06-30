@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import cardsData from "../data/blogs/cardsData";
 import raza from '../assets/autherImg/raza.jpg'
+import 'quill/dist/quill.snow.css';
 import axios from "axios";
 
 const ReadBlog = ({ id }) => {
@@ -43,7 +44,7 @@ const ReadBlog = ({ id }) => {
             <div className="px-10 grid lg:grid-cols-3 gap-8">
               <div className="col-span-2 bg-amber-00 text-justify flex flex-col gap-5 ">
                 <h1 className=" text-2xl font-bold">{blog.title}</h1>
-                 <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
+                <div className="ql-editor" dangerouslySetInnerHTML={{ __html: blog.content.html }} />
               </div>
               <div className="border h-fit p-5 flex flex-col gap-5">
                 <div className="flex gap-3 items-center">

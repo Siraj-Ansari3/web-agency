@@ -27,7 +27,7 @@ const Blog = () => {
           setBlogCardsData(response.data.blogs)
           
           setIsLoading(false)
-          console.log(response.data.blogs)
+          console.log(`all blogs`,response.data.blogs)
         } catch (error) {
           console.log(error)
           setIsLoading(false)
@@ -52,11 +52,10 @@ const Blog = () => {
         selectedCategory === "All" || blog.category === selectedCategory;
       const matchesSearch =
         blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        blog.disc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (blog.auther && blog.auther.toLowerCase().includes(searchQuery.toLowerCase()));
+        (blog.content?.text && blog.content.text.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, blogCardsData]);
 
   // Reset visibleCount when filters/search change
   useEffect(() => {
@@ -267,7 +266,9 @@ const Blog = () => {
           {filteredBlogs?.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <BlogCard data={filteredBlogs?.slice(0, visibleCount)} />
+                {filteredBlogs?.slice(0, visibleCount).map((blog) => (
+                  <BlogCard key={blog.blog_id} data={blog} />
+                ))}
               </div>
               {canLoadMore && (
                 <motion.div

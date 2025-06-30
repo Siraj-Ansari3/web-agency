@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import 'react-quill-new/dist/quill.snow.css'; 
+
 
 /* Hide scrollbar while maintaining scroll functionality */
 .no-scrollbar {
@@ -59,4 +61,31 @@ body{
 
 body, * {
   cursor: none !important;
+}
+
+.ql-editor a {
+  color: #2563eb; /* blue-600 */
+  text-decoration: underline;
+}
+
+.ql-editor blockquote {
+  border-left: 4px solid #d1d5db; /* gray-300 */
+  margin: 1rem 0;
+  padding-left: 1rem;
+  color: #6b7280; /* gray-600 */
+  font-style: italic;
+}
+
+.ql-editor code {
+  background-color: #f3f4f6; /* gray-100 */
+  padding: 2px 4px;
+  font-family: monospace;
+  border-radius: 4px;
+}
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Optional: for rounded corners */
+  display: block;
+  margin: 1rem auto; /* Center image with spacing */
 }
