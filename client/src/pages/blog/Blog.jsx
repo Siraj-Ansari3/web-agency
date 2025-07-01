@@ -51,16 +51,18 @@ const Blog = () => {
 
   // Filter blogs by search and category (normalize for filter)
   const filteredBlogs = useMemo(() => {
-    return blogCardsData?.filter((blog) => {
-      const blogCategory = (blog.category || "General").trim().toLowerCase();
-      const selectedCat = selectedCategory.trim().toLowerCase();
-      const matchesCategory =
-        selectedCat === "all" || blogCategory === selectedCat;
-      const matchesSearch =
-        blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (blog.content?.text && blog.content.text.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
-    });
+    return blogCardsData
+      ?.filter((blog) => {
+        const blogCategory = (blog.category || "General").trim().toLowerCase();
+        const selectedCat = selectedCategory.trim().toLowerCase();
+        const matchesCategory =
+          selectedCat === "all" || blogCategory === selectedCat;
+        const matchesSearch =
+          blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (blog.content?.text && blog.content.text.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesCategory && matchesSearch;
+      })
+      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   }, [searchQuery, selectedCategory, blogCardsData]);
 
   // Reset visibleCount when filters/search change
