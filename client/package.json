@@ -20,6 +20,7 @@
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "react": "^19.1.0",
+    "react-chartjs-2": "^5.3.0",
     "react-cookie": "^8.0.1",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",
