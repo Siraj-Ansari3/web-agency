@@ -63,7 +63,10 @@ router.post('/add', authMiddleware, async (req, res) => {
 
 router.get("/get-all-blogs", async (req, res) => {
   try {
-    const allBlogs = await Blog.find({}).sort({ createdAt: -1 });
+    const allBlogs = await Blog.find({})
+      .populate('author', 'email firstName lastName image')
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({
       message: "All blogs fetched successfully",
@@ -103,7 +106,7 @@ router.get("/get-blog", async (req, res) => {
     const blog = await Blog.findOne({ blog_id: id })
       .populate('author', 'email firstName lastName image') // Add author information
       .lean();;
-      
+
     if (!blog) return res.status(404).json({ error: "Blog not found" });
 
     return res.status(200).json({ message: "blog successfully fetched", blog });

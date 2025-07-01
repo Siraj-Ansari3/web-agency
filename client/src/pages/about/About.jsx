@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import StepsComponent from '../home/StepsComponent';
-import CTA from "../../components/CallToAction"
 import {
   FiLayers,
   FiUsers,
@@ -23,10 +22,8 @@ import {
   FiTrendingUp
 } from 'react-icons/fi';
 import { TbSparkles } from 'react-icons/tb';
-import teamMembers from '../../data/about/team';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
-import majidImg from "../../assets/majid.jpg"
 import defaultImg from "../../assets/default-member.png" 
 
 const iconMap = {
