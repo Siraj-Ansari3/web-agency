@@ -43,7 +43,7 @@ const DashboardWriteBlog = () => {
         content: blog.content,
         category: blog.category,
         status: blog.status,
-        image: blog.imageUrl, // URL string
+        image: blog.image, 
         tags: blog.tags
       });
     } catch (error) {

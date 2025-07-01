@@ -72,11 +72,11 @@ const Hero = ({ data }) => {
               transition={{ duration: 0.8 }}
               className="mb-8"
             >
-           
-               <div className="inline-flex items-center px-4 py-2 bg-black/80 backdrop-blur-md border border-red-200 rounded-full mb-6 shadow-sm">
-                           <TbSparkles className="w-4 h-4 text-yellow-500 mr-2" />
-     <span className="text-high font-medium text-red-200">SOFTERA</span>
-              </div>  
+
+              <div className="inline-flex items-center px-4 py-2 bg-black/80 backdrop-blur-md border border-red-200 rounded-full mb-6 shadow-sm">
+                <TbSparkles className="w-4 h-4 text-yellow-500 mr-2" />
+                <span className="text-high font-medium text-red-200">SOFTERA</span>
+              </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">{data.title}</span>
               </h1>
@@ -152,35 +152,67 @@ const Hero = ({ data }) => {
                 <div className="relative z-10 h-full flex flex-col p-8">
                   <div className="flex items-center mb-6">
                     <div
-                      className="p-4 rounded-xl bg-black/80 backdrop-blur-md border border-red-200 shadow-sm"
+                      className="p-4 rounded-xl bg-black/80 backdrop-blur-md border border-red-200 shadow-sm transition-all duration-500 group-hover:scale-105 group-hover:border-red-400"
                       style={{ color: currentService.color }}
                     >
-                      <currentService.icon className="w-6 h-6" />
+                      <currentService.icon className="w-6 h-6 transition-transform duration-500 group-hover:scale-110" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-2xl font-bold text-white">{currentService.title}</h3>
-                      <p className="text-sm text-gray-400">{currentService.desc}</p>
+                      <h3 className="text-2xl font-bold text-white transition-all duration-500 group-hover:text-red-300">
+                        {currentService.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 transition-all duration-500 group-hover:text-red-200">
+                        {currentService.desc}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex-1 bg-gradient-to-br from-black to-red-900/50 rounded-xl p-6 border border-red-200 shadow-inner">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">FEATURES</h4>
+                  {/* Glass effect container with transitions */}
+                  <motion.div
+                    className="flex-1 rounded-xl p-6 border border-red-200/30 shadow-inner"
+                    style={{
+                      background: 'linear-gradient(145deg, rgba(30,30,30,0.5), rgba(60,0,0,0.3))',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      boxShadow: 'inset 0 0 20px rgba(255,255,255,0.05), inset 0 0 10px rgba(255,50,50,0.2), 0 0 20px rgba(0,0,0,0.3)'
+                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    whileHover={{
+                      boxShadow: 'inset 0 0 25px rgba(255,255,255,0.1), inset 0 0 15px rgba(255,50,50,0.3), 0 0 30px rgba(0,0,0,0.5)',
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 transition-all duration-500 group-hover:text-red-300">
+                      FEATURES
+                    </h4>
                     <ul className="space-y-3">
                       {currentService.features.map((feature, i) => (
                         <motion.li
                           key={i}
-                          whileHover={{ x: 5 }}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 + 0.5, duration: 0.5 }}
+                          whileHover={{
+                            x: 5,
+                            transition: { duration: 0.2 }
+                          }}
                           className="flex items-start"
                         >
-                          <div
+                          <motion.div
                             className="flex-shrink-0 mt-1 mr-3 w-2 h-2 rounded-full"
                             style={{ backgroundColor: currentService.color }}
-                          ></div>
-                          <span className="text-gray-200">{feature}</span>
+                            whileHover={{ scale: 1.5 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                          ></motion.div>
+                          <span className="text-gray-200 transition-all duration-300 group-hover:text-white">
+                            {feature}
+                          </span>
                         </motion.li>
                       ))}
                     </ul>
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             </motion.div>
