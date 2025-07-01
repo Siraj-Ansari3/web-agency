@@ -10,8 +10,12 @@
   flex-wrap: wrap;
   gap: 0.7rem 1.1rem;
   align-items: center;
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  max-width: 100vw;
+  box-shadow: 0 4px 16px 0 rgba(30, 64, 175, 0.13);
 }
 .ql-toolbar .ql-formats {
   margin-right: 1.2rem;
@@ -166,4 +170,9 @@
     margin-right: 0.5rem;
     padding-right: 0.5rem;
   }
+}
+
+/* Add padding to the editor area to prevent overlap */
+.ql-container {
+  margin-top: 3.5rem;
 }

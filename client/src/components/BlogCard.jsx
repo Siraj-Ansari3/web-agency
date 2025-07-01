@@ -43,8 +43,8 @@ const BlogCard = ({ data: item }) => {
           <img src={item?.author?.image} alt={item?.author?.firstName} className="object-cover text-white bg-transparent w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
         </div>
         <div className="pr-0 sm:pr-12">
-          <h3 className="text-lg sm:text-2xl font-extrabold text-white mb-2 sm:mb-3 line-clamp-2 hover:text-red-400 transition-colors duration-200 cursor-pointer" onClick={e => { e.stopPropagation(); navigate(`/blog/${item.blog_id}`); }}>{item.title}</h3>
-          <p className="text-gray-300 text-sm sm:text-base line-clamp-3 mb-4 sm:mb-6">{getFirstWords(item.content?.text, 25)}</p>
+          <h3 className="text-sm sm:text-lg  font-bold text-white mb-2 sm:mb-3 line-clamp-2 hover:text-red-400 transition-colors duration-200 cursor-pointer" onClick={e => { e.stopPropagation(); navigate(`/blog/${item.blog_id}`); }}>{item.title}</h3>
+          <p className="text-gray-300 text-sm sm:text-sm line-clamp-3 mb-4 sm:mb-6">{getFirstWords(item.content?.text, 25)}</p>
         </div>
         <div className="flex justify-start mt-2">
           <button

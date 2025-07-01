@@ -64,7 +64,7 @@ const ReadBlog = ({ id }) => {
   return (
     <div className="bg-black min-h-screen w-full">
       {/* Header */}
-      <header className="bg-black text-white py-4 px-4 md:px-8 lg:px-12 sticky top-0 z-50 shadow-md">
+      <header className="bg-black text-white py-6 px-4 md:px-8 lg:px-12 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <button
             onClick={() => navigate('/blog')}
@@ -119,10 +119,12 @@ const ReadBlog = ({ id }) => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-10 md:py-16">
+      <div className="max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-6 sm:py-10 md:py-16">
         {/* Blog Content */}
-        <article className="ql-editor text-white prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-200 prose-a:text-red-400 prose-a:font-medium prose-blockquote:border-l-red-600 prose-blockquote:bg-black/60 prose-blockquote:text-gray-200 prose-img:rounded-lg prose-img:shadow-md prose-pre:bg-black prose-pre:text-gray-200 prose-pre:rounded-lg prose-pre:p-4">
-          <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
+        <article className="ql-editor blog-content ">
+          <div className="break-words w-full overflow-x-auto">
+            <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
+          </div>
         </article>
         {/* Tags */}
         {blog.tags && blog.tags.length > 0 && (
