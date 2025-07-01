@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import StepsComponent from '../home/StepsComponent';
 import {
   FiLayers,
@@ -19,12 +19,13 @@ import {
   FiRefreshCw,
   FiSmile,
   FiThumbsUp,
-  FiTrendingUp
+  FiTrendingUp,
+  FiX
 } from 'react-icons/fi';
 import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
-import defaultImg from "../../assets/default-member.png" 
+import defaultImg from "../../assets/default-member.png";
 
 const iconMap = {
   FiLayers,
@@ -50,66 +51,59 @@ const iconMap = {
 const About = () => {
   const initialState = {
     header: {},
-    storyMission: {
-    },
-    coreValues: [
-
-    ],
-    teamMembers: [
-
-    ],
-    whyChooseUs: [
-
-    ],
-    cta: {
-
-    }
+    storyMission: {},
+    coreValues: [],
+    teamMembers: [],
+    whyChooseUs: [],
+    cta: {}
   };
-  const [pageData, setPageData] = useState(initialState)
+  
+  const [pageData, setPageData] = useState(initialState);
   const [steps, setSteps] = useState({
-  title: "",
-  subtitle: "",
-  steps: []        
-});
+    title: "",
+    subtitle: "",
+    steps: []        
+  });
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about")
+        const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
         setPageData(aboutData.data);
-        console.log(aboutData.data)
-
+      } catch (err) {
+        console.log(err);
       }
-      catch (err) {
-        console.log(err)
-        return "aboutPage data not found"
-      }
-    }
+    };
 
-    fetchAboutData()
-
-
+    fetchAboutData();
   }, []);
 
   useEffect(() => {
     const fetchStepsData = async () => {
       try {
-        const stepsData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/steps")
+        const stepsData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/steps");
         setSteps(stepsData.data.data);
-        console.log(stepsData.data.data)
-
-
+      } catch (err) {
+        console.log(err);
       }
-      catch (err) {
-        console.log(err)
-        return "aboutPage data not found"
-      }
-    }
+    };
 
-    fetchStepsData()
-
-
+    fetchStepsData();
   }, []);
+
+  const openMemberModal = (member) => {
+    setSelectedMember(member);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+  };
+
+  const closeMemberModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+  };
+
   return (
     <section className="bg-black min-h-screen pt-8 pb-16">
       {/* About Header */}
@@ -148,9 +142,6 @@ const About = () => {
           <h2 className="text-2xl font-bold text-red-400 mb-4">Our Story</h2>
           <p className="text-gray-300 text-lg leading-relaxed mb-4">
             {pageData.storyMission.story}
-          </p>
-          <p className="text-gray-700 text-lg leading-relaxed">
-
           </p>
         </motion.div>
 
@@ -232,76 +223,155 @@ const About = () => {
           </p>
         </motion.div>
 
-        <div className="flex justify-center items-center min-h-screen px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pageData.teamMembers.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative bg-black rounded-xl border border-red-200 shadow-md overflow-hidden transition-all hover:shadow-lg w-full max-w-xs mx-auto"
-              >
-                <div className="relative overflow-hidden h-80">
-                  <img
-                   src={member.img || defaultImg}
-                    alt={member.name}
-                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white/70 to-transparent" />
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {pageData.teamMembers.map((member, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative bg-black rounded-xl border border-red-200 shadow-md overflow-hidden transition-all hover:shadow-lg w-full max-w-xs mx-auto cursor-pointer"
+              onClick={() => openMemberModal(member)}
+            >
+              <div className="relative overflow-hidden h-80">
+                <img
+                  src={member.img || defaultImg}
+                  alt={member.name}
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/70 to-transparent" />
+              </div>
 
-                <div className="p-5">
-                  <h4 className="text-lg font-bold text-white mb-1">{member.name}</h4>
-                  <span className="inline-block px-2 py-1 text-xs font-medium text-red-500 bg-red-50 rounded-full mb-3">
-                    {member.role}
-                  </span>
-                  <p className="text-gray-300 text-sm mb-4">{member.bio}</p>
+              <div className="p-5">
+                <h4 className="text-lg font-bold text-white mb-1">{member.name}</h4>
+                <span className="inline-block px-2 py-1 text-xs font-medium text-red-500 bg-red-50 rounded-full mb-3">
+                  {member.role}
+                </span>
+                <p className="text-gray-300 text-sm mb-4 line-clamp-2">{member.bio}</p>
 
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {member.skills.map((skill, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs px-2 py-1 bg-black text-red-200 border border-red-200 rounded-full"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex space-x-3">
-                    {Object.entries(member.social).map(([platform, url]) => (
-                      <a
-                        key={platform}
-                        href={url}
-                        className="text-gray-400 hover:text-red-500 transition-colors"
-                        aria-label={`${member.name}'s ${platform}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {member.skills?.slice(0, 3).map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs px-2 py-1 bg-black text-red-200 border border-red-200 rounded-full"
                       >
-                        {platform === 'twitter' && <FiTwitter className="w-4 h-4" />}
-                        {platform === 'github' && <FiGithub className="w-4 h-4" />}
-                        {platform === 'linkedin' && <FiLinkedin className="w-4 h-4" />}
-                        {platform === 'dribbble' && <FiDribbble className="w-4 h-4" />}
-                        {platform === 'behance' && <FiFigma className="w-4 h-4" />}
-                        {platform === 'codepen' && <FiCode className="w-4 h-4" />}
-                      </a>
+                        {skill}
+                      </span>
                     ))}
+                    {member.skills?.length > 3 && (
+                      <span className="text-xs px-2 py-1 bg-black text-red-200 border border-red-200 rounded-full">
+                        +{member.skills.length - 3}
+                      </span>
+                    )}
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-
       </div>
 
+      {/* Team Member Modal */}
+      <AnimatePresence>
+        {isModalOpen && selectedMember && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            onClick={closeMemberModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25 }}
+              className="relative bg-black rounded-xl border border-red-200 shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={closeMemberModal}
+                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors z-10"
+                aria-label="Close modal"
+              >
+                <FiX className="w-6 h-6" />
+              </button>
+
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="relative h-full min-h-[400px]">
+                  <img
+                    src={selectedMember.img || defaultImg}
+                    alt={selectedMember.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                </div>
+
+                <div className="p-8">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-white">{selectedMember.name}</h3>
+                    <span className="inline-block px-3 py-1 text-sm font-medium text-red-500 bg-red-50 rounded-full mt-2">
+                      {selectedMember.role}
+                    </span>
+                  </div>
+
+                  <div className="mb-6">
+                    <h4 className="text-lg font-semibold text-red-400 mb-3">About</h4>
+                    <p className="text-gray-300">{selectedMember.bio}</p>
+                  </div>
+
+                  {selectedMember.skills?.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-lg font-semibold text-red-400 mb-3">Skills</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedMember.skills.map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs px-3 py-1 bg-black text-red-200 border border-red-200 rounded-full"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedMember.social && Object.keys(selectedMember.social).length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-semibold text-red-400 mb-3">Connect</h4>
+                      <div className="flex space-x-4">
+                        {Object.entries(selectedMember.social).map(([platform, url]) => (
+                          <a
+                            key={platform}
+                            href={url}
+                            className="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-red-500 rounded-full transition-colors"
+                            aria-label={`${selectedMember.name}'s ${platform}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {platform === 'twitter' && <FiTwitter className="w-5 h-5" />}
+                            {platform === 'github' && <FiGithub className="w-5 h-5" />}
+                            {platform === 'linkedin' && <FiLinkedin className="w-5 h-5" />}
+                            {platform === 'dribbble' && <FiDribbble className="w-5 h-5" />}
+                            {platform === 'behance' && <FiFigma className="w-5 h-5" />}
+                            {platform === 'codepen' && <FiCode className="w-5 h-5" />}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Development Process Section */}
-     <div className="max-w-6xl mx-auto px-4 mb-20">
+      <div className="max-w-6xl mx-auto px-4 mb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -333,10 +403,8 @@ const About = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {pageData.whyChooseUs.map((item, index) => {
-
               let Icon = iconMap[item.icon]
               return (
-
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.03 }}
@@ -353,7 +421,6 @@ const About = () => {
       </div>
 
       <CallToAction data={pageData.cta} />
-
     </section>
   );
 };
