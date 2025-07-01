@@ -15,6 +15,7 @@ const Blog = () => {
   const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [blogCardsData, setBlogCardsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
       const fetchBlogs = async () => {
