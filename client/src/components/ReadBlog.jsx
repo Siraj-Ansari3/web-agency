@@ -22,6 +22,7 @@ const ReadBlog = ({ id }) => {
         setIsLoading(true);
         const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blog/?id=${id}`);
         setBlog(response.data.blog);
+        console.log(response.data.blog);
         
         // Fetch related blogs based on category
         // const relatedResponse = await axios.get(

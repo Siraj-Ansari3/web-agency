@@ -39,8 +39,8 @@ const BlogCard = ({ data: item }) => {
       {/* Right: Content */}
       <div className="relative flex flex-col justify-between p-4 sm:p-8 w-full sm:w-3/5 bg-black">
         {/* Author avatar top-right */}
-        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-black shadow bg-gradient-to-tr from-red-900/30 to-black/80 flex items-center justify-center z-20">
-          <img src={item?.author?.image} alt={item?.author?.firstName} className="object-cover w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white border-2 border-black shadow bg-gradient-to-tr from-red-900/30 to-black/80 flex items-center justify-center z-20">
+          <img src={item?.author?.image} alt={item?.author?.firstName} className="object-cover text-white bg-transparent w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
         </div>
         <div className="pr-0 sm:pr-12">
           <h3 className="text-lg sm:text-2xl font-extrabold text-white mb-2 sm:mb-3 line-clamp-2 hover:text-red-400 transition-colors duration-200 cursor-pointer" onClick={e => { e.stopPropagation(); navigate(`/blog/${item.blog_id}`); }}>{item.title}</h3>
@@ -48,10 +48,10 @@ const BlogCard = ({ data: item }) => {
         </div>
         <div className="flex justify-start mt-2">
           <button
-            className="px-5 py-2 sm:px-7 sm:py-3 rounded-full font-semibold text-white bg-gradient-to-r from-red-500 to-red-700 shadow transition-all duration-300 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 text-sm sm:text-base"
+            className="px-3 py-1 sm:px-5 sm:py-2 rounded-full font-semibold text-white bg-gradient-to-r from-red-500 to-red-700 shadow transition-all duration-300 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 text-xs sm:text-sm"
             onClick={e => { e.stopPropagation(); navigate(`/blog/${item.blog_id}`); }}
           >
-            Read More
+            Read More 
           </button>
         </div>
       </div>
