@@ -9,6 +9,7 @@ import {
   HiUserGroup, 
   HiCog,
   HiTemplate,
+  HiPhotograph,
 } from 'react-icons/hi';
 
 const DashboardLayout = () => {
@@ -20,7 +21,8 @@ const DashboardLayout = () => {
     { path: '/admin/dashboard/blogs', label: 'Blogs', icon: <HiBookOpen size={20} /> },
     { path: '/admin/dashboard/admins', label: 'Admins', icon: <HiUserGroup size={20} /> },
     { path: '/admin/dashboard/settings', label: 'Settings', icon: <HiCog size={20} /> },
-    { path: '/admin/dashboard/page-builder', label: 'Page Builder', icon: <HiTemplate size={20} /> }
+    { path: '/admin/dashboard/page-builder', label: 'Page Builder', icon: <HiTemplate size={20} /> },
+    { path: '/admin/dashboard/portfolios', label: 'Portfolio', icon: <HiPhotograph size={20} /> }
   ];
 
   return (

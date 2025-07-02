@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiChevronLeft, FiChevronRight, FiPlus } from "react-icons/fi";
-import portfolioData from "../../data/portfolio/portfolioData";
+// import projects from "../../data/portfolio/portfolioData";
 import PortfolioCard from "./portfolioCard";
 import PageHeader from "../../components/PageHeader";
+import axios from "axios";
 
 const Portfolio = () => {
   const [selected, setSelected] = useState("All");
@@ -14,14 +15,26 @@ const Portfolio = () => {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [itemsToShow, setItemsToShow] = useState(6); // Show first 2 rows (6 items) initially
   const [isLoading, setIsLoading] = useState(false);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchAllProjects = async () => {
+      const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/project");
+      console.log(response.data.projects);
+      setProjects(response.data.projects)
+
+    }
+
+    fetchAllProjects();
+  }, [])
 
   // Dynamically get categories from data
-  const allCategories = ["All", ...new Set(portfolioData.map(item => item.category))];
-  
+  const allCategories = ["All", ...new Set(projects.map(item => item.category))];
+
   // Filter projects
-  const filtered = selected === "All" 
-    ? portfolioData 
-    : portfolioData.filter((item) => item.category === selected);
+  const filtered = selected === "All"
+    ? projects
+    : projects.filter((item) => item.category === selected);
 
   // Get projects to display based on pagination
   const displayedProjects = filtered.slice(0, itemsToShow);
@@ -90,7 +103,7 @@ const Portfolio = () => {
         variant="gradient"
         showStats={true}
         stats={[
-          { value: portfolioData.length, label: "Total Projects" },
+          { value: projects.length, label: "Total Projects" },
           { value: allCategories.length - 1, label: "Categories" },
           { value: "100%", label: "Client Satisfaction" },
           { value: "24/7", label: "Support" }
@@ -116,7 +129,7 @@ const Portfolio = () => {
                   <FiChevronDown className="text-white" />
                 </motion.div>
               </button>
-              
+
               <AnimatePresence>
                 {showMobileMenu && (
                   <motion.div
@@ -133,9 +146,8 @@ const Portfolio = () => {
                           setSelected(cat);
                           setShowMobileMenu(false);
                         }}
-                        className={`w-full text-left px-6 py-3 hover:bg-white/10 transition-colors ${
-                          selected === cat ? 'bg-red-600/20 text-red-400' : 'text-white'
-                        }`}
+                        className={`w-full text-left px-6 py-3 hover:bg-white/10 transition-colors ${selected === cat ? 'bg-red-600/20 text-red-400' : 'text-white'
+                          }`}
                       >
                         {cat}
                       </button>
@@ -175,7 +187,7 @@ const Portfolio = () => {
             )}
 
             {/* Scrollable Container */}
-            <div 
+            <div
               id="category-scroll"
               className="flex gap-3 overflow-x-auto scrollbar-hide py-2 px-4 -mx-4 scroll-smooth"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -231,7 +243,7 @@ const Portfolio = () => {
                 </motion.button>
               )}
             </div>
-            
+
             {/* Dropdown for remaining categories on tablet */}
             <AnimatePresence>
               {showMobileMenu && (
@@ -250,9 +262,8 @@ const Portfolio = () => {
                           setSelected(cat);
                           setShowMobileMenu(false);
                         }}
-                        className={`px-3 py-2 rounded-lg text-sm hover:bg-white/10 transition-colors ${
-                          selected === cat ? 'bg-red-600/20 text-red-400' : 'text-white'
-                        }`}
+                        className={`px-3 py-2 rounded-lg text-sm hover:bg-white/10 transition-colors ${selected === cat ? 'bg-red-600/20 text-red-400' : 'text-white'
+                          }`}
                       >
                         {cat}
                       </button>
@@ -273,14 +284,14 @@ const Portfolio = () => {
         </div>
 
         {/* Grid of Cards - Max 3 per row */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           <AnimatePresence mode="wait">
             {displayedProjects.map((item) => (
               <motion.div
-                key={item.id}
+                key={item.project_id}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -290,7 +301,7 @@ const Portfolio = () => {
                 <PortfolioCard
                   longSS={item.longSS}
                   category={item.category}
-                  id={item.id}
+                  id={item.project_id}
                   title={item.title}
                   description={item.description}
                 />

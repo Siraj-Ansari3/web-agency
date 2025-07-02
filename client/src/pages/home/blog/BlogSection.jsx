@@ -42,7 +42,6 @@ const BlogSection = ({ blogMeta }) => {
     fetchAllBlogs();
   }, [])
 
-  // const lastThreeBlogs=blogCardsData.filter((blog)=>(blog.id>=blogCardsData.length-3))
   return (
     <section className="relative py-10 sm:py-16 md:py-20 bg-black overflow-hidden">
       {/* Heading */}

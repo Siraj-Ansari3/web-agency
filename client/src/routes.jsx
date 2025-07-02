@@ -21,6 +21,9 @@ import ServiceDetail from "./pages/services/ServiceDetail";
 import PortfolioDetail from "./pages/portfolio/PortfolioDetail";
 import DashboardAdmins from "./pages/adminDashboard/DashboardAdmins";
 import EditAdmin from "./pages/adminDashboard/EditAdmin";
+import DashboardPortfolio from "./pages/adminDashboard/DashboardPortfolio";
+import DashboardAddPortfolio from "./pages/adminDashboard/DashboardAddPortfolio";
+import DashboardEditPortfolio from "./pages/adminDashboard/DashboardEditPortfolio";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -28,7 +31,7 @@ const routes = [
   { path: "/services", element: <Services /> },
   { path: "/services/:id", element: <ServiceDetail /> },
   { path: "/portfolio", element: <Portfolio /> },
-  { path: "/portfolio/:id", element: <PortfolioDetail /> },
+  { path: "/portfolio/:project_id", element: <PortfolioDetail /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:id", element: <BlogContent /> },
   { path: "/contact", element: <Contact /> },
@@ -43,6 +46,9 @@ const routes = [
       { path: "blogs", element: <DashboardBlogs /> },
       { path: "write-blog", element: <DashboardWriteBlog /> },
       { path: "edit-blog/:id", element: <DashboardWriteBlog /> },
+      { path: "portfolios", element: <DashboardPortfolio /> },
+      { path: "add-portfolio", element: <DashboardAddPortfolio /> },
+      { path: "edit-portfolio/:project_id", element: <DashboardEditPortfolio /> },
       { path: "settings", element: <DashboardSettings /> },
       { path: "admins", element: <DashboardAdmins /> },
       { path: "admins/edit/:email", element: <EditAdmin /> },
@@ -50,7 +56,7 @@ const routes = [
       { path: "page-builder/home", element: <EditHomePage /> },
       { path: "page-builder/about", element: <EditAboutPage /> },
       { path: "page-builder/services", element: <EditServicesPage /> },
-      
+
     ]
   }
 ];

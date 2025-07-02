@@ -4,8 +4,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { nanoid } from "nanoid";
 import adminRoute from "./routes/adminRoute.js";
-import pageEdit from "./routes/pageEdit.js"
-import blogRoute from "./routes/blogRoute.js"
+import pageEdit from "./routes/pageEdit.js";
+import blogRoute from "./routes/blogRoute.js";
+import projectRoute from "./routes/projectRoute.js";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 import aws from 'aws-sdk';
@@ -47,7 +48,6 @@ const generateUploadUrl = async () => {
   })
 }
 
-
 // Upload ImageURL Route
 app.get('/get-upload-url', async (req, res) => {
   try {
@@ -60,11 +60,6 @@ app.get('/get-upload-url', async (req, res) => {
     return res.status(500).json({ error: "internal server error" })
   }
 
-  // generateUploadUrl().then(url => res.status(200).json({uploadURL: url}))
-  // .catch(err => {
-  //   console.log(err)
-  //   return res.status(500).json({error: err})
-  // })
 })
 
 
@@ -72,6 +67,7 @@ app.get('/get-upload-url', async (req, res) => {
 app.use("/admin", adminRoute);
 app.use("/admin/edit-page", pageEdit)
 app.use("/blog", blogRoute)
+app.use("/project", projectRoute)
 
 
 mongoose.connect(process.env.MONGO_URI)

@@ -2,7 +2,11 @@
 import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
-    blog_id: String,
+    blog_id: {
+        type: String,
+        unique: true,
+        required: true
+    },
     title: String,
     content: {
         html: String,
@@ -16,11 +20,11 @@ const blogSchema = new mongoose.Schema({
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     image: String,
     tags: [String],
-      author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin',
-    required: true
-  },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        required: true
+    },
 }, {
     timestamps: {
         createdAt: 'publishedAt'

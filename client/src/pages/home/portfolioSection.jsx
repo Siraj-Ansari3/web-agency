@@ -1,13 +1,23 @@
-import React from "react";
-import portfolioData from "../../data/portfolio/portfolioData";
+import React, { useEffect, useState } from "react";
 import PortfolioCard from "../portfolio/portfolioCard";
+import axios from "axios";
 
 const PortfolioSection = ({ portfolioMeta }) => {
-  const lastThreeBlogs = portfolioData.filter(
-    (proj) => proj.id >= portfolioData.length - 2
-  );
-  console.log(lastThreeBlogs);
-  
+  const [lastThreeProjects, setLastThreeProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchLastThreeProjects = async () => {
+      try {
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/project/recent");
+        setLastThreeProjects(response.data.projects);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchLastThreeProjects();
+  }, [])
+
   return (
     <section className="relative py-20 bg-black overflow-hidden">
       {/* Heading */}
@@ -21,13 +31,13 @@ const PortfolioSection = ({ portfolioMeta }) => {
       {/* Cards Container */}
       <div className="relative bg-green-00 z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {/* <BlogCard data={lastThreeBlogs} /> */}
-        {lastThreeBlogs.map((item) => {
+        {lastThreeProjects?.map((item) => {
           return (
             <PortfolioCard
-              key={item.id}
+              key={item.project_id}
               longSS={item.longSS}
               category={item.category}
-              id={item.id}
+              id={item.project_id}
               title={item.title}
               description={item.description}
             />

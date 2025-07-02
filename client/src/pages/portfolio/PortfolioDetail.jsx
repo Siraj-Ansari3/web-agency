@@ -17,6 +17,7 @@ import {
 import { FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 import { SiTailwindcss, SiMongodb, SiTypescript, SiJavascript } from "react-icons/si";
 import portfolioData from "../../data/portfolio/portfolioData";
+import axios from "axios";
 
 const techIcons = {
   React: <FaReact className="text-blue-500" />,
@@ -28,18 +29,36 @@ const techIcons = {
 };
 
 const PortfolioDetail = () => {
-  const { id } = useParams();
+  const { project_id } = useParams();
+  console.log(project_id)
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const project = portfolioData.find((item) => item.id === parseInt(id));
+  const [project, setProject] = useState( {
+    })
+
+
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/project/get-project/${project_id}`)
+        console.log(response.data.project)
+        setProject(response.data.project);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (project_id) fetchProject();
+  }, [project_id])
 
   // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying || !project?.screenshots) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => 
+      setCurrentSlide((prev) =>
         prev === project.screenshots.length - 1 ? 0 : prev + 1
       );
     }, 4000);
@@ -52,13 +71,13 @@ const PortfolioDetail = () => {
   const handleCarouselLeave = () => setIsAutoPlaying(true);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => 
+    setCurrentSlide((prev) =>
       prev === project.screenshots.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => 
+    setCurrentSlide((prev) =>
       prev === 0 ? project.screenshots.length - 1 : prev - 1
     );
   };
@@ -73,8 +92,8 @@ const PortfolioDetail = () => {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-red-500 mb-4">404</h1>
           <p className="text-xl mb-8">Project not found</p>
-          <Link 
-            to="/portfolio" 
+          <Link
+            to="/portfolio"
             className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
           >
             <FiArrowLeft />
@@ -90,7 +109,7 @@ const PortfolioDetail = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${project.thumbnail})` }}
         >
@@ -122,7 +141,7 @@ const PortfolioDetail = () => {
 
             {/* Description */}
             <p className="text-lg sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
-              {project.shortDescription || project.description.substring(0, 200) + "..."}
+              {project.shortDescription || project.description?.substring(0, 200) + "..."}
             </p>
 
             {/* Action Buttons */}
@@ -140,7 +159,7 @@ const PortfolioDetail = () => {
                   <span>View Live Project</span>
                 </motion.a>
               )}
-              
+
               <Link
                 to="/portfolio"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all duration-300"
@@ -247,7 +266,7 @@ const PortfolioDetail = () => {
               </div>
 
               {/* Carousel Container */}
-              <div 
+              <div
                 className="relative group"
                 onMouseEnter={handleCarouselHover}
                 onMouseLeave={handleCarouselLeave}
@@ -269,7 +288,7 @@ const PortfolioDetail = () => {
                         className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover cursor-pointer"
                         onClick={() => setSelectedImage(project.screenshots[currentSlide])}
                       />
-                      
+
                       {/* Overlay with Feature Info */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute bottom-4 left-4 right-4">
@@ -284,7 +303,7 @@ const PortfolioDetail = () => {
 
                       {/* Fullscreen Button */}
                       <div className="absolute top-4 right-4 w-10 h-10 bg-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-                           onClick={() => setSelectedImage(project.screenshots[currentSlide])}>
+                        onClick={() => setSelectedImage(project.screenshots[currentSlide])}>
                         <FiMaximize2 className="text-white" />
                       </div>
                     </motion.div>
@@ -312,11 +331,10 @@ const PortfolioDetail = () => {
                     <button
                       key={index}
                       onClick={() => goToSlide(index)}
-                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-                        index === currentSlide 
-                          ? 'bg-red-500 scale-125' 
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+                          ? 'bg-red-500 scale-125'
                           : 'bg-white/30 hover:bg-white/50'
-                      }`}
+                        }`}
                     />
                   ))}
                 </div>
@@ -405,7 +423,7 @@ const PortfolioDetail = () => {
             </div>
 
             <div className="space-y-4 sm:space-y-6">
-              {project.challenge.map((challenge, i) => (
+              {project.challenge?.map((challenge, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -50 }}
