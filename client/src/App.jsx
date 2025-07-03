@@ -3,7 +3,7 @@ import { useRoutes, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
 import routes from "./routes";
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import CustomCursor from "./components/CustomCursor";
 import GoToTopButton from "./components/GoToTopButton";
 import SocialMediaBar from "./components/SocialMediaBar";
@@ -20,29 +20,33 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App = () => {
+const AppContent = () => {
   const element = useRoutes(routes);
   const { pathname } = useLocation();
+  const { admin } = useAuth();
 
-    const shouldHideNavbar = 
+  const shouldHideNavbar = 
     pathname.startsWith("/admin/") ||
     pathname === "/admin-sign-in-portal" ||
     pathname === "/admin-sign-up-portal";
 
-
   return (
     <>
-      <CustomCursor />
-      <AuthProvider>
-        <ScrollToTop />
-        {!shouldHideNavbar && <Navbar />}
-        {element}
-        <SocialMediaBar />
-        {!shouldHideNavbar && <GoToTopButton />}
-        <Footer />
-      </AuthProvider>
+      {!admin && !pathname.startsWith("/admin/dashboard") && <CustomCursor />}
+      <ScrollToTop />
+      {!shouldHideNavbar && <Navbar />}
+      {element}
+      <SocialMediaBar />
+      {!shouldHideNavbar && <GoToTopButton />}
+      <Footer />
     </>
   );
 };
+
+const App = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
 
 export default App;

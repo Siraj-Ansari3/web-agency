@@ -40,6 +40,9 @@ const CustomCursor = () => {
     };
     animate();
 
+    // Hide system cursor when custom cursor is active
+    document.body.style.cursor = 'none';
+
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mousedown", handleMouseDown);
@@ -47,6 +50,7 @@ const CustomCursor = () => {
       document.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
+      document.body.style.cursor = '';
     };
   }, []);
 

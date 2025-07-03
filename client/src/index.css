@@ -59,9 +59,9 @@ body{
 }
 
 
-body, * {
+/* body, * {
   cursor: none !important;
-}
+} */
 
 .ql-editor a {
   color: #2563eb;
