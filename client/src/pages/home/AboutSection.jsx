@@ -41,7 +41,7 @@ const AboutSection = ({ data }) => {
             className="lg:w-2/3"
           >
             <div className="bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-100 shadow-lg hover:shadow-xl transition-all">
-              <p className="text-white text-lg leading-relaxed mb-6">
+              <p className="text-white text-md text-justify md:text-lg leading-relaxed mb-6">
                {data.description}
                </p>
 

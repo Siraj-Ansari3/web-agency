@@ -24,6 +24,8 @@ import EditAdmin from "./pages/adminDashboard/EditAdmin";
 import DashboardPortfolio from "./pages/adminDashboard/DashboardPortfolio";
 import DashboardAddPortfolio from "./pages/adminDashboard/DashboardAddPortfolio";
 import DashboardEditPortfolio from "./pages/adminDashboard/DashboardEditPortfolio";
+import EditContactPage from "./pages/adminDashboard/pageBuilder/EditContactPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -40,7 +42,11 @@ const routes = [
   { path: "/admin-sign-in-portal", element: <AdminSigninPage /> },
   {
     path: "/admin/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <DashboardHome /> },
       { path: "blogs", element: <DashboardBlogs /> },
@@ -56,6 +62,7 @@ const routes = [
       { path: "page-builder/home", element: <EditHomePage /> },
       { path: "page-builder/about", element: <EditAboutPage /> },
       { path: "page-builder/services", element: <EditServicesPage /> },
+      { path: "page-builder/contact", element: <EditContactPage /> }
 
     ]
   }
