@@ -26,6 +26,7 @@ import DashboardAddPortfolio from "./pages/adminDashboard/DashboardAddPortfolio"
 import DashboardEditPortfolio from "./pages/adminDashboard/DashboardEditPortfolio";
 import EditContactPage from "./pages/adminDashboard/pageBuilder/EditContactPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PageNotFound from "./components/PageNotFound";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -40,6 +41,7 @@ const routes = [
 
   { path: "/admin-sign-up-portal", element: <AdminSignupPage /> },
   { path: "/admin-sign-in-portal", element: <AdminSigninPage /> },
+
   {
     path: "/admin/dashboard",
     element: (
@@ -65,7 +67,8 @@ const routes = [
       { path: "page-builder/contact", element: <EditContactPage /> }
 
     ]
-  }
+  },
+  { path: "*", element: <PageNotFound /> }
 ];
 
 export default routes;

@@ -1,3 +1,4 @@
+// src/components/ProtectedRoute.jsx
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
@@ -9,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!admin) {
-    return <Navigate to="/" />;
+    return <Navigate to="/page-not-found" />;
   }
 
   return children;
