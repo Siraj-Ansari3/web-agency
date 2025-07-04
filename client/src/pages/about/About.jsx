@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import StepsComponent from '../home/StepsComponent';
 import {
   FiLayers,
@@ -26,6 +26,7 @@ import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
 import defaultImg from "../../assets/default-member.png";
+import SkeletonLoader from '../../components/SkeletonLoader';
 
 const iconMap = {
   FiLayers,
@@ -66,14 +67,18 @@ const About = () => {
   });
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAboutData = async () => {
+      setLoading(true);
       try {
         const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
         setPageData(aboutData.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -104,13 +109,12 @@ const About = () => {
     document.body.style.overflow = 'auto'; // Re-enable scrolling
   };
 
+  if (loading) return <SkeletonLoader />;
+
   return (
     <section className="bg-black min-h-screen pt-8 pb-16">
       {/* About Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+      <div
         className="text-center mb-16 px-4"
       >
         <div className="inline-flex items-center px-4 py-2 bg-black/80 backdrop-blur-md border border-red-200 rounded-full mb-6 shadow-sm">
@@ -127,30 +131,22 @@ const About = () => {
         <p className="text-lg text-gray-300 max-w-2xl mx-auto">
           {pageData.header.description}
         </p>
-      </motion.div>
+      </div>
 
       {/* Detailed About Section */}
       <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 mb-20">
         {/* Our Story Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+        <div
           className="md:col-span-2 bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-200 shadow-lg hover:shadow-xl transition-all"
         >
           <h2 className="text-2xl font-bold text-red-400 mb-4">Our Story</h2>
           <p className="text-gray-300 text-lg leading-relaxed mb-4">
             {pageData.storyMission.story}
           </p>
-        </motion.div>
+        </div>
 
         {/* Our Mission Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
+        <div
           className="bg-gradient-to-br from-red-600 to-red-400 rounded-2xl p-6 shadow-lg flex flex-col justify-between"
         >
           <div>
@@ -170,16 +166,12 @@ const About = () => {
               {pageData.storyMission.vision}
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Our Values Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+        <div
           className="bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-200 shadow-lg mb-8"
         >
           <h2 className="text-2xl font-bold text-red-400 mb-6 flex items-center">
@@ -191,28 +183,23 @@ const About = () => {
               const Icon = iconMap[value.icon];
               let title = value.title;
               return (
-                <motion.div
+                <div
                   key={index}
-                  whileHover={{ y: -5 }}
                   className="bg-black p-5 rounded-xl border border-red-200 shadow-sm hover:shadow-md transition-all"
                 >
                   <div className="text-red-400 mb-3"><Icon className="w-6 h-6 text-red-400" /></div>
                   <h4 className="font-semibold text-red-400 mb-2">{title}</h4>
                   <p className="text-gray-300">{desc}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Meet the Team Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+        <div
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold text-white mb-2">
@@ -221,17 +208,12 @@ const About = () => {
           <p className="text-gray-300 max-w-xl mx-auto">
             Our talented team brings together years of experience to deliver exceptional results.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {pageData.teamMembers.map((member, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              viewport={{ once: true }}
               className="group relative bg-black rounded-xl border border-red-200 shadow-md overflow-hidden transition-all hover:shadow-lg w-full max-w-xs mx-auto cursor-pointer"
               onClick={() => openMemberModal(member)}
             >
@@ -269,7 +251,7 @@ const About = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -277,18 +259,11 @@ const About = () => {
       {/* Team Member Modal */}
       <AnimatePresence>
         {isModalOpen && selectedMember && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
             onClick={closeMemberModal}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25 }}
+            <div
               className="relative bg-black rounded-xl border border-red-200 shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
@@ -365,18 +340,14 @@ const About = () => {
                   )}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
       {/* Development Process Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+        <div
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold text-white mb-2">
@@ -385,17 +356,13 @@ const About = () => {
           <p className="text-gray-300 max-w-xl mx-auto">
             {steps.subtitle}
           </p>
-        </motion.div>
+        </div>
         <StepsComponent steps={steps} page="about" />
       </div>
 
       {/* Why Choose Us Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+        <div
           className="bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-200 shadow-lg"
         >
           <h2 className="text-2xl font-bold text-red-400 mb-6 flex items-center">
@@ -405,19 +372,18 @@ const About = () => {
             {pageData.whyChooseUs.map((item, index) => {
               let Icon = iconMap[item.icon]
               return (
-                <motion.div
+                <div
                   key={index}
-                  whileHover={{ scale: 1.03 }}
                   className="bg-black p-5 rounded-xl border border-red-200 shadow-sm hover:shadow-md transition-all"
                 >
                   <div className="text-red-400 mb-3"><Icon className="w-6 h-6 text-red-400" /></div>
                   <h4 className="font-semibold text-red-400 mb-2">{item.title}</h4>
                   <p className="text-gray-300">{item.description}</p>
-                </motion.div>
+                </div>
               )
             })}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <CallToAction data={pageData.cta} />

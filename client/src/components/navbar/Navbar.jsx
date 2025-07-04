@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-import logo from "../../assets/logo/softera.png";
+import logo from "../../assets/logo/Marsev.png";
 import SideBar from "./SideBar";
 import { useAuth } from '../../context/AuthContext';
 

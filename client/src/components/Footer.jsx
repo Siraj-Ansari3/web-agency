@@ -1,6 +1,6 @@
 import React from 'react';
 import services from '../data/services/servicesData';
-import logo from '../assets/logo/softera.png';
+import logo from '../assets/logo/Marsev.png';
 
 const Footer = () => {
   const handleSubmit = (e) => {
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="md:col-span-2 lg:col-span-1">
             <div className="flex items-center">
               <img src={logo} alt="Agency Logo" className="w-30 object-contain" />
-              <span className="text-2xl font-bold">SoftEra</span>
+              <span className="text-2xl font-bold">Marsev</span>
             </div>
             <p className="text-gray-400 mb-6">
               We create digital experiences that matter. Our team delivers innovative solutions.

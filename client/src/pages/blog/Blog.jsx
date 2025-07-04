@@ -1,57 +1,46 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState, useMemo } from "react";
 import { FiSearch, FiFilter, FiX, FiChevronDown } from "react-icons/fi";
 import BlogCard from "../../components/BlogCard";
 import PageHeader from "../../components/PageHeader";
 import axios from "axios";
+import SkeletonLoader from '../../components/SkeletonLoader';
 
 const CARDS_PER_PAGE = 6;
 
 const Blog = () => {
-
-  
+  const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [blogCardsData, setBlogCardsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      const fetchBlogs = async () => {
-        try {
-          setIsLoading(true);
-          const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
-          setBlogCardsData(response.data.blogs)
-          
-          setIsLoading(false)
-          console.log(`all blogs`,response.data.blogs)
-        } catch (error) {
-          console.log(error)
-          setIsLoading(false)
-  
-        }
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
+        setBlogs(response.data.blogs);
+      } finally {
+        setLoading(false);
       }
-  
-      fetchBlogs();
-  
-    }, [])
+    };
+    fetchBlogs();
+  }, []);
 
   // Get unique categories from data (normalize for display)
   const categories = useMemo(() => {
-    const cats = blogCardsData?.map((b) => (b.category || "General").trim());
+    const cats = blogs?.map((b) => (b.category || "General").trim());
     // Remove duplicates, ignore case/whitespace
     return [
       "All",
-      ...Array.from(new Set(cats.map((c) => c.toLowerCase()))).map(
-        (c) => cats.find((cat) => cat.toLowerCase() === c) || c
-      ),
+      ...Array.from(new Set(cats?.map((c) => c.toLowerCase().replace(/\s+/g, ""))))
     ];
-  }, [blogCardsData]);
+  }, [blogs]);
 
   // Filter blogs by search and category (normalize for filter)
   const filteredBlogs = useMemo(() => {
-    return blogCardsData
+    return blogs
       ?.filter((blog) => {
         const blogCategory = (blog.category || "General").trim().toLowerCase();
         const selectedCat = selectedCategory.trim().toLowerCase();
@@ -63,7 +52,7 @@ const Blog = () => {
         return matchesCategory && matchesSearch;
       })
       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  }, [searchQuery, selectedCategory, blogCardsData]);
+  }, [searchQuery, selectedCategory, blogs]);
 
   // Reset visibleCount when filters/search change
   useEffect(() => {
@@ -80,6 +69,7 @@ const Blog = () => {
     setSearchQuery("");
   };
 
+  if (loading) return <SkeletonLoader />;
 
   return (
     <div className="bg-black">
@@ -95,7 +85,7 @@ const Blog = () => {
         variant="gradient"
         showStats={true}
         stats={[
-          { value: blogCardsData?.length, label: "Articles" },
+          { value: blogs?.length, label: "Articles" },
           { value: categories.length - 1, label: "Categories" },
           { value: "10K+", label: "Readers" },
           { value: "Weekly", label: "Updates" }
@@ -107,12 +97,7 @@ const Blog = () => {
         <div className="max-w-4xl mx-auto">
           {/* Desktop Search Bar */}
           <div className="hidden md:block">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
+            <div className="relative">
               <div className="bg-black border-2 border-gray-700 rounded-2xl shadow-2xl p-2">
                 <div className="flex items-center gap-3">
                   {/* Search Input */}
@@ -126,8 +111,6 @@ const Blog = () => {
                       placeholder="Search articles, topics, or authors..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onFocus={() => setIsSearchFocused(true)}
-                      onBlur={() => setIsSearchFocused(false)}
                     />
                     {searchQuery && (
                       <button
@@ -159,18 +142,13 @@ const Blog = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Mobile Search Bar */}
           <div className="md:hidden space-y-4">
             {/* Mobile Search Input */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
+            <div className="relative">
               <div className="bg-black border-2 border-gray-700 rounded-xl shadow-lg">
                 <div className="flex items-center px-4 py-3">
                   <FiSearch className="h-5 w-5 text-gray-400 mr-3" />
@@ -180,8 +158,6 @@ const Blog = () => {
                     placeholder="Search articles..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={() => setIsSearchFocused(true)}
-                    onBlur={() => setIsSearchFocused(false)}
                   />
                   {searchQuery && (
                     <button
@@ -194,13 +170,10 @@ const Blog = () => {
                   )}
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Mobile Filter Button */}
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
               className="w-full bg-black border-2 border-gray-700 text-white px-4 py-3 rounded-xl flex items-center justify-between hover:bg-red-900 transition-all duration-300"
             >
@@ -209,48 +182,35 @@ const Blog = () => {
                 Category: {selectedCategory}
               </span>
               <FiChevronDown className={`h-4 w-4 transition-transform duration-300 ${showMobileFilters ? 'rotate-180' : ''}`} />
-            </motion.button>
+            </button>
 
             {/* Mobile Category Dropdown */}
-            <AnimatePresence>
-              {showMobileFilters && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-black border-2 border-red-700 rounded-xl overflow-hidden"
-                >
-                  <div className="p-2 space-y-1">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setSelectedCategory(cat);
-                          setShowMobileFilters(false);
-                        }}
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
-                          selectedCategory === cat
-                            ? 'bg-red-700 text-white border border-red-500'
-                            : 'text-white hover:bg-red-900'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {showMobileFilters && (
+              <div className="bg-black border-2 border-red-700 rounded-xl overflow-hidden">
+                <div className="p-2 space-y-1">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setShowMobileFilters(false);
+                      }}
+                      className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                        selectedCategory === cat
+                          ? 'bg-red-700 text-white border border-red-500'
+                          : 'text-white hover:bg-red-900'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Search Results Info */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-center"
-          >
+          <div className="mt-6 text-center">
             <div className="inline-flex items-center gap-4 px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
               <span className="text-gray-300 text-sm">
                 Showing {Math.min(visibleCount, filteredBlogs?.length)} of {filteredBlogs?.length} articles
@@ -266,7 +226,7 @@ const Blog = () => {
                 </div>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -281,26 +241,18 @@ const Blog = () => {
                 ))}
               </div>
               {canLoadMore && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex justify-center mt-12"
-                >
+                <div className="flex justify-center mt-12">
                   <button
                     onClick={handleLoadMore}
                     className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl shadow-lg hover:from-red-700 hover:to-red-800 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black"
                   >
                     Load More Articles
                   </button>
-                </motion.div>
+                </div>
               )}
             </>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-16"
-            >
+            <div className="text-center py-16">
               <div className="max-w-md mx-auto">
                 <div className="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <FiSearch className="w-8 h-8 text-red-400" />
@@ -319,7 +271,7 @@ const Blog = () => {
                   Clear Filters
                 </button>
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </section>

@@ -1,46 +1,34 @@
-import React from "react";
-import blogCardsData from "../../../data/blogs/cardsData";
+import React, { useEffect, useState } from 'react';
 import { FaUser, FaComments } from "react-icons/fa";
 import BlogCard from "../../../components/BlogCard";
-import { useEffect } from "react";
 import axios from 'axios';
-import { useState } from "react";
-
-
+// import { useLoading } from '../../../context/LoadingContext';
+// import SkeletonLoader from '../../../components/SkeletonLoader';
+import NotFound404Page from '../../../pages/NotFound404Page';
 
 const BlogSection = ({ blogMeta }) => {
-  const [blogs, setBlogs] = useState([
-    {
-      blog_id: "loading1",
-      title: "Loading blog title...",
-      content: {
-        html: "<p>Loading content...</p>",
-        text: "Loading content...",
-        metadata: {
-          wordCount: 0,
-          readingTime: "0 min read"
-        }
-      },
-      category: "Loading",
-      status: "published",
-      image: "", // Optional placeholder image URL
-      tags: ["loading"],
-      author: {
-        firstName: "Loading author...",
-        image: ""
-      },
-    }
-  ]);
+  const [blogs, setBlogs] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchAllBlogs = async () => {
-      const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + '/blog/get-last-three-blogs');
-      setBlogs(response.data.blogs)
-      console.log(response.data.blogs)
-    }
+    const fetchBlogs = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + '/blog/get-last-three-blogs');
+        setBlogs(response.data.blogs);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
 
-    fetchAllBlogs();
-  }, [])
+  if (loading) return <div>Loading...</div>;
+  if (error) return <NotFound404Page />;
 
   return (
     <section className="relative py-10 sm:py-16 md:py-20 bg-black overflow-hidden">

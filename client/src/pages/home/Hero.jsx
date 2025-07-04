@@ -75,7 +75,9 @@ const Hero = ({ data }) => {
 
               <div className="inline-flex items-center px-4 py-2 bg-black/80 backdrop-blur-md border border-red-200 rounded-full mb-6 shadow-sm">
                 <TbSparkles className="w-4 h-4 text-yellow-500 mr-2" />
-                <span className="text-high font-medium text-red-200">SOFTERA</span>
+                <span className="text-high  pr-2 font-medium text-red-200">MARSEV </span>
+                <span className="text-high font-medium text-red-200">TECH</span>
+
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">{data.title}</span>

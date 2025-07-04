@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import servicesData from '../../data/services/servicesData';
+import React, { useState, useEffect } from 'react';
 import { 
   MdWeb, MdBusiness, MdPhotoLibrary, 
-  MdShoppingBasket, MdDashboard, MdBuild,
-  MdComment, MdClose, MdSend 
+  MdShoppingBasket, MdDashboard, MdBuild, MdDesignServices, MdSecurity, MdCloud, MdDevices, MdSupportAgent, MdComment, MdClose, MdSend
 } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/PageHeader';
+import SkeletonLoader from '../../components/SkeletonLoader';
+import axios from 'axios';
 
 const iconMap = {
   MdWeb: <MdWeb className="text-xl" />,
@@ -14,7 +14,12 @@ const iconMap = {
   MdPhotoLibrary: <MdPhotoLibrary className="text-xl" />,
   MdShoppingBasket: <MdShoppingBasket className="text-xl" />,
   MdDashboard: <MdDashboard className="text-xl" />,
-  MdBuild: <MdBuild className="text-xl" />
+  MdBuild: <MdBuild className="text-xl" />,
+  MdDesignServices: <MdDesignServices className="text-xl" />,
+  MdSecurity: <MdSecurity className="text-xl" />,
+  MdCloud: <MdCloud className="text-xl" />,
+  MdDevices: <MdDevices className="text-xl" />,
+  MdSupportAgent: <MdSupportAgent className="text-xl" />
 };
 
 const Services = () => {
@@ -22,12 +27,33 @@ const Services = () => {
   const [hoveredService, setHoveredService] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [servicesData, setServicesData] = useState([]);
   const [comments, setComments] = useState([
-    { id: 1, serviceId: 1, author: "Alex Johnson", text: "Their web development service transformed our online presence!", date: "2023-05-15" },
+    { id: 1, serviceId: 1, author: "John Doe", text: "Great service!", date: "2023-06-20" },
     { id: 2, serviceId: 3, author: "Sarah Miller", text: "The photography team exceeded our expectations.", date: "2023-06-22" }
   ]);
-
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/services");
+        setServicesData(Array.isArray(response.data.data) ? response.data.data : []);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const safeService = servicesData[activeService] || {};
+  const activeServiceIcon = safeService.icon && iconMap[safeService.icon] ? iconMap[safeService.icon] : iconMap['MdBuild'];
+  const activeServiceTitle = safeService.title || 'Service';
+  const activeServiceDescription = safeService.description || 'No description available.';
+  const activeServiceFeatures = Array.isArray(safeService.features) ? safeService.features : [];
+  const activeServiceId = safeService.id || 0;
 
   const handleAddComment = () => {
     if (newComment.trim() && activeService !== null) {
@@ -42,6 +68,8 @@ const Services = () => {
       setNewComment('');
     }
   };
+
+  if (loading) return <SkeletonLoader />;
 
   return (
     <div className="bg-black">
@@ -65,46 +93,44 @@ const Services = () => {
       />
 
       {/* Services Content */}
-      <div className="relative py-20 bg-black  to-gray-900 overflow-hidden">
+      <div className="relative py-20 bg-black to-gray-900 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-5">
           {[...Array(12)].map((_, i) => (
-              <div 
-                key={i}
+            <div
+              key={i}
               className="absolute border-2 border-red-300 rounded-full"
-                style={{
+              style={{
                 top: '50%',
                 left: '50%',
                 width: `${100 + i * 80}px`,
                 height: `${100 + i * 80}px`,
                 transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
                 animation: `pulse ${8 + i}s infinite alternate`
-                }}
-              />
-            ))}
-          </div>
+              }}
+            />
+          ))}
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
             {/* Radial menu */}
-            <div 
+            <div
               className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center bg-black rounded-full shadow-lg"
               onMouseLeave={() => setHoveredService(null)}
             >
-              {servicesData.map((service, index) => {
+              {servicesData.filter(service => service && service.icon && iconMap[service.icon]).map((service, index) => {
                 const angle = (index * 360) / servicesData.length;
                 const radian = (angle * Math.PI) / 180;
                 const radius = 120;
                 const x = radius * Math.cos(radian);
                 const y = radius * Math.sin(radian);
-
                 const isHighlighted = hoveredService === index;
-
                 return (
                   <button
-                    key={service.id}
+                    key={service.id || index}
                     className={`absolute w-16 h-16 rounded-full flex items-center justify-center text-2xl transition-all duration-300
-                      ${activeService === index 
+                      ${activeService === index
                         ? 'bg-red-600 text-white scale-110 shadow-lg'
                         : isHighlighted
                           ? 'bg-red-100 text-red-600 scale-105'
@@ -123,9 +149,11 @@ const Services = () => {
                       setShowComments(false);
                     }}
                   >
-                    {React.cloneElement(iconMap[service.icon], {
-                      className: `transition-all ${activeService === index ? 'scale-125' : ''}`
-                    })}
+                    {service && service.icon && iconMap[service.icon]
+                      ? React.cloneElement(iconMap[service.icon], {
+                          className: `transition-all ${activeService === index ? 'scale-125' : ''}`
+                        })
+                      : iconMap['MdBuild']}
                   </button>
                 );
               })}
@@ -146,15 +174,15 @@ const Services = () => {
                   <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex-shrink-0">
                       <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center text-red-600">
-                        {iconMap[servicesData[activeService].icon]}
+                        {activeServiceIcon}
                       </div>
                     </div>
                     <div>
                       <div className="flex justify-between items-start">
                         <h3 className="text-2xl font-bold text-white mb-4">
-                          {servicesData[activeService].title}
+                          {activeServiceTitle}
                         </h3>
-                        <button 
+                        <button
                           onClick={() => setShowComments(!showComments)}
                           className={`p-2 rounded-full ${showComments ? 'bg-red-100 text-red-600' : 'text-gray-300 hover:bg-gray-900'}`}
                         >
@@ -162,74 +190,68 @@ const Services = () => {
                         </button>
                       </div>
                       <p className="text-gray-300 mb-6">
-                        {servicesData[activeService].description}
+                        {activeServiceDescription}
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                        {servicesData[activeService].features.map((feature, i) => (
+                        {activeServiceFeatures.length > 0 ? activeServiceFeatures.map((feature, i) => (
                           <div key={i} className="flex items-start">
                             <span className="text-red-500 mr-2 mt-1">✓</span>
-                            <span className="text-white">{feature}</span>
+                            <span className="text-gray-200">{feature}</span>
                           </div>
-                        ))}
+                        )) : <span className="text-gray-400">No features listed.</span>}
                       </div>
                       <button
                         className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
-                        onClick={() => navigate('/contact', { state: { serviceId: servicesData[activeService].id } })}
+                        onClick={() => navigate('/contact', { state: { serviceId: activeServiceId } })}
                       >
-                        Start with {servicesData[activeService].title}
+                        Start with {activeServiceTitle}
                       </button>
                     </div>
                   </div>
                 </div>
-
                 {/* Comments section */}
                 {showComments && (
-                  <div className="border-t lg:border-t-0 lg:border-l border-gray-800 lg:w-1/3 bg-gray-900">
-                    <div className="p-4 flex justify-between items-center border-b border-gray-800">
+                  <div className="p-8 bg-gray-900 border-l border-gray-800 lg:w-1/3">
+                    <div className="flex justify-between items-center mb-4">
                       <h4 className="font-bold text-white flex items-center gap-2">
-                        <MdComment /> Comments ({comments.filter(c => c.serviceId === servicesData[activeService].id).length})
+                        <MdComment /> Comments ({comments.filter(c => c.serviceId === activeServiceId).length})
                       </h4>
-                      <button 
-                        onClick={() => setShowComments(false)}
-                        className="text-gray-400 hover:text-white"
-                      >
+                      <button onClick={() => setShowComments(false)} className="text-gray-400 hover:text-red-500">
                         <MdClose />
                       </button>
                     </div>
-                    <div className="p-4 h-64 overflow-y-auto">
-                      {comments.filter(c => c.serviceId === servicesData[activeService].id).length > 0 ? (
+                    <div className="h-64 overflow-y-auto mb-4">
+                      {comments.filter(c => c.serviceId === activeServiceId).length > 0 ? (
                         comments
-                          .filter(c => c.serviceId === servicesData[activeService].id)
+                          .filter(c => c.serviceId === activeServiceId)
                           .map(comment => (
                             <div key={comment.id} className="mb-4 pb-4 border-b border-gray-900 last:border-0">
-                              <div className="flex justify-between items-start mb-1">
-                                <span className="font-medium text-white">{comment.author}</span>
-                                <span className="text-xs text-gray-400">{comment.date}</span>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-bold text-red-400">{comment.author}</span>
+                                <span className="text-xs text-gray-500">{comment.date}</span>
                               </div>
-                              <p className="text-gray-300 text-sm">{comment.text}</p>
+                              <p className="text-gray-200">{comment.text}</p>
                             </div>
                           ))
                       ) : (
-                        <p className="text-gray-400 text-center py-8">No comments yet. Be the first to share your experience!</p>
+                        <span className="text-gray-400">No comments yet.</span>
                       )}
                     </div>
-                    <div className="p-4 border-t border-gray-800">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={newComment}
-                          onChange={(e) => setNewComment(e.target.value)}
-                          placeholder="Add a comment..."
-                          className="flex-1 bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:outline-none focus:border-red-500"
-                          onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
-                        />
-                        <button
-                          onClick={handleAddComment}
-                          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          <MdSend />
-                        </button>
-                      </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        className="flex-1 px-3 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none"
+                        placeholder="Add a comment..."
+                        value={newComment}
+                        onChange={e => setNewComment(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && handleAddComment()}
+                      />
+                      <button
+                        onClick={handleAddComment}
+                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-all"
+                      >
+                        <MdSend />
+                      </button>
                     </div>
                   </div>
                 )}
@@ -238,88 +260,6 @@ const Services = () => {
           </div>
         </div>
       </div>
-
-      {/* SVG Decorative Divider */}
-      <div className="w-full overflow-hidden leading-none -mb-2">
-        <svg viewBox="0 0 1200 120" className="w-full h-12">
-          <path d="M0,0V46.29c47.5,22.09,103.77,29,158,17.39C306.5,44.09,360,0,480,0s173.5,44.09,322,63.68C1096.23,75.29,1152.5,68.38,1200,46.29V0Z" fill="#ef4444" fillOpacity="0.1"></path>
-        </svg>
-      </div>
-      {/* Enhanced: Services List Section with Decorative Background */}
-      <div className="relative max-w-7xl mx-auto px-4 py-20">
-        {/* Gradient/Blurred Background Blobs */}
-        <div className="absolute -z-10 top-0 left-0 w-full h-full pointer-events-none">
-          <div className="absolute left-1/4 top-0 w-72 h-72 bg-red-400 opacity-20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute right-1/4 bottom-0 w-72 h-72 bg-pink-600 opacity-20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute right-10 top-1/2 w-40 h-40 bg-pink-400 opacity-10 rounded-full blur-2xl animate-pulse"></div>
-        </div>
-        <h2 className="text-4xl font-extrabold text-center mb-4 text-white tracking-tight">All Our Services</h2>
-        <p className="text-lg text-gray-300 text-center max-w-2xl mx-auto mb-12">Discover the full range of solutions we offer to help your business grow and succeed in the digital world.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 border-white lg:grid-cols-3 gap-8">
-          {servicesData.map((service, idx) => (
-            <div
-              key={service.id}
-              className="relative bg-black/70 backdrop-blur-lg border-2 border-red-600 rounded-2xl p-8 shadow-sm hover:shadow-[0_0_32px_8px_rgba(220,38,38,0.5)]  hover:scale-[1.03] transition-all duration-500 flex flex-col items-center group overflow-hidden opacity-0 translate-y-6 animate-fadein"
-              style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'forwards' }}
-            >
-              {/* Popular Badge Example */}
-              {idx === 0 && (
-                <span className="absolute top-4 right-4 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow">Popular</span>
-              )}
-              {/* Icon with Animation */}
-              <div className="w-20 h-20 mb-6 flex items-center  justify-center rounded-full bg-red-100 text-red-600 text-4xl shadow group-hover:animate-bounce transition-all duration-300">
-                {React.cloneElement(iconMap[service.icon], { className: 'text-4xl' })}
-              </div>
-              {/* Title */}
-              <h3 className="text-2xl font-bold text-white mb-2 text-center tracking-tight">{service.title}</h3>
-              {/* Description */}
-              <p className="text-gray-300 text-center mb-4 leading-relaxed">{service.description}</p>
-              {/* Features */}
-              {service.features && service.features.length > 0 && (
-                <ul className="space-y-2 text-sm text-white mb-6 w-full max-w-xs mx-auto">
-                  {service.features.slice(0, 3).map((feature, i) => (
-                    <li key={i} className="flex items-center">
-                      <span className="inline-block w-5 h-5 mr-2 flex items-center justify-center rounded-full bg-red-50 text-red-500 text-center font-bold">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {/* CTA Button: Contact Us */}
-              <Link to="/contact" className="mt-auto bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:from-red-600 hover:to-red-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
-                Contact Us
-              </Link>
-            </div>
-          ))}
-        </div>
-        {/* Section Divider */}
-        <div className="w-24 h-1 bg-gradient-to-r from-red-400 to-red-600 rounded-full mx-auto mt-16 opacity-60"></div>
-        {/* Animations */}
-        <style>{`
-          @keyframes fadein {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fadein {
-            animation: fadein 0.7s cubic-bezier(0.4,0,0.2,1) both;
-          }
-        `}</style>
-      </div>
-      {/* End Enhanced Services List Section */}
-
-      <style jsx>{`
-        @keyframes pulse {
-          0% { opacity: 0.3; }
-          100% { opacity: 0.1; }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateX(10px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        .comment-enter {
-          animation: fadeIn 0.3s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 };

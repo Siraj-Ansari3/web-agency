@@ -7,7 +7,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import CustomCursor from "./components/CustomCursor";
 import GoToTopButton from "./components/GoToTopButton";
 import SocialMediaBar from "./components/SocialMediaBar";
-
+import { LoadingProvider, useLoading } from "./context/LoadingContext";
+import SkeletonLoader from "./components/SkeletonLoader";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -24,6 +25,7 @@ const AppContent = () => {
   const element = useRoutes(routes);
   const { pathname } = useLocation();
   const { admin } = useAuth();
+  const { loading } = useLoading();
 
   const shouldHideNavbar = 
     pathname.startsWith("/admin/") ||
@@ -32,6 +34,7 @@ const AppContent = () => {
 
   return (
     <>
+      {loading && <SkeletonLoader />}
       {!admin && !pathname.startsWith("/admin/dashboard") && <CustomCursor />}
       <ScrollToTop />
       {!shouldHideNavbar && <Navbar />}
@@ -45,7 +48,9 @@ const AppContent = () => {
 
 const App = () => (
   <AuthProvider>
-    <AppContent />
+    <LoadingProvider>
+      <AppContent />
+    </LoadingProvider>
   </AuthProvider>
 );
 

@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from "react";
 import PortfolioCard from "../portfolio/portfolioCard";
 import axios from "axios";
+// import { useLoading } from '../../context/LoadingContext';
+// import SkeletonLoader from '../../components/SkeletonLoader';
+import NotFound404Page from '../../pages/NotFound404Page';
 
 const PortfolioSection = ({ portfolioMeta }) => {
-  const [lastThreeProjects, setLastThreeProjects] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchLastThreeProjects = async () => {
+    const fetchProjects = async () => {
+      setLoading(true);
+      setError(false);
       try {
         const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/project/recent");
-        setLastThreeProjects(response.data.projects);
-      } catch (error) {
-        console.log(error);
+        setProjects(response.data.projects);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-    }
+    };
+    fetchProjects();
+  }, []);
 
-    fetchLastThreeProjects();
-  }, [])
+  if (loading) return <div>Loading...</div>;
+  if (error) return <NotFound404Page />;
 
   return (
     <section className="relative py-20 bg-black overflow-hidden">
@@ -31,7 +42,7 @@ const PortfolioSection = ({ portfolioMeta }) => {
       {/* Cards Container */}
       <div className="relative bg-green-00 z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {/* <BlogCard data={lastThreeBlogs} /> */}
-        {lastThreeProjects?.map((item) => {
+        {projects?.map((item) => {
           return (
             <PortfolioCard
               key={item.project_id}

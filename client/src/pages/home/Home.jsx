@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Hero from './Hero';
 import AboutSection from './AboutSection';
 import FeaturesSection from './FeaturesSection';
@@ -7,12 +7,11 @@ import BlogSection from './blog/BlogSection'
 import Testimonials from './TestimonialSlider';
 import StepsComponent from './StepsComponent';
 import PortfolioSection from './portfolioSection';
-import { useEffect } from 'react';
 import axios from 'axios'
-import { useState } from 'react';
+import { useLoading } from '../../context/LoadingContext';
+import SkeletonLoader from '../../components/SkeletonLoader';
 
 const Home = () => {
-
   const [homeData, setHomeData] = useState({
     hero: {
       title: '',
@@ -91,28 +90,28 @@ const Home = () => {
       ctaLink: ''
     }
   });
-
+  const [error, setError] = useState(false);
+  const { loading, setLoading } = useLoading();
 
   useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(false);
       try {
         const homeData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/homepage")
-        console.log(homeData.data.data)
         setHomeData(homeData.data.data);
-
+      } catch (e) {
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-      catch (err) {
-        console.log(err)
-        return "homepage data not found"
-      }
-    }
+    };
+    fetchData();
+  }, [setLoading]);
 
-    fetchHomeData()
-  }, [])
-
+  if (loading) return <SkeletonLoader />;
 
   return (
-
     <section className="relative bg-black overflow-hidden lg:px-20 sm:px-10">
       <Hero data={homeData.hero} />
       <AboutSection data={homeData.about} />
