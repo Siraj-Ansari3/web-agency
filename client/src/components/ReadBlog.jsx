@@ -67,11 +67,11 @@ const ReadBlog = ({ id }) => {
       <header className="bg-black text-white py-6 px-4 md:px-8 lg:px-12 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <button
-            onClick={() => navigate('/blog')}
-            className="flex items-center gap-2 text-white hover:text-red-400 transition-colors"
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 px-6 py-2 border border-red-600 hover:bg-red-600/10 transition-colors rounded-lg font-medium text-white"
           >
-            <FiArrowLeft className="text-lg" />
-            <span className="font-medium">Back to Blogs</span>
+            <FiArrowLeft className="w-4 h-4" />
+            Back to Blogs
           </button>
           <div className="text-sm text-gray-300 flex items-center gap-2">
             <FiCalendar className="text-red-400" />
