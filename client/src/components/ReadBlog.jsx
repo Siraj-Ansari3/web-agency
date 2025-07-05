@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import raza from '../assets/autherImg/raza.jpg';
 import 'quill/dist/quill.snow.css';
 import axios from "axios";
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
@@ -11,52 +10,93 @@ const ReadBlog = ({ id }) => {
     blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: ""}
   });
   const [relatedBlogs, setRelatedBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterMsg, setNewsletterMsg] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blog/?id=${id}`);
-        setBlog(response.data.blog);
-        console.log(response.data.blog);
-        
-        // Fetch related blogs based on category
-        // const relatedResponse = await axios.get(
-        //   import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blogs/?category=${response.data.blog.category}&limit=3`
-        // );
-        // setRelatedBlogs(relatedResponse.data.blogs.filter(b => b.blog_id !== id));
-        
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
-    fetchBlog();
+  // Memoized reading time calculation
+  const readingTime = useMemo(() => {
+    const wordCount = blog.content?.text?.split(/\s+/)?.length || 0;
+    const minutes = Math.ceil(wordCount / 200);
+    return `${minutes} min read`;
+  }, [blog.content]);
+
+  // Memoized formatted date
+  const formattedDate = useMemo(() => {
+    return new Date(blog.publishedAt).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric'
+    });
+  }, [blog.publishedAt]);
+
+  // Optimized fetch function with useCallback
+  const fetchBlog = useCallback(async () => {
+    if (!id) return;
+    
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blog/?id=${id}`);
+      setBlog(response.data.blog);
+      
+      // Uncomment when you want to fetch related blogs
+      // const relatedResponse = await axios.get(
+      //   import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blogs/?category=${response.data.blog.category}&limit=3`
+      // );
+      // setRelatedBlogs(relatedResponse.data.blogs.filter(b => b.blog_id !== id));
+      
+    } catch (err) {
+      setError(err.message || 'Failed to load blog');
+      console.error('Error fetching blog:', err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [id]);
 
-  const handleNewsletterSubmit = (e) => {
+  useEffect(() => {
+    fetchBlog();
+  }, [fetchBlog]);
+
+  // Optimized newsletter submit handler
+  const handleNewsletterSubmit = useCallback((e) => {
     e.preventDefault();
     if (newsletterEmail.trim()) {
       setNewsletterMsg("Thank you for subscribing!");
       setNewsletterEmail("");
       setTimeout(() => setNewsletterMsg(""), 3000);
     }
-  };
+  }, [newsletterEmail]);
 
-  const formatReadingTime = (content) => {
-    const wordCount = content?.text?.split(/\s+/)?.length || 0;
-    const minutes = Math.ceil(wordCount / 200);
-    return `${minutes} min read`;
-  };
+  // Optimized back navigation
+  const handleBackNavigation = useCallback(() => {
+    window.history.back();
+  }, []);
 
+  // Loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh] bg-black">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] bg-black">
+        <div className="text-center">
+          <div className="text-red-500 text-xl mb-4">Error loading blog</div>
+          <div className="text-gray-400 mb-4">{error}</div>
+          <button 
+            onClick={handleBackNavigation}
+            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Go Back
+          </button>
+        </div>
       </div>
     );
   }
@@ -67,17 +107,15 @@ const ReadBlog = ({ id }) => {
       <header className="bg-black text-white py-6 px-4 md:px-8 lg:px-12 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <button
-            onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-6 py-2 border border-red-600 hover:bg-red-600/10 transition-colors rounded-lg font-medium text-white"
+            onClick={handleBackNavigation}
+            className="flex items-center gap-2 text-white hover:text-red-400 transition-colors"
           >
-            <FiArrowLeft className="w-4 h-4" />
-            Back to Blogs
+            <FiArrowLeft className="text-lg" />
+            <span className="font-medium">Back to Blogs</span>
           </button>
           <div className="text-sm text-gray-300 flex items-center gap-2">
             <FiCalendar className="text-red-400" />
-            {new Date(blog.publishedAt).toLocaleDateString('en-US', {
-              year: 'numeric', month: 'short', day: 'numeric'
-            })}
+            {formattedDate}
           </div>
         </div>
       </header>
@@ -105,12 +143,13 @@ const ReadBlog = ({ id }) => {
                 src={blog?.author?.image} 
                 alt={blog?.author?.firstName} 
                 className="w-10 h-10 rounded-full border-2 border-red-500" 
+                loading="lazy"
               />
               <div>
                 <div className="font-medium text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</div>
                 <div className="text-xs text-gray-300 flex items-center gap-2">
                   <FiClock className="text-red-400" />
-                  {formatReadingTime(blog.content)}
+                  {readingTime}
                 </div>
               </div>
             </div>
@@ -121,17 +160,18 @@ const ReadBlog = ({ id }) => {
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-6 sm:py-10 md:py-16">
         {/* Blog Content */}
-        <article className="ql-editor blog-content ">
+        <article className="ql-editor blog-content">
           <div className="break-words w-full overflow-x-auto">
             <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
           </div>
         </article>
+        
         {/* Tags */}
         {blog.tags && blog.tags.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2">
             {blog.tags.map((tag, idx) => (
               <span 
-                key={idx} 
+                key={`${tag}-${idx}`}
                 className="px-3 py-1 bg-red-700 text-white rounded-full text-xs font-semibold shadow hover:bg-red-600 transition-colors"
               >
                 #{tag}
@@ -139,6 +179,7 @@ const ReadBlog = ({ id }) => {
             ))}
           </div>
         )}
+        
         {/* Author Section Redesigned */}
         <section className="mt-14">
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-black rounded-2xl p-4 sm:p-6 md:p-8 border border-red-700 shadow-lg w-full">
@@ -148,6 +189,7 @@ const ReadBlog = ({ id }) => {
                 src={blog?.author?.image} 
                 alt={blog?.author.firstName} 
                 className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-4 border-red-600 shadow-lg z-10 bg-black object-cover" 
+                loading="lazy"
               />
             </div>
             <div className="flex-1 text-center sm:text-left w-full">
@@ -190,6 +232,7 @@ const ReadBlog = ({ id }) => {
                         src={relatedBlog.image} 
                         alt={relatedBlog.title} 
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
                       />
                     </div>
                   )}
@@ -207,7 +250,11 @@ const ReadBlog = ({ id }) => {
                       </span>
                       <span className="flex items-center gap-1">
                         <FiClock size={14} />
-                        {formatReadingTime(relatedBlog.content)}
+                        {(() => {
+                          const wordCount = relatedBlog.content?.text?.split(/\s+/)?.length || 0;
+                          const minutes = Math.ceil(wordCount / 200);
+                          return `${minutes} min read`;
+                        })()}
                       </span>
                     </div>
                   </div>

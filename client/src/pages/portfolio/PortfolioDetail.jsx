@@ -163,7 +163,8 @@ const PortfolioDetail = () => {
               <Link
                 to="/portfolio"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all duration-300"
-              >
+                onClick={() => window.history.back()}
+                >        
                 <FiArrowLeft />
                 <span>Back to Portfolio</span>
               </Link>
