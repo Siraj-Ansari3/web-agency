@@ -1,6 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
+const defaultUserIcon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=";
+
+
 const BlogCard = ({ data: item }) => {
   const navigate = useNavigate();
   if (!item) return null;
@@ -42,6 +46,10 @@ const BlogCard = ({ data: item }) => {
           <img
             src={item.author.image}
             alt={item.author.firstName}
+            onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = defaultUserIcon;
+                }}
             className="absolute bottom-3 right-3 w-10 h-10 rounded-full border-2 border-white shadow-md z-20"
           />
         )}
