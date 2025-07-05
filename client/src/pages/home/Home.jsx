@@ -100,6 +100,7 @@ const Home = () => {
       try {
         const homeData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/homepage")
         setHomeData(homeData.data.data);
+        console.log(homeData.data.data)
       } catch (e) {
         setError(true);
       } finally {
@@ -112,7 +113,7 @@ const Home = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <section className="relative bg-black overflow-hidden lg:px-20 sm:px-10">
+    <section className="relative bg-black overflow-hidden lg:px-20 sm:px-8">
       <Hero data={homeData.hero} />
       <AboutSection data={homeData.about} />
       <FeaturesSection features={homeData.features} />

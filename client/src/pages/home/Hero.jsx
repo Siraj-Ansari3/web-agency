@@ -116,7 +116,7 @@ const Hero = ({ data }) => {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => scrollToSection('work')}
+                  onClick={() => navigate("/portfolio")}
                   className="flex items-center px-6 py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm"
                 >
                   View Portfolio

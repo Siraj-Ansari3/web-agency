@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageHeader from '../../components/PageHeader';
 import SkeletonLoader from '../../components/SkeletonLoader';
+import PortfolioCard from './portfolioCard';
 
 const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState([]);
@@ -87,24 +88,15 @@ const Portfolio = () => {
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {projectsToShow.map((project) => (
-            <div key={project.id} className="bg-black/80 border-2 border-red-600 rounded-2xl p-6 shadow-lg hover:scale-[1.03] transition-all duration-300 flex flex-col">
-              <img src={project.image} alt={project.title} className="rounded-lg mb-4 w-full h-48 object-cover" />
-              <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-              <p className="text-gray-300 mb-4 flex-1">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags && project.tags.map((tag, i) => (
-                  <span key={i} className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold">{tag}</span>
-              ))}
-            </div>
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:from-red-600 hover:to-red-700 transition-all duration-200 text-center"
-              >
-                View Project
-              </a>
-            </div>
+
+            <PortfolioCard
+            longSS={project.longSS}
+            id={project.project_id}
+            description={project.description}
+            title={project.title}
+            category={project.category}
+            />
+
           ))}
         </div>
 

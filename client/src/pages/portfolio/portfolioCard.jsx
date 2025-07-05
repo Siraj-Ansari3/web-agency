@@ -51,16 +51,16 @@ const PortfolioCard = ({ longSS, category, id, title, description }) => {
         whileHover={{ y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="bg-white/95 backdrop-blur-md rounded-b-2xl p-5 flex flex-col space-y-2 shadow-xl border-t border-red-500/20" >
+        <div className="bg-black/95 backdrop-blur-md rounded-b-2xl p-5 flex flex-col space-y-2 shadow-xl border-t border-red-500/20" >
          
           
           {/* Title with enhanced typography */}
-          <h3 className="text-lg font-bold text-gray-900 truncate group-hover:text-red-600 transition-colors duration-300" title={title}>
+          <h3 className="text-lg font-bold text-white truncate group-hover:text-red-600 transition-colors duration-300" title={title}>
             {title}
           </h3>
           
           {/* Description with better readability */}
-          <p className="text-gray-700 text-sm line-clamp-2 mb-2 leading-relaxed">{description}</p>
+          <p className="text-white text-sm line-clamp-2 mb-2 leading-relaxed">{description}</p>
           
           {/* Enhanced Button */}
           <motion.div

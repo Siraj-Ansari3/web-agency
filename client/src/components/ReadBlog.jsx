@@ -111,7 +111,7 @@ const ReadBlog = ({ id }) => {
             className="flex items-center gap-2 text-white hover:text-red-400 transition-colors"
           >
             <FiArrowLeft className="text-lg" />
-            <span className="font-medium">Back to Blogs</span>
+            <span className="font-medium">Back</span>
           </button>
           <div className="text-sm text-gray-300 flex items-center gap-2">
             <FiCalendar className="text-red-400" />
