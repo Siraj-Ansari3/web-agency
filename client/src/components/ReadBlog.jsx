@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import 'quill/dist/quill.snow.css';
 import axios from "axios";
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
@@ -15,6 +15,12 @@ const ReadBlog = ({ id }) => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterMsg, setNewsletterMsg] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Memoized reading time calculation
   const readingTime = useMemo(() => {
@@ -59,7 +65,6 @@ const ReadBlog = ({ id }) => {
     fetchBlog();
   }, [fetchBlog]);
 
-  // Optimized newsletter submit handler
   const handleNewsletterSubmit = useCallback((e) => {
     e.preventDefault();
     if (newsletterEmail.trim()) {
@@ -69,10 +74,16 @@ const ReadBlog = ({ id }) => {
     }
   }, [newsletterEmail]);
 
-  // Optimized back navigation
+  // Optimized back navigation with scroll to top
   const handleBackNavigation = useCallback(() => {
-    window.history.back();
-  }, []);
+    // Scroll to top immediately
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    
+    // Then navigate back after a tiny delay
+    setTimeout(() => {
+      navigate(-2);
+    }, 10);
+  }, [navigate]);
 
   // Loading state
   if (isLoading) {
@@ -111,7 +122,7 @@ const ReadBlog = ({ id }) => {
             className="flex items-center gap-2 text-white hover:text-red-400 transition-colors"
           >
             <FiArrowLeft className="text-lg" />
-            <span className="font-medium">Back to Blogs</span>
+            <span className="font-medium">Go Back</span>
           </button>
           <div className="text-sm text-gray-300 flex items-center gap-2">
             <FiCalendar className="text-red-400" />

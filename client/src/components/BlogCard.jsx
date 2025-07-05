@@ -20,10 +20,10 @@ const BlogCard = ({ data: item }) => {
   return (
     <div
       onClick={() => navigate(`/blog/${item.blog_id}`)}
-      className="group relative bg-black text-white rounded-3xl overflow-hidden shadow-xl hover:shadow-red-600 transition-all duration-300 cursor-pointer w-full max-w-md mx-auto my-8 border border-gray-400"
+      className="group relative bg-black text-white rounded-xl overflow-hidden shadow-xl hover:shadow-red-600 transition-all duration-300 cursor-pointer min-w-[260px] max-w-[320px] md:min-w-[300px] md:max-w-[360px] min-h-[260px] md:min-h-[320px] border-2 border-red-600 mx-auto my-6"
     >
       {/* Image section with overlay */}
-      <div className="relative w-full h-60 flex-shrink-0 overflow-hidden group" onClick={() => navigate(`/blog/${item.blog_id}`)} style={{ cursor: 'pointer' }}>
+      <div className="relative w-full h-48 flex-shrink-0 overflow-hidden group" onClick={() => navigate(`/blog/${item.blog_id}`)} style={{ cursor: 'pointer' }}>
         <img
           src={item.image}
           alt={item.title}
@@ -48,27 +48,23 @@ const BlogCard = ({ data: item }) => {
       </div>
 
       {/* Text section */}
-      <div className="p-6 sm:p-8 space-y-4 bg-amber-00 h-[250px] ">
-        <div className="flex flex-col justify-between h-full">
-        <h2 className="text-xl sm:text-2xl font-bold group-hover:text-red-400 transition-colors line-clamp-2">
+      <div className="p-5 flex flex-col justify-between h-[180px]">
+        <h2 className="text-lg font-bold group-hover:text-red-400 transition-colors line-clamp-2">
           {item.title}
         </h2>
-        <p className="text-gray-300 text-sm sm:text-base line-clamp-3">
+        <p className="text-gray-300 text-sm line-clamp-3">
           {getFirstWords(item.content?.text)}
         </p>
-
-       
 
         <button
           onClick={(e) => {
             e.stopPropagation();
             navigate(`/blog/${item.blog_id}`);
           }}
-          className="mt-4 inline-block bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white text-sm px-5 py-2 rounded-full transition-all duration-300 shadow hover:shadow-lg"
+          className="mt-4 inline-block bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white text-xs px-4 py-2 rounded-full transition-all duration-300 shadow hover:shadow-lg"
         >
           Read More
         </button>
-        </div>
       </div>
     </div>
   );

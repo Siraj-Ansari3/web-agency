@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const PortfolioCard = ({ longSS, category, id, title, description }) => {
   return (
     <motion.div
-      className="group relative h-[400px] w-full overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-900 transition-all duration-500"
+      className="group relative min-h-[260px] md:min-h-[320px] min-w-[260px] max-w-[320px] md:min-w-[300px] md:max-w-[360px] w-full overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300"
       whileHover={{ 
         scale: 1.03,
         boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)",
@@ -16,10 +16,10 @@ const PortfolioCard = ({ longSS, category, id, title, description }) => {
       transition={{ duration: 0.5 }}
     >
       {/* Glow Effect on Hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 via-red-500/0 to-red-500/0 group-hover:from-red-500/10 group-hover:via-red-500/5 group-hover:to-red-500/10 transition-all duration-500 rounded-2xl z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 via-red-500/0 to-red-500/0 group-hover:from-red-500/10 group-hover:via-red-500/5 group-hover:to-red-500/10 transition-all duration-500 rounded-xl z-10" />
       
       {/* Image Wrapper */}
-      <div className="absolute inset-0 h-full w-full overflow-hidden rounded-2xl">
+      <div className="absolute inset-0 h-full w-full overflow-hidden rounded-xl">
         <motion.img
           src={longSS}
           alt={category}
@@ -51,16 +51,16 @@ const PortfolioCard = ({ longSS, category, id, title, description }) => {
         whileHover={{ y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="bg-white/95 backdrop-blur-md rounded-b-2xl p-5 flex flex-col space-y-2 shadow-xl border-t border-red-500/20" >
+        <div className="bg-black/95 backdrop-blur-md rounded-b-xl p-5 flex flex-col space-y-2 shadow-xl border-t border-red-500/20" >
          
           
           {/* Title with enhanced typography */}
-          <h3 className="text-lg font-bold text-gray-900 truncate group-hover:text-red-600 transition-colors duration-300" title={title}>
+          <h3 className="text-lg font-bold text-white truncate group-hover:text-red-600 transition-colors duration-300" title={title}>
             {title}
           </h3>
           
           {/* Description with better readability */}
-          <p className="text-gray-700 text-sm line-clamp-2 mb-2 leading-relaxed">{description}</p>
+          <p className="text-gray-300 text-sm line-clamp-2 mb-2 leading-relaxed">{description}</p>
           
           {/* Enhanced Button */}
           <motion.div

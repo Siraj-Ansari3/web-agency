@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // import testimonials from '../../data/testimonials/testimonialsData';
+import avitar from '../../assets/testimonial-avitar/testimonail-avitar.png'
 
 const TestimonialSlider = ({testimonials}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,17 +85,20 @@ const TestimonialSlider = ({testimonials}) => {
                   }
                 }}
               >
-                <div className="relative flex flex-col items-center w-full max-w-xl mx-auto">
-                  {/* Avatar Floating Above Card */}
-                  <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20">
-                    <div className="rounded-full p-1 bg-black shadow-2xl">
-                      <img
-                        className="w-28 h-28 rounded-full object-cover border-4 border-red-600 shadow-xl"
-                        src={testimonials[currentIndex].avatar}
-                        alt={testimonials[currentIndex].name}
-                      />
-                    </div>
-                  </div>
+<div className="relative flex flex-col items-center w-full max-w-xl mx-auto">
+  {/* Avatar Floating Above Card - Tightly fitted */}
+  <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20">
+    <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-red-600 shadow-xl">
+      <img
+        className="w-full h-full object-cover bg-white"
+        src={testimonials[currentIndex].avatar || avitar}
+        alt={testimonials[currentIndex].name}
+        onError={(e) => {
+          e.target.src = avitar;
+        }}
+      />
+    </div>
+  </div>
                   {/* Glassmorphism Card */}
                   <div className="relative bg-black/90 border-4 border-red-600 rounded-3xl shadow-2xl pt-20 pb-10 px-8 flex flex-col items-center w-full min-h-[340px] mt-12 overflow-hidden ring-2 ring-red-700/60">
                     {/* Glowing Red Border Effect */}

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiHome, FiUser, FiSettings, FiGrid, FiFileText, FiMail } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../media/general/logo.png";
+import logo from "../../assets/logo/Marsev.png";
 
 const SideBar = ({ navItems, isOpen, setisOpen }) => {
   const location = useLocation();
