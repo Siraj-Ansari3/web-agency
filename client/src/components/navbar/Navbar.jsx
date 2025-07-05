@@ -131,7 +131,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side - Admin/CTA */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             {admin ? (
               <div className="relative flex items-center">
                 {/* Profile Icon */}

@@ -13,12 +13,12 @@ const Footer = () => {
 
   return (
     <footer className="bg-black text-white pt-16 pb-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About - Full width on mobile, then normal */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <div className="flex items-center">
-              <img src={logo} alt="Agency Logo" className="w-30 object-contain" />
+          <div className="md:col-span-2 lg:col-span-1 flex flex-col items-start justify-start">
+            <div className="flex items-center mb-2 ml-[-30px]">
+              <img src={logo} alt="Agency Logo" className="w-30  object-contain" />
               <span className="text-2xl font-bold">Marsev</span>
             </div>
             <p className="text-gray-400 mb-6">

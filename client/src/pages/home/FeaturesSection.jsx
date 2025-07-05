@@ -64,7 +64,7 @@ const FeaturesSection = () => {
               </div>
             );
           })}
-        </div>
+                  </div>
 
         {/* Horizontal Scroller for small screens only */}
         <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 lg:hidden scrollbar-hide">
@@ -89,7 +89,7 @@ const FeaturesSection = () => {
                 <button onClick={() => openModal(feature)} className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium text-center block transition-all hover:from-red-700 hover:to-red-800">
                   Learn More
                 </button>
-              </div>
+          </div>
             );
           })}
         </div>
