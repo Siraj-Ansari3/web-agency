@@ -5,11 +5,13 @@ import axios from "axios";
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
 import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
 
+const defaultUserIcon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=";
+
 const ReadBlog = ({ id }) => {
   const [blog, setBlog] = useState({
-    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: ""}
+    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: "" }
   });
-  const [relatedBlogs, setRelatedBlogs] = useState([]);
+  const [relatedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newsletterEmail, setNewsletterEmail] = useState("");
@@ -39,20 +41,20 @@ const ReadBlog = ({ id }) => {
   // Optimized fetch function with useCallback
   const fetchBlog = useCallback(async () => {
     if (!id) return;
-    
+
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blog/?id=${id}`);
       setBlog(response.data.blog);
-      
+
       // Uncomment when you want to fetch related blogs
       // const relatedResponse = await axios.get(
       //   import.meta.env.VITE_SERVER_DOMAIN + `/blog/get-blogs/?category=${response.data.blog.category}&limit=3`
       // );
       // setRelatedBlogs(relatedResponse.data.blogs.filter(b => b.blog_id !== id));
-      
+
     } catch (err) {
       setError(err.message || 'Failed to load blog');
       console.error('Error fetching blog:', err);
@@ -101,7 +103,7 @@ const ReadBlog = ({ id }) => {
         <div className="text-center">
           <div className="text-red-500 text-xl mb-4">Error loading blog</div>
           <div className="text-gray-400 mb-4">{error}</div>
-          <button 
+          <button
             onClick={handleBackNavigation}
             className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
           >
@@ -122,7 +124,7 @@ const ReadBlog = ({ id }) => {
             className="flex items-center gap-2 text-white hover:text-red-400 transition-colors"
           >
             <FiArrowLeft className="text-lg" />
-            <span className="font-medium">Go Back</span>
+            <span className="font-medium">Back</span>
           </button>
           <div className="text-sm text-gray-300 flex items-center gap-2">
             <FiCalendar className="text-red-400" />
@@ -132,7 +134,7 @@ const ReadBlog = ({ id }) => {
       </header>
 
       {/* Hero Section */}
-      <div 
+      <div
         className="relative h-[48vh] min-h-[260px] max-h-[500px] bg-black overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.5)), url(${blog.image})`,
@@ -150,11 +152,15 @@ const ReadBlog = ({ id }) => {
               {blog.title}
             </h1>
             <div className="flex items-center gap-4 flex-wrap">
-              <img 
-                src={blog?.author?.image} 
-                alt={blog?.author?.firstName} 
-                className="w-10 h-10 rounded-full border-2 border-red-500" 
+              <img
+                src={blog?.author?.image}
+                alt={blog?.author?.firstName}
+                className="w-10 h-10 rounded-full border-2 border-red-500"
                 loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = defaultUserIcon;
+                }}
               />
               <div>
                 <div className="font-medium text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</div>
@@ -176,12 +182,12 @@ const ReadBlog = ({ id }) => {
             <div dangerouslySetInnerHTML={{ __html: blog.content.html }} />
           </div>
         </article>
-        
+
         {/* Tags */}
         {blog.tags && blog.tags.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2">
             {blog.tags.map((tag, idx) => (
-              <span 
+              <span
                 key={`${tag}-${idx}`}
                 className="px-3 py-1 bg-red-700 text-white rounded-full text-xs font-semibold shadow hover:bg-red-600 transition-colors"
               >
@@ -190,16 +196,16 @@ const ReadBlog = ({ id }) => {
             ))}
           </div>
         )}
-        
+
         {/* Author Section Redesigned */}
         <section className="mt-14">
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-black rounded-2xl p-4 sm:p-6 md:p-8 border border-red-700 shadow-lg w-full">
             <div className="relative flex-shrink-0">
               <span className="absolute -inset-1 rounded-full bg-gradient-to-tr from-red-600 to-red-900 blur-sm opacity-70"></span>
-              <img 
-                src={blog?.author?.image} 
-                alt={blog?.author.firstName} 
-                className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-4 border-red-600 shadow-lg z-10 bg-black object-cover" 
+              <img
+                src={blog?.author?.image}
+                alt={blog?.author.firstName}
+                className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-4 border-red-600 shadow-lg z-10 bg-black object-cover"
                 loading="lazy"
               />
             </div>
@@ -232,16 +238,16 @@ const ReadBlog = ({ id }) => {
             <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-red-500 mb-6 sm:mb-8 pl-2 sm:pl-4 uppercase tracking-wider">Suggested Blogs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {relatedBlogs.map((relatedBlog) => (
-                <div 
-                  key={relatedBlog.blog_id} 
+                <div
+                  key={relatedBlog.blog_id}
                   className="bg-black border border-red-900 rounded-xl shadow-lg overflow-hidden hover:shadow-red-700 transition-shadow cursor-pointer flex flex-col min-h-[320px]"
                   onClick={() => navigate(`/blog/${relatedBlog.blog_id}`)}
                 >
                   {relatedBlog.image && (
                     <div className="h-36 sm:h-40 md:h-48 overflow-hidden">
-                      <img 
-                        src={relatedBlog.image} 
-                        alt={relatedBlog.title} 
+                      <img
+                        src={relatedBlog.image}
+                        alt={relatedBlog.title}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />

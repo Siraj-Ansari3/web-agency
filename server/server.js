@@ -73,7 +73,7 @@ app.use("/project", projectRoute)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('MongoDB connection established');
-    app.listen(process.env.PORT, '0.0.0.0', () => {
+    app.listen(process.env.PORT, () => {
       console.log(`Server up on port ${process.env.PORT}`);
     });
   })
