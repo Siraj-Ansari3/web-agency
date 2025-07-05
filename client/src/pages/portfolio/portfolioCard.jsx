@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const PortfolioCard = ({ longSS, category, id, title, description }) => {
   return (
     <motion.div
-      className="group relative min-h-[260px] md:min-h-[320px] min-w-[260px] max-w-[320px] md:min-w-[300px] md:max-w-[360px] w-full overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300"
+      className="group relative w-full h-full min-h-[260px] md:min-h-[320px] overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300"
       whileHover={{ 
         scale: 1.03,
         boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)",

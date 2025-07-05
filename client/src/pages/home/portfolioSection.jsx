@@ -40,20 +40,22 @@ const PortfolioSection = ({ portfolioMeta }) => {
       </div>
 
       {/* Cards Container */}
-      <div className="relative bg-green-00 z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {/* <BlogCard data={lastThreeBlogs} /> */}
-        {projects?.map((item) => {
-          return (
-            <PortfolioCard
-              key={item.project_id}
-              longSS={item.longSS}
-              category={item.category}
-              id={item.project_id}
-              title={item.title}
-              description={item.description}
-            />
-          );
-        })}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+          {projects?.map((item) => {
+            return (
+              <div key={item.project_id} className="w-full">
+                <PortfolioCard
+                  longSS={item.longSS}
+                  category={item.category}
+                  id={item.project_id}
+                  title={item.title}
+                  description={item.description}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

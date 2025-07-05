@@ -24,7 +24,7 @@ const BlogCard = ({ data: item }) => {
   return (
     <div
       onClick={() => navigate(`/blog/${item.blog_id}`)}
-      className="group relative bg-black text-white rounded-xl overflow-hidden shadow-xl hover:shadow-red-600 transition-all duration-300 cursor-pointer min-w-[260px] max-w-[320px] md:min-w-[300px] md:max-w-[360px] min-h-[260px] md:min-h-[320px] border-2 border-red-600 mx-auto my-6"
+      className="group relative bg-black text-white rounded-xl overflow-hidden shadow-xl hover:shadow-red-600 transition-all duration-300 cursor-pointer w-full h-full min-h-[260px] md:min-h-[320px] border-2 border-red-600"
     >
       {/* Image section with overlay */}
       <div className="relative w-full h-48 flex-shrink-0 overflow-hidden group" onClick={() => navigate(`/blog/${item.blog_id}`)} style={{ cursor: 'pointer' }}>

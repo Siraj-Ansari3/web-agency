@@ -33,17 +33,23 @@ const BlogSection = ({ blogMeta }) => {
   return (
     <section className="relative py-10 sm:py-16 md:py-20 bg-black overflow-hidden">
       {/* Heading */}
-      <div className="text-center pt-8 pb-8 sm:pt-12 sm:pb-12 md:pt-16 md:pb-16 text-black">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-2 md:mb-4">{blogMeta.title}</h2>
-        <p className="max-w-xl mx-auto mt-2 sm:mt-4 text-xs sm:text-sm md:text-base text-gray-700">
+      <div className="text-center pt-8 pb-8 sm:pt-12 sm:pb-12 md:pt-16 md:pb-16">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-2 md:mb-4 text-white">
+          {blogMeta.title}
+        </h2>
+        <p className="max-w-xl mx-auto mt-2 sm:mt-4 text-xs sm:text-sm md:text-base text-gray-400">
           {blogMeta.subtitle}
         </p>
       </div>
       {/* Cards Container */}
-      <div className="relative z-10 max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-        {blogs.map(blog => (
-          <BlogCard key={blog.blog_id} data={blog} />
-        ))}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+          {blogs.map(blog => (
+            <div key={blog.blog_id} className="w-full">
+              <BlogCard data={blog} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

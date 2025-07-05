@@ -1,4 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState } from 'react';
+import features from '../../data/features/featuresData';
+import { Link } from 'react-router-dom';
 import { 
   FaBolt, 
   FaShieldAlt,
@@ -7,270 +9,113 @@ import {
   FaChartLine,
   FaCog 
 } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+
+const iconMap = {
+  FaBolt,
+  FaShieldAlt,
+  FaMobile,
+  FaRocket,
+  FaChartLine,
+  FaCog,
+};
 
 const FeaturesSection = () => {
-  const scrollRef = useRef(null);
-  
-  const features = [
-    {
-      icon: <FaBolt className="text-red-500 text-2xl" />,
-      title: "Lightning Fast",
-      stat: "0.8s Load Time",
-      highlight: "300% Faster",
-      description: "Web apps that load instantly"
-    },
-    {
-      icon: <FaShieldAlt className="text-red-500 text-2xl" />,
-      title: "Ironclad Security",
-      stat: "100% Secure",
-      highlight: "Zero Breaches",
-      description: "Military-grade protection"
-    },
-    {
-      icon: <FaMobile className="text-red-500 text-2xl" />,
-      title: "Perfect on Mobile",
-      stat: "100% Score",
-      highlight: "All Devices",
-      description: "Flawless on every screen"
-    },
-    {
-      icon: <FaRocket className="text-red-500 text-2xl" />,
-      title: "Easy Scaling",
-      stat: "10M+ Users",
-      highlight: "Zero Downtime",
-      description: "Grows with your business"
-    },
-    {
-      icon: <FaChartLine className="text-red-500 text-2xl" />,
-      title: "Real Analytics",
-      stat: "Live Data",
-      highlight: "Actionable Insights",
-      description: "Make smart decisions"
-    },
-    {
-      icon: <FaCog className="text-red-500 text-2xl" />,
-      title: "Always Updated",
-      stat: "24/7 Support",
-      highlight: "Auto-Updates",
-      description: "We handle maintenance"
-    },
-    {
-      icon: <FaBolt className="text-red-500 text-2xl" />,
-      title: "SEO Optimized",
-      stat: "#1 Ranking",
-      highlight: "Top Results",
-      description: "Boost your visibility"
-    },
-    {
-      icon: <FaShieldAlt className="text-red-500 text-2xl" />,
-      title: "GDPR Ready",
-      stat: "100% Compliant",
-      highlight: "Privacy First",
-      description: "Data protection guaranteed"
-    }
-  ];
+  const [modalFeature, setModalFeature] = useState(null);
 
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const card = container.querySelector('.feature-card');
-    if (card) {
-      container.scrollLeft = card.offsetLeft - (container.offsetWidth / 2) + (card.offsetWidth / 2);
-    }
-  }, []);
+  const openModal = (feature) => setModalFeature(feature);
+  const closeModal = () => setModalFeature(null);
 
   return (
-    <section className="relative py-16 bg-black overflow-hidden">
-      {/* Glowing red accents */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-red-500 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-1/3 -right-20 w-80 h-80 bg-red-500 rounded-full filter blur-3xl"></div>
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 bg-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Headline */}
-        <div className="text-center mb-12">
-          <motion.h2 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
-          >
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl  sm:text-4xl lg:text-5xl font-bold text-white">
             Professional Web Apps That <span className="text-red-500">Deliver</span>
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-lg text-gray-300 max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="text-gray-400 text-lg mt-2">
             Built for speed, security, and scalability
-          </motion.p>
+          </p>
         </div>
 
-        {/* Feature cards with horizontal scroll on small screens */}
-        <div className="features-scroll-container">
-          {/* Grid layout for large screens */}
-          {/* Removed grid layout for large screens */}
-
-          {/* Horizontal scroll for all screen sizes */}
-          <div
-            className="flex features-list gap-3 md:gap-4 p-2 md:p-4 overflow-x-auto overflow-y-hidden"
-            ref={scrollRef}
-          >
-            {features.map((feature, index) => (
-              <motion.div
+        {/* Grid Layout for large screens only */}
+        <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature, index) => {
+            const Icon = iconMap[feature.icon];
+            return (
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                whileHover={{ 
-                  y: -5,
-                  borderColor: "#ef4444",
-                  boxShadow: "0 10px 30px -10px rgba(239, 68, 68, 0.3)"
-                }}
-                className="feature-card bg-black border-2 border-red-600 rounded-xl min-w-[260px] max-w-[320px] md:min-w-[300px] md:max-w-[360px] min-h-[260px] md:min-h-[320px] p-3 sm:p-4 md:p-6 flex-shrink-0 text-white shadow-xl hover:shadow-red-600 transition-all duration-300"
+                className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600"
               >
-                <div className="flex flex-col h-full">
-                  <div className="mb-2 sm:mb-3">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-white mb-1 sm:mb-2">{feature.title}</h3>
-                  <div className="flex items-baseline gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className="text-base sm:text-xl font-bold text-red-500">{feature.stat}</span>
-                    <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
-                      {feature.highlight}
-                    </span>
-                  </div>
-                  <p className="text-gray-300 mb-2 sm:mb-3 flex-grow text-xs sm:text-sm">{feature.description}</p>
-                  <div className="w-full h-px bg-gray-800 mb-1 sm:mb-2"></div>
-                  <div className="text-red-500 font-medium flex items-center text-xs sm:text-sm">
-                    Learn more
-                    <svg className="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
+                <div className="flex justify-center mb-5">
+                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center">
+                    {Icon && <Icon className="text-white text-3xl" />}
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-300 mb-4 flex-grow">{feature.description}</p>
+                <div className="mb-4">
+                  <p className="text-red-400 font-medium text-sm">{feature.stat}</p>
+                  <p className="text-gray-400 text-xs">{feature.highlight}</p>
+                </div>
+                <button onClick={() => openModal(feature)} className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium text-center block transition-all hover:from-red-700 hover:to-red-800">
+                  Learn More
+                </button>
+              </div>
+            );
+          })}
         </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-16 text-center"
-        >
-          <button
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all transform hover:scale-105"
-            onClick={() => {
-              window.location.href = '/contact';
-            }}
-          >
-            Get Started Today
-          </button>
-          <p className="text-gray-500 mt-3 text-sm">
-            No obligation - just answers
-          </p>
-        </motion.div>
+        {/* Horizontal Scroller for small screens only */}
+        <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 lg:hidden scrollbar-hide">
+          {features.map((feature, index) => {
+            const Icon = iconMap[feature.icon];
+            return (
+              <div
+                key={index}
+                className="flex-shrink-0 w-48 sm:w-60 md:w-72 min-h-[220px] sm:min-h-[300px] flex flex-col bg-black rounded-xl p-4 sm:p-6 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600"
+              >
+                <div className="flex justify-center mb-5">
+                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center">
+                    {Icon && <Icon className="text-white text-3xl" />}
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-300 mb-4 flex-grow">{feature.description}</p>
+                <div className="mb-4">
+                  <p className="text-red-400 font-medium text-sm">{feature.stat}</p>
+                  <p className="text-gray-400 text-xs">{feature.highlight}</p>
+                </div>
+                <button onClick={() => openModal(feature)} className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium text-center block transition-all hover:from-red-700 hover:to-red-800">
+                  Learn More
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <style jsx>{`
-        .features-scroll-container {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .features-list {
-          display: flex;
-          gap: 16px;
-          overflow-x: auto;
-          padding: 16px 0;
-          flex: 1;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          align-items: stretch;
-        }
-
-        .features-list::-webkit-scrollbar {
-          display: none;
-        }
-
-        .feature-card {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: stretch;
-          min-width: 280px;
-          max-width: 320px;
-          height: 100%;
-          min-height: 280px;
-          box-sizing: border-box;
-          background: #000000;
-          border-radius: 16px;
-          padding: 24px;
-          box-shadow: none;
-          transition: all 0.4s ease;
-          border: 1px solid #374151;
-          position: relative;
-          overflow: hidden;
-          flex-shrink: 0;
-        }
-
-        .feature-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #dc2626, #b91c1c);
-          transform: scaleX(0);
-          transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.3);
-        }
-
-        .feature-card:hover::before {
-          transform: scaleX(1);
-        }
-
-        @media (max-width: 768px) {
-          .features-scroll-container {
-            gap: 8px;
-          }
-
-          .features-list {
-            gap: 12px;
-            padding: 12px 0;
-          }
-
-          .feature-card {
-            min-width: 260px;
-            max-width: 280px;
-            min-height: 260px;
-            padding: 20px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .feature-card {
-            min-width: 240px;
-            max-width: 260px;
-            min-height: 240px;
-            padding: 16px;
-          }
-        }
-      `}</style>
+      {/* Modal Popup for Feature Details */}
+      {modalFeature && (() => {
+        const Icon = iconMap[modalFeature.icon];
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+            <div className="bg-black border border-red-700/50 rounded-2xl shadow-xl max-w-xl w-full p-8 flex flex-col items-center relative animate-fadeIn">
+              <button onClick={closeModal} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+              <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center mb-6 shadow-lg">
+                {Icon && <Icon className="text-white text-3xl" />}
+              </div>
+              <h1 className="text-3xl font-bold text-white mb-2 text-center">{modalFeature.title}</h1>
+              <div className="flex gap-3 mb-4">
+                <span className="inline-block bg-red-700/90 text-white text-xs font-bold px-3 py-1 rounded-full shadow">{modalFeature.stat}</span>
+                <span className="inline-block bg-gray-800 text-red-300 text-xs font-semibold px-3 py-1 rounded-full">{modalFeature.highlight}</span>
+              </div>
+              <p className="text-gray-300 text-center text-lg mb-6">{modalFeature.longDescription}</p>
+              <button onClick={closeModal} className="mt-4 px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium shadow hover:from-red-700 hover:to-red-800 transition-all">Close</button>
+            </div>
+          </div>
+        );
+      })()}
     </section>
   );
 };
