@@ -2,7 +2,7 @@ import React from 'react';
 
 const DashboardHome = () => {
   return (
-    <div>
+    <div >
       <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[1, 2, 3].map((item) => (

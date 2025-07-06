@@ -1,11 +1,22 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiHome, FiUser, FiSettings, FiGrid, FiFileText, FiMail } from "react-icons/fi";
+import { FiX, FiHome, FiUser, FiSettings, FiGrid, FiFileText, FiMail, FiLogOut, FiShield } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext';
 import logo from "../../assets/logo/Marsev.png";
 
 const SideBar = ({ navItems, isOpen, setisOpen }) => {
   const location = useLocation();
+  const { admin, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      setisOpen(false);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   // Prevent body scroll when sidebar is open
   useEffect(() => {
@@ -142,6 +153,83 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                       );
                     })}
                   </div>
+
+                  {/* Admin Section */}
+                  {admin && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="mt-8 pt-6 border-t border-white/10"
+                    >
+                      <div className="mb-4">
+                        <h3 className="text-white/60 text-sm font-medium uppercase tracking-wider mb-3 px-4">
+                          Admin Panel
+                        </h3>
+                      </div>
+                      
+                      {/* Admin Profile */}
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="mb-3"
+                      >
+                        <div className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10">
+                          <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-500 rounded-full flex items-center justify-center">
+                            <FiShield className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-white font-medium text-sm">
+                              {admin.name || admin.email || 'Admin User'}
+                            </p>
+                            <p className="text-gray-400 text-xs">Administrator</p>
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* Admin Dashboard Link */}
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="mb-3"
+                      >
+                        <Link
+                          to="/admin/dashboard"
+                          onClick={() => setisOpen(false)}
+                          className="group flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-300 text-white hover:bg-red-600/20 hover:border-red-500/30 border border-transparent"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 rounded-lg transition-all duration-300 bg-white/10 text-white group-hover:bg-red-600/20 group-hover:text-red-400">
+                              <FiSettings className="w-5 h-5" />
+                            </div>
+                            <span className="font-medium tracking-wide">
+                              Dashboard
+                            </span>
+                          </div>
+                        </Link>
+                      </motion.div>
+
+                      {/* Logout Button */}
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <button
+                          onClick={handleLogout}
+                          className="group flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-300 text-red-400 hover:bg-red-600/20 hover:border-red-500/30 border border-transparent"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 rounded-lg transition-all duration-300 bg-white/10 text-red-400 group-hover:bg-red-600/20">
+                              <FiLogOut className="w-5 h-5" />
+                            </div>
+                            <span className="font-medium tracking-wide">
+                              Logout
+                            </span>
+                          </div>
+                        </button>
+                      </motion.div>
+                    </motion.div>
+                  )}
                 </nav>
 
                 {/* Footer */}
@@ -149,26 +237,49 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 }}
-                  className="p-6 border-t border-white/10  mb-8"
+                  className="p-6 border-t border-white/10 mb-8"
                 >
-                  <div className="bg-whie/5 backdrop-blur-sm border border-white/10  rounded-xl p-4">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-500 rounded-full flex items-center justify-center">
-                        <FiUser className="w-5 h-5 text-white" />
+                  {admin ? (
+                    // Admin is logged in - show admin info
+                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-500 rounded-full flex items-center justify-center">
+                          <FiShield className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-white font-medium">Admin Panel</p>
+                          <p className="text-gray-400 text-sm">Manage your website</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-white font-medium">Ready to start?</p>
-                        <p className="text-gray-400 text-sm">Let's build something amazing</p>
-                      </div>
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setisOpen(false)}
+                        className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-medium text-center block hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105"
+                      >
+                        Go to Dashboard
+                      </Link>
                     </div>
-                    <Link
-                      to="/contact"
-                      onClick={() => setisOpen(false)}
-                      className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-medium text-center block hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
+                  ) : (
+                    // Admin is not logged in - show login option
+                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-500 rounded-full flex items-center justify-center">
+                          <FiUser className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-white font-medium">Admin Access</p>
+                          <p className="text-gray-400 text-sm">Login to manage website</p>
+                        </div>
+                      </div>
+                      <Link
+                        to="/admin/signin"
+                        onClick={() => setisOpen(false)}
+                        className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-medium text-center block hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105"
+                      >
+                        Login as Admin
+                      </Link>
+                    </div>
+                  )}
                 </motion.div>
               </div>
             </div>
