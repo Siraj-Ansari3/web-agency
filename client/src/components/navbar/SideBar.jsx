@@ -160,7 +160,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.6 }}
-                      className="mt-8 pt-6 border-t border-white/10"
+                      className="mt-8 pt-6 border-t border-white/10 "
                     >
                       <div className="mb-4">
                         <h3 className="text-white/60 text-sm font-medium uppercase tracking-wider mb-3 px-4">
@@ -239,7 +239,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                   transition={{ delay: 0.8 }}
                   className="p-6 border-t border-white/10 mb-8"
                 >
-                  {admin ? (
+                  {admin && (
                     // Admin is logged in - show admin info
                     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
                       <div className="flex items-center space-x-3 mb-3">
@@ -259,27 +259,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                         Go to Dashboard
                       </Link>
                     </div>
-                  ) : (
-                    // Admin is not logged in - show login option
-                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-500 rounded-full flex items-center justify-center">
-                          <FiUser className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">Admin Access</p>
-                          <p className="text-gray-400 text-sm">Login to manage website</p>
-                        </div>
-                      </div>
-                      <Link
-                        to="/admin/signin"
-                        onClick={() => setisOpen(false)}
-                        className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-medium text-center block hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105"
-                      >
-                        Login as Admin
-                      </Link>
-                    </div>
-                  )}
+                  ) }
                 </motion.div>
               </div>
             </div>

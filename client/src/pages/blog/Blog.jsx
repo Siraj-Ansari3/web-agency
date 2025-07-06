@@ -93,7 +93,7 @@ const Blog = () => {
       />
 
       {/* Modern Search & Filter Section */}
-      <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 xl:px-20">
+      <section className="py-8 sm:py-12 px-12 sm:px-6 lg:px-8 xl:px-20">
         <div className="max-w-4xl mx-auto">
           {/* Desktop Search Bar */}
           <div className="hidden md:block">

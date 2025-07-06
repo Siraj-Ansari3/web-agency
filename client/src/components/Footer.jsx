@@ -12,7 +12,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-black text-white pt-16 pb-8">
+    <footer className="bg-black text-white pt-16 md:px-10 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About - Full width on mobile, then normal */}
@@ -53,7 +53,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {['Home', 'About Us', 'Services', 'Portfolio', 'Blog', 'Contact'].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-gray-400 hover:text-red-500 transition-colors text-sm md:text-base">
+                  <a href="#" className="text-gray-400 hover:text-red-500  transition-colors text-sm md:text-base">
                     {link}
                   </a>
                 </li>
@@ -104,7 +104,7 @@ const Footer = () => {
 
         {/* Newsletter Subscription - Full width at the bottom */}
         <div className="w-full flex justify-center mt-12">
-          <div className="bg-black border-2 border-red-600 rounded-2xl shadow-lg p-6 flex flex-col items-center w-full max-w-2xl mx-auto">
+          <div className="bg-black border-1 border-red-600 rounded-2xl shadow-lg p-6 flex flex-col items-center w-full max-w-2xl mx-auto">
             <h3 className="text-lg font-semibold mb-2 text-white">Subscribe to our Newsletter</h3>
             <p className="text-gray-400 text-sm mb-4 text-center">Get the latest updates, news, and offers straight to your inbox.</p>
             <form className="w-full flex flex-col sm:flex-row gap-2" onSubmit={handleSubmit}>

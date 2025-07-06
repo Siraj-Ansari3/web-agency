@@ -13,7 +13,7 @@ const SocialMediaBar = () => {
   // Hide on admin dashboard routes
   if (location.pathname.startsWith('/admin/dashboard')) return null;
   return (
-    <div className="hidden md:flex flex-col fixed left-4 top-3/5 z-40 space-y-3">
+    <div className="hidden md:flex flex-col fixed left-0 bg-amber-20 top-1/2 z-40 space-y-2">
       {socials.map(({ icon, url, label, color }) => (
         <a
           key={label}
@@ -25,7 +25,7 @@ const SocialMediaBar = () => {
           style={{ transition: 'all 0.3s cubic-bezier(.4,2,.6,1)' }}
         >
           <span
-            className={`flex items-center justify-center w-12 h-12 rounded-full bg-black shadow-md border-2 border-white group-hover:border-red-600 group-hover:shadow-red-400 group-hover:shadow-lg transition-all duration-300`}
+            className={`flex items-center justify-center w-10 h-10  bg-black shadow-md border-1 border-white group-hover:border-red-600 group-hover:shadow-red-400 group-hover:shadow-lg transition-all duration-300`}
             style={{
               boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
             }}
@@ -39,7 +39,6 @@ const SocialMediaBar = () => {
           </span>
         </a>
       ))}
-      <div className="w-0.5 h-16 bg-red-600 mx-auto mt-2" />
     </div>
   );
 };

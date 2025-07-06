@@ -56,7 +56,7 @@ const BlogCard = ({ data: item }) => {
       </div>
 
       {/* Text section */}
-      <div className="p-5 flex flex-col justify-between h-[180px]">
+      <div className="p-5 flex flex-col justify-between h-[210px]">
         <h2 className="text-lg font-bold group-hover:text-red-400 transition-colors line-clamp-2">
           {item.title}
         </h2>

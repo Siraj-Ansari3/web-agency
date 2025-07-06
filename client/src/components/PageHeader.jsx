@@ -173,9 +173,10 @@ const PageHeader = ({
           {/* Stats - Responsive grid */}
           {showStats && stats.length > 0 && (
             <motion.div
-              variants={itemVariants}
-              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-8 sm:mt-12 max-w-4xl mx-auto"
-            >
+  variants={itemVariants}
+  className=" grid place-content-center gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
+  style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}
+>
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}

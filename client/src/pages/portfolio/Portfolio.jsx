@@ -64,7 +64,7 @@ const Portfolio = () => {
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-12 py-12">
         {/* Category Filter */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
                     {allCategories.map((cat) => (

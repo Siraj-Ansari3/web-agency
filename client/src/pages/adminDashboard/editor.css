@@ -1,17 +1,16 @@
 /* --- Modern Clean Quill Toolbar Dropdown Styles --- */
 .ql-toolbar {
-  background: #cde1f4;
-  border-radius: 0.5rem 0.5rem 0 0;
-  border: 1px solid #e5e7eb;
+  background: #989899;
+  border-radius: 0;
   padding: 0.7rem 1.2rem 0.5rem 1.2rem;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   box-shadow: 0 2px 8px 0 rgba(30, 64, 175, 0.05);
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem 1.1rem;
   align-items: center;
   position: sticky;
-  top: 0;
+  top: -25px;
   z-index: 100;
   width: 100%;
   max-width: 100vw;
@@ -133,7 +132,7 @@
 .ql-toolbar .ql-picker-label:hover,
 .ql-toolbar .ql-picker-label.ql-active {
   background: #e0e7ff;
-  color: #2563eb;
+  color: #0a0c0e;
   border-color: #2563eb;
   box-shadow: 0 2px 8px 0 rgba(59, 130, 246, 0.10);
 }

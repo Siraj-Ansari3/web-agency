@@ -2,10 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 @import 'react-quill-new/dist/quill.snow.css'; 
 
-body{
-  background-color: #e5e7eb;
-}
-/* Hide scrollbar while maintaining scroll functionality */
+
 .no-scrollbar {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
@@ -30,7 +27,7 @@ body{
 }
 body{
   background-color: white;
-  padding-top: 80px; /* Account for fixed navbar */
+  padding-top: 80px; 
 }
 .ql-font-serif {
   font-family: 'serif';
@@ -61,9 +58,6 @@ body{
 }
 
 
-/* body, * {
-  cursor: none !important;
-} */
 
 .ql-editor a {
   color: #2563eb;
