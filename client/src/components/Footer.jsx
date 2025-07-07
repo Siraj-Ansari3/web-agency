@@ -1,6 +1,7 @@
 import React from 'react';
 import services from '../data/services/servicesData';
 import logo from '../assets/logo/Marsev.png';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const handleSubmit = (e) => {
@@ -12,7 +13,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-black text-white pt-16 md:px-10 pb-8">
+    <footer className="bg-black text-white md:pt-16 md:px-10 pb-8 border-t-1 border-red-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About - Full width on mobile, then normal */}
@@ -51,11 +52,12 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {['Home', 'About Us', 'Services', 'Portfolio', 'Blog', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-gray-400 hover:text-red-500  transition-colors text-sm md:text-base">
-                    {link}
-                  </a>
+              {[
+                {page:'Home',route:'./'},{page:'About Us',route:'/about'} ,{page:'Services',route:'/services'} ,{page:'Portfolio',route:'/portfolio'} ,{page:'Blog',route:'/blog'} ,{page:'Contact',route:'/contact'} , '', '', '',].map((link) => (
+                <li key={link.route}>
+                  <Link to={link.route} className="text-gray-400 hover:text-red-500  transition-colors text-sm md:text-base">
+                    {link.page}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -67,9 +69,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {services.map((service) => (
                 <li key={service.id}>
-                  <a href="#" className="text-gray-400 hover:text-red-500 transition-colors text-sm md:text-base">
+                  <span className="text-gray-400  text-sm md:text-base">
                     {service.title}
-                  </a>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -83,20 +85,20 @@ const Footer = () => {
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>wegagency@gmail.com</span>
+                <span>support@marsevtech.com</span>
               </div>
               <div className="flex items-start">
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>000-1111-2222-333-444</span>
+                <span>+92 3493157551</span>
               </div>
               <div className="flex items-start">
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>123 Business Ave, New York, NY 10001</span>
+                <span>Karachi Pakistan</span>
               </div>
             </address>
           </div>
@@ -127,7 +129,7 @@ const Footer = () => {
 
         {/* Copyright - Centered and properly spaced */}
         <div className="border-t border-red-900 mt-8 pt-6 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} WEG Agency. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} MarsevTech. All rights reserved.</p>
         </div>
       </div>
     </footer>

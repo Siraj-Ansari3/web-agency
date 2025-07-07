@@ -41,7 +41,7 @@ const AppContent = () => {
       {element}
       <SocialMediaBar />
       {!shouldHideNavbar && <GoToTopButton />}
-      <Footer />
+      {!shouldHideNavbar && !pathname.startsWith("/admin/dashboard")&&<Footer />}
     </>
   );
 };
