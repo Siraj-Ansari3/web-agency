@@ -64,6 +64,17 @@
   gap: 16px;
 }
 
+.services-list {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 20px 0;
+  flex: 1;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  align-items: stretch;
+}
+
 .scroll-button {
   background: #000000;
   border: 2px solid #dc2626;
@@ -124,21 +135,6 @@
   margin: auto;
   width: 1.8em;
   height: 1.8em;
-}
-
-.services-list {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  padding: 20px 0;
-  flex: 1;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  align-items: stretch;
-}
-
-.services-list::-webkit-scrollbar {
-  display: none;
 }
 
 .service-card {
