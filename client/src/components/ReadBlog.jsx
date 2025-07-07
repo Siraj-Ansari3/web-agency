@@ -83,7 +83,7 @@ const ReadBlog = ({ id }) => {
     
     // Then navigate back after a tiny delay
     setTimeout(() => {
-      navigate(-2);
+      navigate(-1);
     }, 10);
   }, [navigate]);
 
