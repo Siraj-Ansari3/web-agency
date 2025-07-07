@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/PageHeader';
 import SkeletonLoader from '../../components/SkeletonLoader';
 import axios from 'axios';
+import GridPattern from '../../components/GridPattern';
 
 const iconMap = {
   MdWeb: <MdWeb className="text-xl" />,
@@ -66,7 +67,8 @@ const Services = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <div className="bg-black">
+    <div className="relative">
+      <GridPattern/>
       {/* Page Header */}
       <PageHeader
         title="Services"
@@ -87,7 +89,7 @@ const Services = () => {
       />
 
       {/* Services Content */}
-      <div className="relative py-20 bg-black to-gray-900 overflow-hidden">
+      <div className="relative py-20 bg-blak to-gray-900 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-5">
           {[...Array(12)]?.map((_, i) => (

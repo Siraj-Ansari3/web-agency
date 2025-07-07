@@ -80,13 +80,13 @@ const PageHeader = ({
             className="absolute bottom-24 sm:bottom-32 left-1/4 w-1 sm:w-1.5 h-1 sm:h-1.5 bg-purple-500/30 rounded-full"
           />
           
-          {/* Grid pattern */}
+          {/* Grid pattern
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
               backgroundSize: '20px 20px'
             }}></div>
-          </div>
+          </div> */}
         </div>
       </div>
 

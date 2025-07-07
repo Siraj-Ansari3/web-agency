@@ -78,6 +78,7 @@ const Hero = ({ data }) => {
 
   return (
     <section className="relative min-h-screen flex items-center  overflow-hidden">
+      
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-5 w-full z-10">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Content Section */}

@@ -27,6 +27,7 @@ import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
 import defaultImg from "../../assets/default-member.png";
 import SkeletonLoader from '../../components/SkeletonLoader';
+import GridPattern from '../../components/GridPattern';
 
 const iconMap = {
   FiLayers,
@@ -113,7 +114,8 @@ const About = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <section className="bg-black min-h-screen pt-8 pb-16">
+    <section className="bg-blac relative min-h-screen pt-8 pb-16">
+      <GridPattern/>
       {/* About Header */}
       <div
         className="text-center mb-16 px-4"
