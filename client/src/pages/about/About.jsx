@@ -58,12 +58,12 @@ const About = () => {
     whyChooseUs: [],
     cta: {}
   };
-  
+
   const [pageData, setPageData] = useState(initialState);
   const [steps, setSteps] = useState({
     title: "",
     subtitle: "",
-    steps: []        
+    steps: []
   });
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -351,7 +351,7 @@ const About = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold text-white mb-2">
-            Our <span className="text-red-500">{steps.title}</span>
+            <span className="text-red-500">{steps.title}</span>
           </h2>
           <p className="text-gray-300 max-w-xl mx-auto">
             {steps.subtitle}

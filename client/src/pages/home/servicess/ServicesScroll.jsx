@@ -39,7 +39,7 @@ export default function ServicesScroll({services}) {
           <div className="services-list p-10 flex flex-row" style={{padding: '3rem'}} ref={scrollRef}>
             {services.items.map((item, idx) => (
               <div key={item.id + '-' + idx} className="service-card">
-                <div className="service-icon">
+                <div className="bg-red-600 service-icon">
                   {iconMap[item.icon]}
                 </div>
                 <h3 className="service-title">{item.title}</h3>
@@ -52,7 +52,7 @@ export default function ServicesScroll({services}) {
                     </li>
                   ))}
                 </ul>
-                <button className="service-learn-more" onClick={() => navigate('/contact', { state: { serviceId: item.id } })}>
+                <button className="bg-red-600 service-learn-more" onClick={() => navigate('/contact', { state: { serviceId: item.id } })}>
                   Contact Us
                 </button>
               </div>

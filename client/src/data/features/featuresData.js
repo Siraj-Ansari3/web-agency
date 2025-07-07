@@ -2,7 +2,7 @@ const features = [
   {
     icon: "FaBolt",
     title: "Lightning Fast",
-    stat: "0.8s Load Time",
+    stat: "< 2s Load Time",
     highlight: "300% Faster",
     slug: "lightning-fast",
     description: "Our web apps are optimized for speed, ensuring your users never have to wait.",
@@ -43,15 +43,6 @@ const features = [
     slug: "real-analytics",
     description: "Make informed decisions with real-time analytics.",
     longDescription: "Track user behavior, conversions, and more with our intuitive analytics dashboards. Get actionable insights in real time to drive your business forward and make smarter decisions."
-  },
-  {
-    icon: "FaCog",
-    title: "Always Updated",
-    stat: "24/7 Support",
-    highlight: "Auto-Updates",
-    slug: "always-updated",
-    description: "Stay ahead with automatic updates and round-the-clock support.",
-    longDescription: "We handle all maintenance and updates, so you never have to worry about falling behind. Our support team is available 24/7 to assist you, ensuring your web app is always running smoothly and securely."
   },
   {
     icon: "FaBolt",
