@@ -23,30 +23,40 @@ const Contact = () => {
     setErrors({ ...errors, [e.target.name]: undefined });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
+  if (Object.keys(validationErrors).length > 0) return;
 
-    emailjs.sendForm(
-      'service_lxawnud',      // ✅ Your EmailJS Service ID
-      'template_chhsgx8',     // ✅ Your EmailJS Template ID
+  // Send to Admin
+  emailjs.sendForm(
+    'service_lxawnud',
+    'template_chhsgx8',
+    formRef.current,
+    't5oxR8sG0RJvos3qR'
+  )
+  .then(() => {
+    // Then send auto-reply to user
+    return emailjs.sendForm(
+      'service_lxawnud',
+      'template_psv4eke',
       formRef.current,
-      't5oxR8sG0RJvos3qR'     // ✅ Your EmailJS Public Key
-    )
-    .then(() => {
-      setSubmitted(true);
-      setForm(initialForm);
-      setTimeout(() => setSubmitted(false), 3000);
-    })
-    .catch((err) => {
-      console.error('EmailJS Error:', err);
-    });
-  };
+      't5oxR8sG0RJvos3qR'
+    );
+  })
+  .then(() => {
+    setSubmitted(true);
+    setForm(initialForm);
+    setTimeout(() => setSubmitted(false), 3000);
+  })
+  .catch((err) => {
+    console.error('EmailJS Error:', err);
+  });
+};
 
   return (
-    <section className="min-h-screen w-full flex flex-col items-center justify-center bg-black relative overflow-x-hidden">
+    <section className="min-h-screen  w-full flex flex-col items-center justify-center bg-black relative overflow-x-hidden">
       <div className="absolute top-0 left-0 w-full z-0">
         <svg viewBox="0 0 1440 220" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-40 md:h-56">
           <path fill="#ef4444" d="M0,160 C480,240 960,80 1440,160 L1440,0 L0,0 Z" />
