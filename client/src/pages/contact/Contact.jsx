@@ -72,7 +72,7 @@ const Contact = () => {
         {/* Form Side */}
         <div className="flex-1 p-8 md:p-12">
 
-          <h2 className="text-lg font-semibold text-red-400 mb-6">Send us a message</h2>
+          <h2 className="text-lg font-semibold text-red-400 mb-6">Request a Quote</h2>
           {submitted && (
             <div className="mb-4 p-3 rounded bg-green-100 text-green-800 text-sm font-semibold border border-green-300 animate-fade-in">
               Sent successfully! We have received your message.
@@ -124,14 +124,14 @@ const Contact = () => {
               type="submit"
 
               disabled={isSubmitting}
-              className={`mt-2 px-8 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow transition-all duration-200 w-44 text-sm tracking-widest flex items-center gap-2 ${
+              className={`mt-2 px-5 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow transition-all duration-200 max-w-35 text-sm tracking-widest flex items-center gap-2 ${
                 isSubmitting 
                   ? 'opacity-50 cursor-not-allowed' 
                   : 'hover:from-red-700 hover:to-red-600 hover:shadow-xl'
               }`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              {isSubmitting ? 'Sending...' : submitted ? 'Thank you!' : 'SEND MESSAGE'}
+              {isSubmitting ? 'Sending...' : submitted ? 'Thank you!' : 'SEND'}
             </button>
           </form>
         </div>
@@ -144,10 +144,10 @@ const Contact = () => {
           <ul className="space-y-5 text-sm pl-4">
             
             <li className="flex items-start gap-3">
-              <span className="mt-1">📞</span> +92 3493157551
+              <span className="">📞</span> <p>+92 3493157551</p>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1">✉️</span> support@marsevtech.com
+              <span className="">✉️</span> <p>support@marsevtech.com</p>
             </li>
           </ul>
         </div>
