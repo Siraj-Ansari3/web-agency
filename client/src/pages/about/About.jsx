@@ -75,6 +75,7 @@ const About = () => {
       try {
         const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
         setPageData(aboutData.data);
+        console.log(aboutData)
       } catch (err) {
         console.log(err);
       } finally {
