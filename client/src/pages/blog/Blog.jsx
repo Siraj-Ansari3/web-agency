@@ -4,6 +4,7 @@ import BlogCard from "../../components/BlogCard";
 import PageHeader from "../../components/PageHeader";
 import axios from "axios";
 import SkeletonLoader from '../../components/SkeletonLoader';
+import GridPattern from "../../components/GridPattern";
 
 const CARDS_PER_PAGE = 6;
 
@@ -72,7 +73,9 @@ const Blog = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <div className="bg-black">
+    <div className="relative">
+              <GridPattern/>
+
       {/* Page Header */}
       <PageHeader
         title="Blog & Insights"
@@ -93,7 +96,7 @@ const Blog = () => {
       />
 
       {/* Modern Search & Filter Section */}
-      <section className="py-8 sm:py-12 px-12 sm:px-6 lg:px-8 xl:px-20">
+      <section className=" py-8 sm:py-12 px-12 sm:px-6 lg:px-8 xl:px-20">
         <div className="max-w-4xl mx-auto">
           {/* Desktop Search Bar */}
           <div className="hidden md:block">

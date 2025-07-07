@@ -4,6 +4,7 @@ import axios from 'axios';
 import PageHeader from '../../components/PageHeader';
 import SkeletonLoader from '../../components/SkeletonLoader';
 import PortfolioCard from './portfolioCard';
+import GridPattern from '../../components/GridPattern';
 
 const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState([]);
@@ -46,7 +47,8 @@ const Portfolio = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="relative min-h-screen">
+      <GridPattern/>
       <PageHeader
         title="Portfolio"
         subtitle="Our Work"

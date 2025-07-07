@@ -10,6 +10,8 @@ import PortfolioSection from './portfolioSection';
 import axios from 'axios'
 import { useLoading } from '../../context/LoadingContext';
 import SkeletonLoader from '../../components/SkeletonLoader';
+import GridPattern from '../../components/GridPattern';
+
 
 const Home = () => {
   const [homeData, setHomeData] = useState({
@@ -122,6 +124,7 @@ const Home = () => {
       <BlogSection blogMeta={homeData.blog} />
       <PortfolioSection portfolioMeta={homeData.portfolio} />
       <Testimonials testimonials={homeData.testimonials}/>
+            <GridPattern/>
     </section>
   )
 }
