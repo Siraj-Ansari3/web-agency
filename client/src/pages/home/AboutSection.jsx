@@ -48,6 +48,7 @@ const AboutSection = ({ data }) => {
             viewport={{ once: true }}
             className="lg:w-2/3"
           >
+
             <div className="bg-black/90 backdrop-blur-sm p-4 md:p-8 rounded-2xl border border-red-100 shadow-lg hover:shadow-xl transition-all">
               <p className="text-white text-md text-justify md:text-lg  leading-relaxed mb-6">
                {data.description}
@@ -118,10 +119,10 @@ const AboutSection = ({ data }) => {
               <ul className="space-y-3 pl-2">
                 {data.ourApproach.items.map((item, i) => (
                   <li className="flex items-start">
-                  <div className="bg-red-100 text-red-600 p-1 rounded-full mr-3 mt-1">
-                    <FiCheckCircle className="w-3 h-3" />
-                  </div>
-                  <span className="text-gray-200">{item}</span>
+                    <div className="bg-red-100 text-red-600 p-1 rounded-full mr-3 mt-1">
+                      <FiCheckCircle className="w-3 h-3" />
+                    </div>
+                    <span className="text-gray-200">{item}</span>
                   </li>
                 ))}
               </ul>
