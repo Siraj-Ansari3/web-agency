@@ -71,16 +71,16 @@ const Services = () => {
       <PageHeader
         title="Services"
         subtitle="Digital Solutions"
-        description="Explore our comprehensive suite of services designed to elevate your business and transform your digital presence."
+        description="From custom websites to full-stack solutions, we build digital experiences that drive results and meet real business goals."
         breadcrumbs={["Home", "Services"]}
         showBadge={true}
-        badgeText="Premium Services"
+        badgeText="Trusted by Clients"
         badgeColor="red"
         variant="gradient"
         showStats={true}
         stats={[
           { value: servicesData.items.length, label: "Services" },
-          { value: "500+", label: "Projects Completed" },
+          { value: "10+", label: "Projects Completed" },
           { value: "98%", label: "Client Satisfaction" },
           { value: "24/7", label: "Support" }
         ]}
