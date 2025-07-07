@@ -43,7 +43,7 @@ const Contact = () => {
       <div className="relative w-full max-w-4xl mx-auto mt-20 mb-16 rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden bg-black/80 backdrop-blur-lg border border-red-100 animate-fade-in group transition-transform duration-300 hover:scale-[1.015]">
         {/* Left: Form */}
         <div className="flex-1 p-8 md:p-12">
-          <h2 className="text-lg font-semibold text-red-400 mb-6">Send us a message</h2>
+          <h2 className="text-lg font-semibold text-red-400 mb-6">Request a Quote</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="relative">
@@ -117,7 +117,7 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="mt-2 px-8 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow hover:from-red-700 hover:to-red-600 hover:shadow-xl transition-all duration-200 w-44 text-sm tracking-widest flex items-center gap-2"
+              className="mt-2 px-2 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow hover:from-red-700 hover:to-red-600 hover:shadow-xl transition-all duration-200 w-44 text-sm tracking-widest flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               {submitted ? 'Thank you!' : 'SEND MESSAGE'}
