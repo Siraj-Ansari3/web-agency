@@ -28,6 +28,7 @@ import EditContactPage from "./pages/adminDashboard/pageBuilder/EditContactPage"
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./components/PageNotFound";
 import FeatureDetail from "./pages/features/FeatureDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -40,6 +41,7 @@ const routes = [
   { path: "/blog/:id", element: <BlogContent /> },
   { path: "/contact", element: <Contact /> },
   { path: "/features/:slug", element: <FeatureDetail /> },
+  { path: "/privacy-policy", element: <PrivacyPolicy /> },
 
   { path: "/admin-sign-up-portal", element: <AdminSignupPage /> },
   { path: "/admin-sign-in-portal", element: <AdminSigninPage /> },

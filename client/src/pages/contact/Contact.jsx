@@ -24,41 +24,42 @@ const Contact = () => {
     setErrors({ ...errors, [e.target.name]: undefined });
   };
 
- const handleSubmit = (e) => {
-  e.preventDefault();
-  const validationErrors = validate();
-  setErrors(validationErrors);
-  if (Object.keys(validationErrors).length > 0) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
 
-  setIsSubmitting(true);
+    setIsSubmitting(true);
 
-  // Send to Admin
-  emailjs.sendForm(
-    'service_lxawnud',
-    'template_chhsgx8',
-    formRef.current,
-    't5oxR8sG0RJvos3qR'
-  )
-  .then(() => {
-    // Then send auto-reply to user
-    return emailjs.sendForm(
+    // Send to Admin
+    emailjs.sendForm(
       'service_lxawnud',
-      'template_psv4eke',
+      'template_chhsgx8',
       formRef.current,
       't5oxR8sG0RJvos3qR'
-    );
-  })
-  .then(() => {
-    setSubmitted(true);
-    setForm(initialForm);
-    setIsSubmitting(false);
-    setTimeout(() => setSubmitted(false), 3000);
-  })
-  .catch((err) => {
-    console.error('EmailJS Error:', err);
-    setIsSubmitting(false);
-  });
-};
+    )
+      .then(() => {
+        // Then send auto-reply to user
+        return emailjs.sendForm(
+          'service_lxawnud',
+          'template_psv4eke',
+          formRef.current,
+          't5oxR8sG0RJvos3qR'
+        );
+      })
+      .then(() => {
+        setSubmitted(true);
+        setIsSubmitting(false);
+        setTimeout(() => setSubmitted(false), 3000);
+        setForm(initialForm);
+
+      })
+      .catch((err) => {
+        console.error('EmailJS Error:', err);
+        setIsSubmitting(false);
+      });
+  };
 
   return (
     <section className="min-h-screen  w-full flex flex-col items-center justify-center bg-black relative overflow-x-hidden">
@@ -92,9 +93,8 @@ const Contact = () => {
                     name={field.name}
                     value={form[field.name]}
                     onChange={handleChange}
-                    className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white  focus:outline-none focus:border-red-500 transition-all duration-200 ${
-                      errors[field.name] ? 'border-red-500' : 'border-gray-700'
-                    }`}
+                    className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white  focus:outline-none focus:border-red-500 transition-all duration-200 ${errors[field.name] ? 'border-red-500' : 'border-gray-700'
+                      }`}
                     placeholder=" "
                   />
                   <label className="absolute left-0 top-[-5px] text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-4 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
@@ -110,9 +110,8 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
                 rows={3}
-                className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white focus:outline-none focus:border-red-500 transition-all duration-200 resize-none ${
-                  errors.message ? 'border-red-500' : 'border-gray-700'
-                }`}
+                className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white focus:outline-none focus:border-red-500 transition-all duration-200 resize-none ${errors.message ? 'border-red-500' : 'border-gray-700'
+                  }`}
                 placeholder=" "
               />
               <label className="absolute left-0 top-[-5px] text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-4 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
@@ -120,19 +119,33 @@ const Contact = () => {
               </label>
               {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
             </div>
-            <button
-              type="submit"
-
-              disabled={isSubmitting}
-              className={`mt-2 px-5 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow transition-all duration-200 max-w-35 text-sm tracking-widest flex items-center gap-2 ${
-                isSubmitting 
-                  ? 'opacity-50 cursor-not-allowed' 
+            <>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`mt-2 px-5 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow transition-all duration-200 max-w-35 text-sm tracking-widest flex items-center gap-2 ${isSubmitting
+                  ? 'opacity-50 cursor-not-allowed'
                   : 'hover:from-red-700 hover:to-red-600 hover:shadow-xl'
-              }`}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              {isSubmitting ? 'Sending...' : submitted ? 'Thank you!' : 'SEND'}
-            </button>
+                  }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                {isSubmitting ? 'Sending...' : submitted ? 'Thank you!' : 'SEND'}
+              </button>
+
+              <p className="text-xs text-gray-400 mt-3">
+                We use your information only to respond to your message. Learn more in our{' '}
+                <a
+                  href="/privacy-policy"
+                  className="text-red-400 underline hover:text-red-300 transition-colors duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
+                </a>.
+              </p>
+
+            </>
+
           </form>
         </div>
 
@@ -142,7 +155,7 @@ const Contact = () => {
           <h3 className="text-lg font-semibold mb-4 pl-4">Contact Information</h3>
           <p className="text-sm mb-6 opacity-80 pl-4">We'd love to hear from you. Reach out anytime.</p>
           <ul className="space-y-5 text-sm pl-4">
-            
+
             <li className="flex items-start gap-3">
               <span className="">📞</span> <p>+92 3493157551</p>
             </li>
