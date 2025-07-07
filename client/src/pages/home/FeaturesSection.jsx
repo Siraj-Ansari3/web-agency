@@ -28,15 +28,13 @@ const FeaturesSection = () => {
   return (
     <section className="py-16 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Headline */}
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl  sm:text-4xl lg:text-5xl font-bold text-white">
-            Professional Web Apps That <span className="text-red-500">Deliver</span>
-          </h2>
-          <p className="text-gray-400 text-lg mt-2">
+        
+        <div className="services-header">
+        <h2 className="services-title">Web Apps That <span className="text-red-500">Deliver</span></h2>
+        <p className="services-description">
             Built for speed, security, and scalability
-          </p>
-        </div>
+        </p>
+      </div>
 
         {/* Grid Layout for large screens only */}
         <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

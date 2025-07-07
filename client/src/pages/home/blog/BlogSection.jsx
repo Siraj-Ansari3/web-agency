@@ -32,12 +32,11 @@ const BlogSection = ({ blogMeta }) => {
 
   return (
     <section className="relative py-10 sm:py-16 md:py-20 bg-black overflow-hidden">
-      {/* Heading */}
-      <div className="text-center pt-8 pb-8 sm:pt-12 sm:pb-12 md:pt-16 md:pb-16">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-2 md:mb-4 text-white">
-          {blogMeta.title}
-        </h2>
-        <p className="max-w-xl mx-auto mt-2 sm:mt-4 text-xs sm:text-sm md:text-base text-gray-400">
+      
+                {/* Heading */}
+      <div className="services-header">
+        <h2 className="services-title">{blogMeta.title}</h2>
+        <p className="services-description">
           {blogMeta.subtitle}
         </p>
       </div>

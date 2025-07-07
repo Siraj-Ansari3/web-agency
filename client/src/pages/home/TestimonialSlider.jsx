@@ -59,8 +59,11 @@ const TestimonialSlider = ({testimonials}) => {
             Client Voices
           </span>
           <h2 className="text-4xl font-extrabold text-white sm:text-5xl tracking-tight drop-shadow-lg">
-            What Our Clients Say
+           
           </h2>
+          <div className="services-header">
+        <h2 className="services-title"> What Our Clients Say</h2>
+      </div>
         </div>
 
         <div className="relative">
