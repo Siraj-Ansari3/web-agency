@@ -21,17 +21,17 @@ const Hero = ({ data }) => {
   const services = [
     {
       icon: FiGlobe,
-      title: "Business Websites",
+      title: "Business Systems",
       desc: "Professional & Effective",
       color: "#dc2626",
       features: ["SEO Optimized", "Mobile Responsive", "Fast Loading"],
     },
     {
       icon: FiLayout,
-      title: "Web Applications",
-      desc: "Powerful Solutions",
+      title: "Blogging Sites",
+      desc: "Fully SEO Blogging Websites ",
       color: "#b91c1c",
-      features: ["User Dashboards", "Real-time Data", "Secure Authentication"],
+      features: ["Blog Editor", "Attractive Reading Interface", "Admin Dashboard"],
     },
     {
       icon: FiShoppingCart,
@@ -101,14 +101,14 @@ const Hero = ({ data }) => {
                 {data.subtitle}
               </p>
 
-              <motion.div className="mb-8">
-                <div className="flex flex-wrap gap-3 mb-4">
+              <motion.div className="md:mb-8">
+                <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
                   {services.map((service, i) => (
                     <motion.span
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center px-4 py-2 bg-black border border-red-200 text-red-200 rounded-full hover:bg-red-900 transition-all shadow-sm"
+                      className="inline-flex items-center text-xs px-4 py-2 bg-black border border-red-200 text-red-200 rounded-full hover:bg-red-900 transition-all shadow-sm"
                     >
                       {service.title}
                     </motion.span>
