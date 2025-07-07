@@ -13,7 +13,6 @@
   display: none;  /* Safari and Chrome */
 }
 
-/* Additional scrollbar hiding class for portfolio */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
@@ -29,8 +28,7 @@
 body{
   background-color: black;
   padding-top: 80px;
-    font-family: "Poppins", sans-serif;
-  /* font-weight: 700; */
+  font-family: "Poppins", sans-serif;
   font-style: normal;
 
 

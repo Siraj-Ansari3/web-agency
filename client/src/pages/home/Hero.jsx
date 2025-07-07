@@ -97,7 +97,7 @@ const Hero = ({ data }) => {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">{data.title}</span>
               </h1>
 
-              <p className="text-xl text-gray-300 mb-6 max-w-lg">
+              <p className="sm:text-xl text-justify text-gray-300 mb-6 max-w-lg">
                 {data.subtitle}
               </p>
 
