@@ -11,7 +11,7 @@ const AboutSection = ({ data }) => {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header with animation */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -29,7 +29,15 @@ const AboutSection = ({ data }) => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">{data.title}</span>
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-red-400 to-red-600 mx-auto mb-6 rounded-full"></div>
-        </motion.div>
+        </motion.div> */}
+
+              {/* Heading */}
+      <div className="services-header">
+        <h2 className="services-title">{data.title}</h2>
+        <p className="services-description">
+          {data.tagline}
+        </p>
+      </div>
 
         <div className="flex flex-col lg:flex-row gap-12 items-start">
           {/* Main Content - Animated */}
@@ -40,10 +48,11 @@ const AboutSection = ({ data }) => {
             viewport={{ once: true }}
             className="lg:w-2/3"
           >
-            <div className="bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-100 shadow-lg hover:shadow-xl transition-all">
-              <p className="text-white text-md text-justify md:text-lg leading-relaxed mb-6">
-                {data.description}
-              </p>
+
+            <div className="bg-black/90 backdrop-blur-sm p-4 md:p-8 rounded-2xl border border-red-100 shadow-lg hover:shadow-xl transition-all">
+              <p className="text-white text-md text-justify md:text-lg  leading-relaxed mb-6">
+               {data.description}
+               </p>
 
 
               <div className="relative bg-gradient-to-br from-red-900/40 to-red-900/10 rounded-xl p-6 border-2 border-red-200 shadow-lg mb-6">
@@ -51,10 +60,10 @@ const AboutSection = ({ data }) => {
                   <FiZap className="w-5 h-5 text-yellow-500 animate-pulse" />
                 </div>
                 <p className="text-gray-100 text-lg font-medium leading-relaxed">
-                  <span className="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent font-bold">
+                  <span className="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent text-xl font-bold">
                     Our Mission →
 
-                  </span> {data.mission}</p>
+                  </span> <span className='text-md block'>{data.mission}</span></p>
               </div>
 
             </div>
@@ -78,14 +87,14 @@ const AboutSection = ({ data }) => {
                   {data.whatWeBuild.title}
                 </h3>
               </div>
-              <p className="text-gray-200 mb-4">
+              <p className="text-gray-200 mb-4 md:text-md text-justify">
                 {data.whatWeBuild.description}</p>
               <div className="grid grid-cols-2 gap-3">
                 {data.whatWeBuild.items.map((item, i) => (
                   <motion.div
                     key={i}
                     whileHover={{ scale: 1.03 }}
-                    className="bg-red-900/30 text-red-200 px-3 py-2 rounded-lg border border-red-200 text-sm font-medium text-center"
+                    className="bg-red-900/30 text-red-200 px-3 flex items-center justify-center py-2 rounded-lg border border-red-200 text-sm font-medium text-center"
                   >
                     {item}
                   </motion.div>

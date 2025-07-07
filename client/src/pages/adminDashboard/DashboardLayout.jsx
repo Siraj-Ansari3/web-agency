@@ -42,7 +42,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen -mt-[80px] ">
+    <div className="flex h-screen -mt-[80px] bg-white">
       {/* Mobile Sidebar Toggle */}
       <button
         className="md:hidden fixed top-4 left-4 z-30 p-2 rounded-md bg-gray-800 text-white"

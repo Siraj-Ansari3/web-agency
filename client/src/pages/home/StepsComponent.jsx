@@ -8,8 +8,13 @@ const StepsComponent = ({ steps, page = "undefined" }) => {
 
     <div className="max-w-6xl mx-auto p-6 md:p-10 font-sans">
       {page === "about" ? "" : <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-red-600 text-lg mb-2 uppercase">{steps.title}</h2>
-        <h1 className="text-white text-3xl md:text-4xl font-bold">{steps.subtitle}</h1>
+        
+          <div className="services-header">
+        <h2 className="services-title">{steps.title}</h2>
+        <p className="services-description">
+          {steps.subtitle}
+        </p>
+      </div>
       </div>}
 
       <div className="flex flex-col lg:flex-row gap-8 items-center">
