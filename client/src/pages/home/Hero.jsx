@@ -77,8 +77,8 @@ const Hero = ({ data }) => {
   const currentService = services[activeService];
 
   return (
-    <section className="relative min-h-screen flex items-center bg-black overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 w-full z-10">
+    <section className="relative min-h-screen flex items-center  overflow-hidden">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-5 w-full z-10">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Content Section */}
           <div className="w-full lg:w-1/2">
