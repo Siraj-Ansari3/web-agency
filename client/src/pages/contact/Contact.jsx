@@ -7,6 +7,7 @@ const Contact = () => {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef();
 
   const validate = () => {
@@ -29,6 +30,8 @@ const Contact = () => {
   setErrors(validationErrors);
   if (Object.keys(validationErrors).length > 0) return;
 
+  setIsSubmitting(true);
+
   // Send to Admin
   emailjs.sendForm(
     'service_lxawnud',
@@ -48,10 +51,12 @@ const Contact = () => {
   .then(() => {
     setSubmitted(true);
     setForm(initialForm);
+    setIsSubmitting(false);
     setTimeout(() => setSubmitted(false), 3000);
   })
   .catch((err) => {
     console.error('EmailJS Error:', err);
+    setIsSubmitting(false);
   });
 };
 
@@ -86,12 +91,12 @@ const Contact = () => {
                     name={field.name}
                     value={form[field.name]}
                     onChange={handleChange}
-                    className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white focus:outline-none focus:border-red-500 transition-all duration-200 ${
+                    className={`peer w-full border-b-2 px-0 py-2 bg-transparent text-white  focus:outline-none focus:border-red-500 transition-all duration-200 ${
                       errors[field.name] ? 'border-red-500' : 'border-gray-700'
                     }`}
                     placeholder=" "
                   />
-                  <label className="absolute left-0 top-1 text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-5 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
+                  <label className="absolute left-0 top-[-5px] text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-4 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
                     {field.label}
                   </label>
                   {errors[field.name] && <p className="text-red-500 text-xs mt-1">{errors[field.name]}</p>}
@@ -109,17 +114,22 @@ const Contact = () => {
                 }`}
                 placeholder=" "
               />
-              <label className="absolute left-0 top-1 text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-5 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
+              <label className="absolute left-0 top-[-5px] text-xs font-semibold text-gray-400 pointer-events-none transition-all duration-200 peer-focus:-translate-y-4 peer-focus:text-red-500 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500">
                 Message *
               </label>
               {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
             </div>
             <button
               type="submit"
-              className="mt-2 px-8 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow hover:from-red-700 hover:to-red-600 hover:shadow-xl transition-all duration-200 w-44 text-sm tracking-widest flex items-center gap-2"
+              disabled={isSubmitting}
+              className={`mt-2 px-8 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold rounded-full shadow transition-all duration-200 w-44 text-sm tracking-widest flex items-center gap-2 ${
+                isSubmitting 
+                  ? 'opacity-50 cursor-not-allowed' 
+                  : 'hover:from-red-700 hover:to-red-600 hover:shadow-xl'
+              }`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              {submitted ? 'Thank you!' : 'SEND MESSAGE'}
+              {isSubmitting ? 'Sending...' : submitted ? 'Thank you!' : 'SEND MESSAGE'}
             </button>
           </form>
         </div>
@@ -130,11 +140,9 @@ const Contact = () => {
           <h3 className="text-lg font-semibold mb-4 pl-4">Contact Information</h3>
           <p className="text-sm mb-6 opacity-80 pl-4">We'd love to hear from you. Reach out anytime.</p>
           <ul className="space-y-5 text-sm pl-4">
+            
             <li className="flex items-start gap-3">
-              <span className="mt-1">📍</span> 9757 Aspen Lane South Richmond Hill, NY 11419
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="mt-1">📞</span> +1 (291) 939 9321
+              <span className="mt-1">📞</span> +92 3493157551
             </li>
             <li className="flex items-start gap-3">
               <span className="mt-1">✉️</span> support@marsevtech.com
