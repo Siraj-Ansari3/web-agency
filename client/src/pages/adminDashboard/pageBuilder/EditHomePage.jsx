@@ -9,6 +9,7 @@ import { FaQuoteLeft, FaSlidersH, FaMobileAlt, FaPalette, FaExchangeAlt } from '
 import axios from 'axios';
 import { uploadImage } from '../../../common/aws';
 
+
 const EditHomePage = () => {
   // Initial state structure matching all homepage sections
   const [pageData, setPageData] = useState({
@@ -138,13 +139,13 @@ const EditHomePage = () => {
   };
 
   const addArrayItem = (arrayName, template) => {
-    if (arrayName === 'testimonials') {
-      setTestimonialAvatarFiles(prev => {
-        const newFiles = { ...prev };
-        delete newFiles[index];
-        return newFiles;
-      });
-    }
+    // if (arrayName === 'testimonials') {
+    //   setTestimonialAvatarFiles(prev => {
+    //     const newFiles = { ...prev };
+    //     delete newFiles[index];
+    //     return newFiles;
+    //   });
+    // }
 
     setPageData(prev => ({
       ...prev,
@@ -210,6 +211,8 @@ const EditHomePage = () => {
 
   // Handle testimonial avatars
   const handleTestimonialAvatarChange = (index, e) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
     const file = e.target.files[0];
     if (!file) return;
 
@@ -235,7 +238,7 @@ const EditHomePage = () => {
 
     try {
       let updatedPageData = { ...pageData };
-      console.log("about page posted" , updatedPageData)
+      console.log("about page posted", updatedPageData)
 
       // Array to hold all upload promises
       const uploadPromises = [];
@@ -251,11 +254,14 @@ const EditHomePage = () => {
 
       // Upload testimonial avatars
       Object.entries(testimonialAvatarFiles).forEach(([index, file]) => {
-        uploadPromises.push(
-          uploadImage(file).then(url => {
-            updatedPageData.testimonials[index].avatar = url;
-          })
-        );
+        const numIndex = parseInt(index);
+        if (!isNaN(numIndex)) {
+          uploadPromises.push(
+            uploadImage(file).then(url => {
+              updatedPageData.testimonials[index].avatar = url;
+            })
+          );
+        }
       });
 
       // Wait for all uploads to complete
