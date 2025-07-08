@@ -52,7 +52,7 @@ const TestimonialSlider = ({testimonials}) => {
   );
 
   return (
-    <section className="bg-black py-12 px-4 sm:px-6 lg:px-8 min-h-[600px] flex items-center">
+    <section className="bg-black py-12 px-4 sm:px-6 lg:px-8 flex items-center min-h-[480px] sm:min-h-[520px] md:min-h-[600px]">
       <div className="max-w-4xl mx-auto w-full">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1 text-base font-semibold text-white bg-gradient-to-r from-red-500/80 to-pink-500/80 rounded-full mb-4 shadow-lg">
@@ -67,7 +67,7 @@ const TestimonialSlider = ({testimonials}) => {
         </div>
 
         <div className="relative">
-          <div className="overflow-visible h-[440px] md:h-[400px] flex items-center justify-center">
+          <div className="overflow-visible flex items-center justify-center h-[400px] sm:h-[440px] md:h-[400px] lg:h-[400px]">
             <AnimatePresence custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -90,8 +90,8 @@ const TestimonialSlider = ({testimonials}) => {
               >
 <div className="relative flex flex-col items-center w-full max-w-xl mx-auto">
   {/* Avatar Floating Above Card - Tightly fitted */}
-  <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20">
-    <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-red-600 shadow-xl">
+  <div className="absolute -top-14 sm:-top-16 left-1/2 -translate-x-1/2 z-20">
+    <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-red-600 shadow-xl">
       <img
         className="w-full h-full object-cover bg-white"
         src={testimonials[currentIndex].avatar || avitar}
@@ -103,24 +103,24 @@ const TestimonialSlider = ({testimonials}) => {
     </div>
   </div>
                   {/* Glassmorphism Card */}
-                  <div className="relative bg-black/90 border-4 border-red-600 rounded-3xl shadow-2xl pt-20 pb-10 px-8 flex flex-col items-center w-full min-h-[340px] mt-12 overflow-hidden ring-2 ring-red-700/60">
+                  <div className="relative bg-black/90 border-4 border-red-600 rounded-3xl shadow-2xl pt-16 sm:pt-20 pb-8 sm:pb-10 px-4 sm:px-8 flex flex-col items-center w-full min-h-[280px] sm:min-h-[340px] max-h-[340px] sm:max-h-[340px] mt-10 sm:mt-12 overflow-hidden ring-2 ring-red-700/60">
                     {/* Glowing Red Border Effect */}
                     <div className="absolute inset-0 rounded-3xl pointer-events-none border-4 border-red-600 shadow-[0_0_32px_8px_rgba(220,38,38,0.5)]" style={{zIndex:0, opacity:0.7}} />
                     {/* Large Faded Quotation Mark */}
-                    <svg className="absolute top-8 left-8 w-24 h-24 text-white/10 z-0" fill="currentColor" viewBox="0 0 32 32">
+                    <svg className="absolute top-4 sm:top-8 left-4 sm:left-8 w-16 sm:w-24 h-16 sm:h-24 text-white/10 z-0" fill="currentColor" viewBox="0 0 32 32">
                       <text x="0" y="24" fontSize="32" fontWeight="bold">“</text>
                     </svg>
                     {/* Client Name */}
-                    <h3 className="text-2xl font-bold text-white mb-1 z-10 drop-shadow-lg">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 z-10 drop-shadow-lg">
                       {testimonials[currentIndex].name}
                     </h3>
                     {/* Client Role */}
-                    <p className="text-pink-300 text-base mb-6 z-10 font-medium">
+                    <p className="text-pink-300 text-sm sm:text-base mb-4 sm:mb-6 z-10 font-medium">
                       {testimonials[currentIndex].role}
                     </p>
                     {/* Review Content */}
-                    <div className="relative flex-1 w-full z-10">
-                      <p className="text-white/90 leading-relaxed text-center px-4 md:px-8 text-lg font-medium">
+                    <div className="relative flex-1 w-full z-10 flex items-center justify-center">
+                      <p className="text-white/90 leading-relaxed text-center px-2 sm:px-4 md:px-8 text-xs sm:text-sm font-medium line-clamp-5">
                         "{testimonials[currentIndex].content}"
                       </p>
                     </div>
@@ -135,19 +135,19 @@ const TestimonialSlider = ({testimonials}) => {
           {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 sm:-ml-14 bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 sm:-ml-14 bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600  focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
             aria-label="Previous testimonial"
           >
-            <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 sm:-mr-14 bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
+            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 sm:-mr-14  bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
             aria-label="Next testimonial"
           >
-            <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
