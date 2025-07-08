@@ -4,7 +4,6 @@ import BlogCard from "../../components/BlogCard";
 import PageHeader from "../../components/PageHeader";
 import axios from "axios";
 import SkeletonLoader from '../../components/SkeletonLoader';
-import GridPattern from "../../components/GridPattern";
 
 const CARDS_PER_PAGE = 6;
 
@@ -74,8 +73,6 @@ const Blog = () => {
 
   return (
     <div className="relative">
-              <GridPattern/>
-
       {/* Page Header */}
       <PageHeader
         title="Blog & Insights"

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import GridPattern from '../../components/GridPattern';
 
 const initialForm = { user_name: '', user_email: '', phone: '', company: '', message: '' };
 
@@ -64,7 +63,6 @@ const Contact = () => {
 
   return (
     <section className="min-h-screen  w-full flex flex-col items-center justify-center bg-black relative overflow-x-hidden">
-      <GridPattern/>
       <div className="absolute top-0 left-0 w-full z-0">
         <svg viewBox="0 0 1440 220" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-40 md:h-56">
           <path fill="#ef4444" d="M0,160 C480,240 960,80 1440,160 L1440,0 L0,0 Z" />
@@ -154,8 +152,8 @@ const Contact = () => {
         {/* Info Side */}
         <div className="w-full md:w-80 bg-white text-black flex flex-col justify-center p-8 md:p-10 relative animate-slide-in">
           <div className="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-red-400 to-red-700 rounded-full" />
-          <h3 className="text-lg font-semibold mb-4 pl-4">Let’s Build Something Great Together.</h3>
-          <p className="text-sm mb-6 opacity-80 pl-4">Have a question or project in mind? Drop us a message — we’re just a click away.</p>
+          <h3 className="text-lg font-semibold mb-4 pl-4">Let's Build Something Great Together.</h3>
+          <p className="text-sm mb-6 opacity-80 pl-4">Have a question or project in mind? Drop us a message — we're just a click away.</p>
           <ul className="space-y-5 text-sm pl-4">
 
             <li className="flex items-start gap-3">

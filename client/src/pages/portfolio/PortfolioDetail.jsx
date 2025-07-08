@@ -14,19 +14,11 @@ import {
   FiChevronLeft,
   FiX,
 } from "react-icons/fi";
-import { FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
-import { SiTailwindcss, SiMongodb, SiTypescript, SiJavascript } from "react-icons/si";
+import { FaReact, FaNodeJs, FaGithub, FaHtml5, FaCss3Alt, FaJs, FaAngular, FaJava, FaPhp, FaLaravel, FaGitAlt, FaAws } from "react-icons/fa";
+import { SiTailwindcss, SiMongodb, SiExpress, SiRedux, SiTypescript, SiNextdotjs, SiDjango, SiMysql, SiPostgresql, SiSass, SiBootstrap, SiJquery, SiCplusplus, SiGo, SiRuby, SiSwift, SiKotlin, SiFirebase, SiGraphql, SiDocker, SiVuedotjs } from "react-icons/si";
 import portfolioData from "../../data/portfolio/portfolioData";
 import axios from "axios";
-
-const techIcons = {
-  React: <FaReact className="text-blue-500" />,
-  "Node.js": <FaNodeJs className="text-green-600" />,
-  "Tailwind CSS": <SiTailwindcss className="text-cyan-400" />,
-  MongoDB: <SiMongodb className="text-green-700" />,
-  TypeScript: <SiTypescript className="text-blue-600" />,
-  JavaScript: <SiJavascript className="text-yellow-500" />,
-};
+import { getTechIcon } from "./techIcons.jsx";
 
 const PortfolioDetail = () => {
   const { project_id } = useParams();
@@ -370,38 +362,28 @@ const PortfolioDetail = () => {
 
             <div className="relative group">
               <div className="flex overflow-x-auto gap-4 sm:gap-6 pb-4 no-scrollbar snap-x snap-mandatory">
-                {(project.techStack || ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS", "TypeScript"]).map((tech, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    className="flex-shrink-0 w-64 sm:w-72 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 snap-center"
-                  >
-                    <div className="text-4xl sm:text-5xl mb-4 flex justify-center">
-                      {techIcons[tech] || <FaReact className="text-gray-400" />}
-                    </div>
-                    <h3 className="font-bold text-lg sm:text-xl mb-2">{tech}</h3>
-                    <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-                      {tech === "React" && "Frontend library for building user interfaces"}
-                      {tech === "Node.js" && "JavaScript runtime environment for server-side development"}
-                      {tech === "MongoDB" && "NoSQL database for flexible data storage"}
-                      {tech === "Express" && "Web application framework for Node.js"}
-                      {tech === "Tailwind CSS" && "Utility-first CSS framework for rapid UI development"}
-                      {tech === "TypeScript" && "Type-safe JavaScript for better development experience"}
-                    </p>
-                  </motion.div>
-                ))}
+                {(project.techStack || ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS", "TypeScript"]).map((tech, index) => {
+                  const key = tech?.trim().toLowerCase();
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{ scale: 1, y: 0 }}
+                      className="flex-shrink-0 w-64 sm:w-72 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 snap-center"
+                    >
+                      <div className="text-4xl sm:text-5xl mb-4 flex justify-center">
+                        {getTechIcon(tech) || tech}
+                      </div>
+                      <h3 className="font-bold text-lg sm:text-xl mb-0">{tech}</h3>
+                    </motion.div>
+                  );
+                })}
               </div>
 
-              {/* Scroll Indicators */}
-              <div className="flex justify-center mt-6 space-x-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <div className="w-2 h-2 bg-white/30 rounded-full"></div>
-                <div className="w-2 h-2 bg-white/30 rounded-full"></div>
-              </div>
+              
             </div>
           </motion.div>
         </div>

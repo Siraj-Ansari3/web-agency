@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { MdWeb, MdBusiness, MdPhotoLibrary, MdShoppingBasket, MdDashboard, MdBuild } from 'react-icons/md';
-import GridPattern from '../../components/GridPattern';
 
 const serviceData = [
   {
@@ -56,8 +55,6 @@ const ServiceDetail = () => {
 
   return (
     <div className="relative max-w-3xl mx-auto p-8 bg-black rounded-xl shadow-md mt-10">
-              <GridPattern/>
-
       <div className="flex items-center mb-6">
         <div className="mr-4 text-red-500">{service.icon}</div>
         <h1 className="text-3xl font-bold text-white">{service.title}</h1>

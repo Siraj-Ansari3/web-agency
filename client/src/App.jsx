@@ -9,6 +9,7 @@ import GoToTopButton from "./components/GoToTopButton";
 import SocialMediaBar from "./components/SocialMediaBar";
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
 import SkeletonLoader from "./components/SkeletonLoader";
+import GetQuoteButton from "./components/GetQuoteButton";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -40,6 +41,7 @@ const AppContent = () => {
       {!shouldHideNavbar && <Navbar />}
       {element}
       <SocialMediaBar />
+      <GetQuoteButton />
       {!shouldHideNavbar && <GoToTopButton />}
       {!shouldHideNavbar && !pathname.startsWith("/admin/dashboard")&&<Footer />}
     </>

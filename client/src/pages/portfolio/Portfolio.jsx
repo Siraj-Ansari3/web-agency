@@ -4,7 +4,6 @@ import axios from 'axios';
 import PageHeader from '../../components/PageHeader';
 import SkeletonLoader from '../../components/SkeletonLoader';
 import PortfolioCard from './portfolioCard';
-import GridPattern from '../../components/GridPattern';
 
 const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState([]);
@@ -52,7 +51,6 @@ const Portfolio = () => {
 
   return (
     <div className="relative min-h-screen">
-      <GridPattern/>
       <PageHeader
         title="Portfolio"
         subtitle="Our Work"
@@ -72,7 +70,7 @@ const Portfolio = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-12 py-12">
         {/* Category Filter - Fixed */}
-        <div className="flex flex-wrap gap-4 mb-8 justify-center">
+        {/* <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {allCategories.map((cat) => (
             <button
               key={cat}
@@ -89,7 +87,7 @@ const Portfolio = () => {
               {cat}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full md:px-5">
