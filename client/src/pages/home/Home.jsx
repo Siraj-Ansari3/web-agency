@@ -115,7 +115,7 @@ const Home = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <section className="relative bg-black overflow-hidden lg:px-20 sm:px-8">
+    <section className="bg-black overflow-hidden lg:px-20 sm:px-8">
       <Hero data={homeData.hero} />
       <AboutSection data={homeData.about} />
       <FeaturesSection features={homeData.features} />
