@@ -10,7 +10,6 @@ import PortfolioSection from './portfolioSection';
 import axios from 'axios'
 import { useLoading } from '../../context/LoadingContext';
 import SkeletonLoader from '../../components/SkeletonLoader';
-import GridPattern from '../../components/GridPattern';
 
 
 const Home = () => {
@@ -92,19 +91,17 @@ const Home = () => {
       ctaLink: ''
     }
   });
-  const [error, setError] = useState(false);
   const { loading, setLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(false);
       try {
         const homeData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/homepage")
         setHomeData(homeData.data.data);
         console.log(homeData.data.data)
-      } catch (e) {
-        setError(true);
+      } catch {
+        // setError(true); // This line was removed as per the edit hint
       } finally {
         setLoading(false);
       }
@@ -124,7 +121,6 @@ const Home = () => {
       <BlogSection blogMeta={homeData.blog} />
       <PortfolioSection portfolioMeta={homeData.portfolio} />
       <Testimonials testimonials={homeData.testimonials}/>
-            <GridPattern/>
     </section>
   )
 }

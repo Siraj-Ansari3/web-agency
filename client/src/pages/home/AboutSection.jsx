@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { FiLayers, FiUsers, FiCheckCircle, FiZap } from 'react-icons/fi';
 import { TbSparkles } from 'react-icons/tb';
 
@@ -41,7 +40,7 @@ const AboutSection = ({ data }) => {
 
         <div className="flex flex-col lg:flex-row gap-12 items-start">
           {/* Main Content - Animated */}
-          <motion.div
+          <div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -67,10 +66,10 @@ const AboutSection = ({ data }) => {
               </div>
 
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column - Services */}
-          <motion.div
+          <div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -90,20 +89,19 @@ const AboutSection = ({ data }) => {
               <p className="text-gray-200 mb-4 md:text-md text-justify">
                 {data.whatWeBuild.description}</p>
               <div className="grid grid-cols-2 gap-3">
-                {data.whatWeBuild.items.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.03 }}
+                {data.whatWeBuild.items.map((item) => (
+                  <div
+                    key={item}
                     className="bg-red-900/30 text-red-200 px-3 flex items-center justify-center py-2 rounded-lg border border-red-200 text-sm font-medium text-center"
                   >
                     {item}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Our Approach */}
-            <motion.div
+            <div
               whileHover={{ y: -5 }}
               className="bg-black/90 backdrop-blur-sm p-6 rounded-xl border border-red-200 shadow-lg hover:shadow-xl transition-all mt-6"
             >
@@ -117,8 +115,8 @@ const AboutSection = ({ data }) => {
                 </h3>
               </div>
               <ul className="space-y-3 pl-2">
-                {data.ourApproach.items.map((item, i) => (
-                  <li className="flex items-start">
+                {data.ourApproach.items.map((item) => (
+                  <li key={item} className="flex items-start">
                     <div className="bg-red-100 text-red-600 p-1 rounded-full mr-3 mt-1">
                       <FiCheckCircle className="w-3 h-3" />
                     </div>
@@ -126,8 +124,8 @@ const AboutSection = ({ data }) => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

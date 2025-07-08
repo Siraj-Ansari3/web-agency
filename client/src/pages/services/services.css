@@ -25,6 +25,146 @@
   border-radius: 50%;
   animation: float 8s ease-in-out infinite;
 }
+/* Services.css */
+.services-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.services-container {
+  position: relative;
+  z-index: 10;
+}
+
+.services-header {
+  margin-bottom: 3rem;
+}
+
+.services-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #ffffff, #e5e7eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.services-description {
+  color: #9ca3af;
+  font-size: 1.125rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.services-scroll-container {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+.services-list {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1.5rem;
+  gap: 1.5rem;
+}
+
+.service-card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-0.5rem) scale(1.02);
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.25);
+}
+
+.service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.service-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+}
+
+.service-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.service-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-feature {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.feature-dot {
+  color: #ef4444;
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.service-learn-more {
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.service-learn-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .services-title {
+    font-size: 1.75rem;
+  }
+  
+  .services-description {
+    font-size: 1rem;
+  }
+  
+  .service-card {
+    min-width: 260px;
+  }
+}
 
 @keyframes float {
   0%, 100% { 

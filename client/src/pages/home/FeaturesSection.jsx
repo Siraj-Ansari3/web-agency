@@ -34,7 +34,7 @@ const FeaturesSection = () => {
             return (
               <div
                 key={index}
-                className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 h-[420px] w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
+                className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
                 tabIndex={0}
               >
                 <div className="flex justify-center mb-5">
@@ -67,7 +67,7 @@ const FeaturesSection = () => {
             return (
               <div
                 key={index}
-                className="flex-shrink-0 w-64 h-[420px] min-h-[420px] flex flex-col bg-black rounded-xl p-4 border border-red-700/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
+                className="flex-shrink-0 w-64 min-h-[220px] flex flex-col bg-black rounded-xl p-4 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
                 tabIndex={0}
               >
                 <div className="flex justify-center mb-5">
