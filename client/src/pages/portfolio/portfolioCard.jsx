@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const PortfolioCard = ({ longSS, category, id, title, description }) => {
+const PortfolioCard = ({ longSS, category, id, title }) => {
   return (
     <motion.div
-      className="group relative w-full h-full min-h-[260px] md:min-h-[320px] overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300"
+      className="group relative w-full max-w-[400px] mx-auto h-[320px] md:h-[340px] lg:h-[360px] min-h-[320px] max-h-[360px] overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300 flex flex-col justify-end"
       whileHover={{ 
         scale: 1.03,
         boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)",
@@ -18,17 +18,15 @@ const PortfolioCard = ({ longSS, category, id, title, description }) => {
       {/* Glow Effect on Hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 via-red-500/0 to-red-500/0 group-hover:from-red-500/10 group-hover:via-red-500/5 group-hover:to-red-500/10 transition-all duration-500 rounded-xl z-10" />
       
-      {/* Image Wrapper */}
+      {/* Image Container with CSS TranslateY Scroll */}
       <div className="absolute inset-0 h-full w-full overflow-hidden rounded-xl">
-        <motion.img
+        <img
           src={longSS}
           alt={category}
-          className="w-full min-h-[120%] object-cover transition-transform duration-[3500ms] group-hover:translate-y-[-80%]"
-          whileHover={{ 
-            scale: 1.1,
-            transition: { duration: 0.8, ease: "easeOut" }
+          className="w-full h-auto object-cover transition-transform duration-[3000ms] ease-linear transform translate-y-0 group-hover:translate-y-[-70%]"
+          style={{
+            minHeight: "200%", // Make sure image is tall enough to scroll
           }}
-          style={{ willChange: 'transform' }}
         />
         
         {/* Enhanced Gradient Overlay */}
@@ -44,32 +42,24 @@ const PortfolioCard = ({ longSS, category, id, title, description }) => {
         </div>
       </div>
 
-      {/* Footer Overlay - Enhanced with better animations */}
+      {/* Footer Overlay */}
       <motion.div 
         className="absolute bottom-0 left-0 w-full z-40 px-0 pb-0"
         initial={{ y: 0 }}
         whileHover={{ y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="bg-black/95 backdrop-blur-md rounded-b-2xl p-5 flex flex-col space-y-2 shadow-xl border-t border-red-500/20" >
-         
-          
-          {/* Title with enhanced typography */}
-          <h3 className="text-lg font-bold text-white truncate group-hover:text-red-600 transition-colors duration-300" title={title}>
+        <div className="bg-black/95 backdrop-blur-md rounded-b-2xl p-4 flex flex-col space-y-2 shadow-xl border-t border-red-500/20">
+          <h3 className="text-lg font-bold text-white truncate group-hover:text-red-600 transition-colors duration-300 text-center" title={title}>
             {title}
           </h3>
-          
-          {/* Description with better readability */}
-          <p className="text-white text-sm line-clamp-2 mb-2 leading-relaxed">{description}</p>
-          
-          {/* Enhanced Button */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <Link
               to={`/portfolio/${id}`}
-              className="mt-2 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-bold py-3 rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 group-hover:shadow-2xl group-hover:shadow-red-500/25"
+              className="mt-2 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-bold py-2 rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 group-hover:shadow-2xl group-hover:shadow-red-500/25"
             >
               <span>View Details</span>
               <motion.svg 

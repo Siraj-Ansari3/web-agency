@@ -9,17 +9,14 @@ import GridPattern from '../../components/GridPattern';
 const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState([]);
   const [selected, setSelected] = useState('All');
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [itemsToShow, setItemsToShow] = useState(6); // Show first 2 rows (6 items) initially
+  const [itemsToShow, setItemsToShow] = useState(6);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-      const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/project");
+        const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/project");
         setPortfolioData(response.data.projects || []);
       } finally {
         setLoading(false);
@@ -28,20 +25,27 @@ const Portfolio = () => {
     fetchData();
   }, []);
 
-  // Dynamically get categories from data
-  const allCategories = ['All', ...new Set(portfolioData.map(item => item.category))];
+  // Normalize categories and deduplicate
+  const allCategories = ['All', ...new Set(
+    portfolioData
+      .map(item => item.category?.trim())
+      .filter(Boolean)
+      .map(cat => cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase())
+  )];
 
   // Filter projects
   const filtered = selected === 'All'
     ? portfolioData
-    : portfolioData.filter((item) => item.category === selected);
+    : portfolioData.filter((item) => 
+        item.category?.trim().toLowerCase() === selected.toLowerCase()
+      );
 
   // Get projects to display based on pagination
   const projectsToShow = filtered.slice(0, itemsToShow);
 
-  // Load more function - load next 2 rows (6 items)
-  const loadMore = async () => {
-    setItemsToShow(prev => Math.min(prev + 6, filtered.length)); // Load 6 more items
+  // Load more function
+  const loadMore = () => {
+    setItemsToShow(prev => Math.min(prev + 6, filtered.length));
   };
 
   if (loading) return <SkeletonLoader />;
@@ -66,39 +70,38 @@ const Portfolio = () => {
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-12 py-12">
-        {/* Category Filter */}
+      <div className="max-w-7xl mx-auto px-4 md:px-12 py-12">
+        {/* Category Filter - Fixed */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
-                    {allCategories.map((cat) => (
-                      <button
-                        key={cat}
+          {allCategories.map((cat) => (
+            <button
+              key={cat}
               className={`px-6 py-2 rounded-full font-semibold border-2 transition-all duration-200
-                ${selected === cat
+                ${selected.toLowerCase() === cat.toLowerCase()
                   ? 'bg-red-600 text-white border-red-600 shadow-lg'
                   : 'bg-black text-red-400 border-red-400 hover:bg-red-600 hover:text-white hover:border-red-600'}
               `}
-                        onClick={() => {
-                          setSelected(cat);
-                setItemsToShow(6);
-                        }}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-          </div>
+              onClick={() => {
+                setSelected(cat);
+                setItemsToShow(6); // Reset to initial count when changing category
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full md:px-5">
           {projectsToShow.map((project) => (
-
             <PortfolioCard
-            longSS={project.longSS}
-            id={project.project_id}
-            description={project.description}
-            title={project.title}
-            category={project.category}
+              key={project.project_id}
+              longSS={project.longSS}
+              id={project.project_id}
+              description={project.description}
+              title={project.title}
+              category={project.category}
             />
-
           ))}
         </div>
 
