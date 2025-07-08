@@ -55,7 +55,7 @@ const TestimonialSlider = ({testimonials}) => {
     <section className="bg-black py-12 px-4 sm:px-6 lg:px-8 flex items-center min-h-[480px] sm:min-h-[520px] md:min-h-[600px]">
       <div className="max-w-4xl mx-auto w-full">
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1 text-base font-semibold text-white bg-gradient-to-r from-red-500/80 to-pink-500/80 rounded-full mb-4 shadow-lg">
+          <span className="inline-block px-4 py-1 text-base font-semibold text-white bg-red-600 rounded-full mb-4 shadow-lg">
             Client Voices
           </span>
           <h2 className="text-4xl font-extrabold text-white sm:text-5xl tracking-tight drop-shadow-lg">
@@ -103,9 +103,9 @@ const TestimonialSlider = ({testimonials}) => {
     </div>
   </div>
                   {/* Glassmorphism Card */}
-                  <div className="relative bg-black/90 border-4 border-red-600 rounded-3xl shadow-2xl pt-16 sm:pt-20 pb-8 sm:pb-10 px-4 sm:px-8 flex flex-col items-center w-full min-h-[280px] sm:min-h-[340px] max-h-[340px] sm:max-h-[340px] mt-10 sm:mt-12 overflow-hidden ring-2 ring-red-700/60">
+                  <div className="relative bg-black/90 border-4 border-red-600 rounded-3xl shadow-2xl pt-16 sm:pt-20 pb-8 sm:pb-10 px-4 sm:px-8 flex flex-col items-center w-full min-h-[280px] sm:min-h-[340px] max-h-[340px] sm:max-h-[340px] mt-10 sm:mt-12 overflow-hidden ring-2 ring-red-600">
                     {/* Glowing Red Border Effect */}
-                    <div className="absolute inset-0 rounded-3xl pointer-events-none border-4 border-red-600 shadow-[0_0_32px_8px_rgba(220,38,38,0.5)]" style={{zIndex:0, opacity:0.7}} />
+                    <div className="absolute inset-0 rounded-3xl pointer-events-none border-4 border-red-600 shadow-[0_0_32px_8px_rgba(220,38,38,0.5)]" style={{zIndex:0}} />
                     {/* Large Faded Quotation Mark */}
                     <svg className="absolute top-4 sm:top-8 left-4 sm:left-8 w-16 sm:w-24 h-16 sm:h-24 text-white/10 z-0" fill="currentColor" viewBox="0 0 32 32">
                       <text x="0" y="24" fontSize="32" fontWeight="bold">“</text>
