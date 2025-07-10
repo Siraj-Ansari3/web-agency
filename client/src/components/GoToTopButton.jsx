@@ -18,7 +18,7 @@ const GoToTopButton = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 z-50 p-2 sm:p-3 rounded-full bg-black text-white border-2 border-red-600 shadow-lg transition-all duration-300 hover:bg-red-600 hover:text-white hover:border-black focus:outline-none ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      className={`fixed bottom-6 right-6 z-50 p-2 sm:p-3 rounded-full bg-black cursor-pointer text-white border-2 border-red-600 shadow-lg transition-all duration-300 hover:bg-red-600 hover:text-white hover:border-black focus:outline-none ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       aria-label="Go to top"
       style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}
     >

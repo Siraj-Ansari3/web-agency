@@ -133,7 +133,7 @@ const Hero = ({ data }) => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate(data.ctaLink)}
-                  className="flex items-center w-1/2 sm:w-auto px-3 text-center cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all"
+                  className="flex items-center w-1/2 sm:w-auto px-3 justify-center  cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all"
                 >
                   {data.ctaText}
                   <FiArrowRight className="hidden md:inline ml-2 w-4 h-4" />
@@ -142,7 +142,7 @@ const Hero = ({ data }) => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate("/portfolio")}
-                  className="flex items-center px-3 w-1/2 sm:w-auto text-center cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm"
+                  className="flex items-center px-3 w-1/2 sm:w-auto justify-center cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm"
                 >
                   View Portfolio
                   <FiChevronRight className="hidden md:inline ml-2 w-4 h-4" />
