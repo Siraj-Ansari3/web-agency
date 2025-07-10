@@ -50,7 +50,7 @@ const BlogCard = ({ data: item }) => {
                   e.target.onerror = null;
                   e.target.src = defaultUserIcon;
                 }}
-            className="absolute bottom-3 right-3 w-10 h-10 rounded-full border-2 border-white shadow-md z-20"
+            className="absolute bottom-3 object-cover right-3 w-13 h-13 rounded-full border-2 border-white shadow-md z-20"
           />
         )}
       </div>
@@ -69,7 +69,7 @@ const BlogCard = ({ data: item }) => {
             e.stopPropagation();
             navigate(`/blog/${item.blog_id}`);
           }}
-          className="mt-4 inline-block bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white text-xs px-4 py-2 rounded-full transition-all duration-300 shadow hover:shadow-lg"
+          className="mt-4 inline-block cursor-pointer bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white text-xs px-4 py-2 rounded-full transition-all duration-300 shadow hover:shadow-lg"
         >
           Read More
         </button>

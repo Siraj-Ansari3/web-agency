@@ -3,9 +3,9 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaGithub } from 'rea
 import { useLocation } from 'react-router-dom';
 
 const socials = [
-  { icon: <FaFacebookF />, url: 'https://facebook.com', label: 'Facebook', color: 'text-[#1877F3]' },
-  { icon: <FaInstagram />, url: 'https://instagram.com', label: 'Instagram', color: 'text-[#E4405F]' },
-  { icon: <FaLinkedinIn />, url: 'https://linkedin.com', label: 'LinkedIn', color: 'text-[#0A66C2]' },
+  { icon: <FaFacebookF />, url: 'https://www.facebook.com/share/1BLxJKtqrB/', label: 'Facebook', color: 'text-[#1877F3]' },
+  { icon: <FaInstagram />, url: 'https://www.instagram.com/marsevtech?igsh=MXFwamlrOGt0cDY5dw==', label: 'Instagram', color: 'text-[#E4405F]' },
+  { icon: <FaLinkedinIn />, url: 'https://www.linkedin.com/company/marsevtech/', label: 'LinkedIn', color: 'text-[#0A66C2]' },
 ];
 
 const SocialMediaBar = () => {

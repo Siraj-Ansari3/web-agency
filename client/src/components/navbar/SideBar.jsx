@@ -52,7 +52,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-40"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-60"
             onClick={() => setisOpen(false)}
           />
 
@@ -62,7 +62,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed left-0 top-0 h-screen w-full sm:w-80 md:w-96 z-50"
+            className="fixed left-0 top-0 h-screen w-full sm:w-80 md:w-96 z-60"
           >
             {/* Glass morphism background */}
             <div className="relative h-full w-full bg-gradient-to-br from-black/95 via-gray-900/90 to-black/95 backdrop-blur-xl border-r border-white/10 shadow-2xl">
@@ -92,7 +92,7 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
                       <img src={logo} alt="logo" className="w-8 h-8 transition-transform group-hover:scale-110" />
                       <div className="absolute inset-0 bg-red-500/20 rounded-full blur-sm group-hover:bg-red-500/30 transition-colors" />
                     </div>
-                    <span className="text-white font-bold text-lg">Web Agency</span>
+                    <span className="text-white font-bold text-lg">Marsev Tech</span>
                   </Link>
                   
                   <motion.button
