@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 
 const PortfolioCard = ({ longSS, category, id, title }) => {
   return (
+    <Link
+              to={`/portfolio/${id}`}
+            >
     <motion.div
-      className="group relative w-full max-w-[400px] mx-auto h-[320px] md:h-[340px] lg:h-[360px] min-h-[320px] max-h-[360px] overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300 flex flex-col justify-end"
+      className="group relative w-full max-w-[400px] cursor-pointer mx-auto h-[320px] md:h-[340px] lg:h-[360px] min-h-[320px] max-h-[360px] overflow-hidden rounded-xl bg-black text-white shadow-xl border-2 border-red-600 transition-all duration-300 flex flex-col justify-end"
       whileHover={{ 
         scale: 1.03,
         boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)",
@@ -81,6 +84,7 @@ const PortfolioCard = ({ longSS, category, id, title }) => {
       {/* Corner Accent */}
       <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-50" />
     </motion.div>
+    </Link>
   );
 };
 

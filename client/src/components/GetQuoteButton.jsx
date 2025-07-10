@@ -34,7 +34,7 @@ const GetQuoteButton = () => {
                      text-white font-semibold text-base
                      hover:scale-105 active:scale-95
                      transition-all duration-300 focus:outline-none
-                     focus:ring-2 focus:ring-red-400/50 subtle-glow"
+                     focus:ring-2 focus:ring-red-400/50 subtle-glow cursor-pointer"
         >
           <span className="inline-flex items-center gap-1">
             <svg
@@ -50,7 +50,7 @@ const GetQuoteButton = () => {
                 d="M8 17l4 4 4-4m-4-5v9"
               />
             </svg>
-            Get Quote
+            Lets Talk
           </span>
         </motion.button>
       )}

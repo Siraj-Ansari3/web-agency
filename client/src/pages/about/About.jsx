@@ -257,7 +257,7 @@ const About = () => {
       <AnimatePresence>
         {isModalOpen && selectedMember && (
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-70 flex items-center justify-center p-4"
             onClick={closeMemberModal}
           >
             <div
@@ -266,7 +266,7 @@ const About = () => {
             >
               <button
                 onClick={closeMemberModal}
-                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors z-10"
+                className="absolute top-4 right-4 text-gray-400 cursor-pointer hover:text-red-500 transition-colors z-10"
                 aria-label="Close modal"
               >
                 <FiX className="w-6 h-6" />
@@ -342,20 +342,7 @@ const About = () => {
         )}
       </AnimatePresence>
 
-      {/* Development Process Section */}
-      <div className="max-w-6xl mx-auto px-4 mb-20">
-        <div
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold text-white mb-2">
-            <span className="text-red-500">{steps.title}</span>
-          </h2>
-          <p className="text-gray-300 max-w-xl mx-auto">
-            {steps.subtitle}
-          </p>
-        </div>
-        <StepsComponent steps={steps} page="about" />
-      </div>
+ 
 
       {/* Why Choose Us Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">

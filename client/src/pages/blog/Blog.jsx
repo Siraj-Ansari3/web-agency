@@ -87,7 +87,7 @@ const Blog = () => {
         stats={[
           { value: blogs?.length, label: "Articles" },
           { value: categories.length - 1, label: "Categories" },
-          { value: "10K+", label: "Readers" },
+          { value: "100+", label: "Readers" },
           { value: "Weekly", label: "Updates" }
         ]}
       />

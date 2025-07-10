@@ -13,7 +13,7 @@ const SocialMediaBar = () => {
   // Hide on admin dashboard routes
   if (location.pathname.startsWith('/admin/dashboard')) return null;
   return (
-    <div className="hidden md:flex flex-col fixed left-2 top-3/5 z-40 space-y-3">
+    <div className="hidden md:flex flex-col fixed left-2 bottom-0 z-40 space-y-3">
       {socials.map(({ icon, url, label, color }) => (
         <a
           key={label}

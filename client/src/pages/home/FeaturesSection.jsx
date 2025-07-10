@@ -35,7 +35,7 @@ const FeaturesSection = () => {
               return (
                 <div
                   key={index}
-                  className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 min-h-[400px] max-h-[400px] h-[400px] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
+                  className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 min-h-[350px] max-h-[350px] h-[350px] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
                   tabIndex={0}
                 >
                   <div className="flex justify-center mb-5">
@@ -99,9 +99,9 @@ const FeaturesSection = () => {
       {modalFeature && (() => {
         const Icon = iconMap[modalFeature.icon] || FaCog;
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+          <div className="fixed inset-0 z-70 flex items-center justify-center bg-black bg-opacity-70">
             <div className="bg-black border border-red-700/50 rounded-2xl shadow-xl max-w-xl w-full p-8 flex flex-col items-center relative animate-fadeIn">
-              <button onClick={closeModal} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold" aria-label="Close">&times;</button>
+              <button onClick={closeModal} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold cursor-pointer" aria-label="Close">&times;</button>
               <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center mb-6 shadow-lg">
                 <Icon className="text-white text-3xl" />
               </div>
@@ -111,7 +111,7 @@ const FeaturesSection = () => {
                 <span className="inline-block bg-gray-800 text-red-300 text-xs font-semibold px-3 py-1 rounded-full">{modalFeature.highlight}</span>
               </div>
               <p className="text-gray-300 text-center text-lg mb-6">{modalFeature.longDescription}</p>
-              <button onClick={closeModal} className="mt-4 px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium shadow hover:from-red-700 hover:to-red-800 transition-all" aria-label="Close">Close</button>
+              <button onClick={closeModal} className="mt-4 px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium shadow hover:from-red-700 cursor-pointer hover:to-red-800 transition-all" aria-label="Close">Close</button>
             </div>
           </div>
         );

@@ -244,7 +244,7 @@ const Services = () => {
       </div>
 
       {/* Additional Section */}
-      <section className="w-full bg-gradient-to-b from-black via-gray-900 to-black py-12 md:py-20 mt-8 md:mt-12 flex flex-col items-center justify-center border-t-4 border-red-600 px-4 sm:px-6">
+      <section className="w-full bg-gradient-to-b from-black via-gray-900 to-black py-12 md:py-20 mt-8 md:mt-12 flex flex-col items-center justify-center border-t-2 border-red-600 px-4 sm:px-6">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 md:mb-4 text-center">
           <span className="text-red-500">Why</span> Choose Us?
         </h2>
