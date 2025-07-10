@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import features from '../../data/features/featuresData';
 import { FaBolt, FaShieldAlt, FaMobile, FaRocket, FaChartLine, FaCog } from 'react-icons/fa';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const iconMap = {
   FaBolt: FaBolt,
@@ -29,35 +30,35 @@ const FeaturesSection = () => {
 
         {/* Grid Layout for large screens only */}
         <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => {
-            const Icon = iconMap[feature.icon] || FaCog;
-            return (
-              <div
-                key={index}
-                className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
-                tabIndex={0}
-              >
-                <div className="flex justify-center mb-5">
-                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Icon className="text-white text-3xl" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 truncate">{feature.title}</h3>
-                <p className="text-gray-300 mb-4 flex-grow overflow-hidden text-ellipsis line-clamp-3">{feature.description}</p>
-                <div className="mb-4">
-                  <p className="text-red-400 font-medium text-sm truncate">{feature.stat}</p>
-                  <p className="text-gray-400 text-xs truncate">{feature.highlight}</p>
-                </div>
-                <button
-                  onClick={() => openModal(feature)}
-                  className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium text-center block transition-all hover:from-red-700 hover:to-red-800 cursor-pointer mt-auto"
+            {features.map((feature, index) => {
+              const Icon = iconMap[feature.icon] || FaCog;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col bg-black rounded-xl p-6 border border-red-700/50 min-h-[400px] max-h-[400px] h-[400px] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
                   tabIndex={0}
                 >
-                  Learn More
-                </button>
-              </div>
-            );
-          })}
+                  <div className="flex justify-center mb-5">
+                    <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="text-white text-3xl" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 truncate">{feature.title}</h3>
+                  <p className="text-gray-300 mb-4 flex-grow overflow-hidden text-ellipsis line-clamp-3">{feature.description}</p>
+                  <div className="mb-4">
+                    <p className="text-red-400 font-medium text-sm truncate">{feature.stat}</p>
+                    <p className="text-gray-400 text-xs truncate">{feature.highlight}</p>
+                  </div>
+                  <button
+                    onClick={() => openModal(feature)}
+                    className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium text-center block transition-all hover:from-red-700 hover:to-red-800 cursor-pointer mt-auto"
+                    tabIndex={0}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              );
+            })}
         </div>
 
         {/* Horizontal Scroller for small screens only */}
@@ -67,7 +68,7 @@ const FeaturesSection = () => {
             return (
               <div
                 key={index}
-                className="flex-shrink-0 w-64 min-h-[220px] flex flex-col bg-black rounded-xl p-4 border border-red-700/50 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
+                className="flex-shrink-0 w-64 min-h-[350px] max-h-[300px] h-[300px] flex flex-col  rounded-xl p-4 border border-red-700/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-red-600 group"
                 tabIndex={0}
               >
                 <div className="flex justify-center mb-5">

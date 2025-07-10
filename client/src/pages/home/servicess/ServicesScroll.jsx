@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Services.css';
 import { MdWeb, MdBusiness, MdPhotoLibrary, MdShoppingBasket, MdDashboard, MdBuild } from 'react-icons/md';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const iconMap = {
   MdWeb: <MdWeb className="landing-icon" />,
@@ -36,7 +37,7 @@ export default function ServicesScroll({services}) {
 
   return (
     <section className="relative py-16 bg-black overflow-hidden services-section">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 services-container">
+      <div className="max-w-7xl mx-auto   px-4 sm:px-6 lg:px-8 services-container">
         <div className="services-header mb-12 text-center">
           <h2 className="services-title text-3xl md:text-4xl font-bold text-white mb-4">
             Professional Web Solutions
@@ -50,9 +51,29 @@ export default function ServicesScroll({services}) {
           {/* Scroll gradient overlays */}
           <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+
+          {/* Navigation Arrows for large screens */}
+          <button
+            className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-red-600 border border-red-600 cursor-pointer text-white rounded-full p-2 shadow-lg transition-all duration-200"
+            aria-label="Scroll Left"
+            onClick={() => {
+              if (scrollRef.current) scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+            }}
+          >
+            <FiChevronLeft className="w-7 h-7" />
+          </button>
+          <button
+            className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-red-600 border border-red-600 cursor-pointer text-white rounded-full p-2 shadow-lg transition-all duration-200"
+            aria-label="Scroll Right"
+            onClick={() => {
+              if (scrollRef.current) scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+            }}
+          >
+            <FiChevronRight className="w-7 h-7" />
+          </button>
           
           <div 
-            className="services-list flex overflow-x-auto pb-8 scroll-smooth hide-scrollbar"
+            className="services-list flex overflow-x-auto   pb-8 scroll-smooth hide-scrollbar"
             ref={scrollRef}
             style={{ scrollbarWidth: 'none' }}
           >
@@ -63,11 +84,11 @@ export default function ServicesScroll({services}) {
                 key={item.id + '-' + idx} 
                 className="service-card flex-shrink-0 mx-3 w-[280px] min-h-[400px] max-h-[400px] flex flex-col bg-gray-900 rounded-xl p-6 border border-red-700/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-red-500/20 hover:border-red-600 group overflow-hidden"
               >
-                <div className="bg-red-600 service-icon flex items-center justify-center w-16 h-16 rounded-full mb-6 group-hover:bg-red-700 group-hover:scale-110 transition-all duration-300">
+                <div className="bg-red-600 service-icon flex items-center justify-center w-14 h-14 rounded-full mb-4 group-hover:bg-red-700 group-hover:scale-110 transition-all duration-300">
                   {iconMap[item.icon]}
                 </div>
-                <h3 className="service-title text-xl font-bold text-white mb-3 truncate">{item.title}</h3>
-                <p className="service-description text-gray-300 mb-4 flex-grow overflow-hidden text-ellipsis line-clamp-3">
+                <h3 className="text-md font-bold text-white  pb-1 text-center">{item.title}</h3>
+                <p className="text-gray-300 pb-3 text-left text-sm lex-grow">
                   {item.description}
                 </p>
                 <ul className="service-features mb-4">
