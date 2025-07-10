@@ -3,13 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import 'quill/dist/quill.snow.css';
 import axios from "axios";
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaLinkedin, FaGithub, FaTwitter, FaInstagram, FaFacebook } from 'react-icons/fa';
 
 const defaultUserIcon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=";
 
 const ReadBlog = ({ id }) => {
   const [blog, setBlog] = useState({
-    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: "" }
+    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: "", description: "", socialLinks: [] }
   });
   const [relatedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +79,7 @@ const ReadBlog = ({ id }) => {
   const handleBackNavigation = useCallback(() => {
     // Scroll to top immediately
     window.scrollTo({ top: 0, behavior: 'auto' });
-    
+
     // Then navigate back after a tiny delay
     setTimeout(() => {
       navigate(-1);
@@ -213,17 +213,67 @@ const ReadBlog = ({ id }) => {
                 <span className="text-xl sm:text-2xl font-extrabold text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</span>
                 <span className="inline-block bg-red-700 text-white text-xs font-semibold px-3 py-1 rounded-full ml-0 sm:ml-3">Full Stack Developer</span>
               </div>
-              <p className="text-gray-300 mb-4 text-xs sm:text-sm md:text-base max-w-xl mx-auto sm:mx-0">Passionate about building modern web experiences and sharing knowledge with the world. Always exploring new technologies and creative solutions.</p>
+              <p className="text-gray-300 mb-4 text-xs sm:text-sm md:text-base max-w-xl mx-auto sm:mx-0">{blog?.author?.description}</p>
               <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
-                <a href="#" className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-700 text-white hover:bg-white hover:text-red-700 transition-colors font-semibold text-xs sm:text-sm shadow">
-                  <FaLinkedin className="text-base sm:text-lg" /> LinkedIn
-                </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow">
-                  <FaGithub className="text-base sm:text-lg" /> GitHub
-                </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow">
-                  <FaTwitter className="text-base sm:text-lg" /> Twitter
-                </a>
+                {/* LinkedIn */}
+                {blog?.author?.socialLinks?.linkedin && (
+                  <a
+                    href={blog.author.socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-700 text-white hover:bg-white hover:text-red-700 transition-colors font-semibold text-xs sm:text-sm shadow"
+                  >
+                    <FaLinkedin className="text-base sm:text-lg" /> LinkedIn
+                  </a>
+                )}
+
+                {/* GitHub */}
+                {blog?.author?.socialLinks?.github && (
+                  <a
+                    href={blog.author.socialLinks.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                  >
+                    <FaGithub className="text-base sm:text-lg" /> GitHub
+                  </a>
+                )}
+
+                {/* Twitter */}
+                {blog?.author?.socialLinks?.twitter && (
+                  <a
+                    href={blog.author.socialLinks.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                  >
+                    <FaTwitter className="text-base sm:text-lg" /> Twitter
+                  </a>
+                )}
+
+                {/* Instagram */}
+                {blog?.author?.socialLinks?.instagram && (
+                  <a
+                    href={blog.author.socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                  >
+                    <FaInstagram className="text-base sm:text-lg" /> Instagram
+                  </a>
+                )}
+
+                {/* Facebook */}
+                {blog?.author?.socialLinks?.facebook && (
+                  <a
+                    href={blog.author.socialLinks.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                  >
+                    <FaFacebook className="text-base sm:text-lg" /> Facebook
+                  </a>
+                )}
               </div>
             </div>
           </div>

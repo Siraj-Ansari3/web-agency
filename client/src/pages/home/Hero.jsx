@@ -78,7 +78,7 @@ const Hero = ({ data }) => {
 
   return (
     <section className="relative min-h-screen flex items-center  overflow-hidden">
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-5 w-full z-10">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Content Section */}
@@ -102,50 +102,56 @@ const Hero = ({ data }) => {
                 {data.subtitle}
               </p>
 
-              {/* Auto-scrolling services tags slider */}
-              <motion.div className="md:mb-8  overflow-hidden relative">
-                <motion.div
-                  className="flex gap-4 mb-4 whitespace-nowrap"
-                  animate={{ x: [0, -1000] }}
-                  transition={{
-                    repeat: Infinity,
-                    repeatType: 'loop',
-                    duration: 18,
-                    ease: 'linear',
-                  }}
-                  style={{ willChange: 'transform' }}
-                >
-                  {[...services, ...services].map((service, i) => (
-                    <motion.span
-                      key={i}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center text-xs px-4 py-2 bg-black border border-red-200 text-red-200 rounded-full hover:bg-red-900 transition-all shadow-sm mx-2"
-                    >
-                      {service.title}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </motion.div>
+              {/* Auto-scrolling services tags slider with fade effect */}
+              <div className="md:mb-8 relative">
+                <div className="absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
 
-              <div className="flex flex-wra gap-2 py-5 sm:py-0">
+                <motion.div className="overflow-hidden py-2">
+                  <motion.div
+                    className="flex gap-4 whitespace-nowrap"
+                    animate={{ x: [0, -1000] }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: 'loop',
+                      duration: 20,
+                      ease: 'linear',
+                    }}
+                    style={{ willChange: 'transform' }}
+                  >
+                    {[...services, ...services].map((service, i) => (
+                      <motion.span
+                        key={i}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="inline-flex items-center text-xs md:text-sm px-4 py-2 bg-black border border-red-200 text-red-200 rounded-full hover:bg-red-900 transition-all shadow-sm mx-1"
+                      >
+                        {service.title}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 py-5 sm:py-0">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate(data.ctaLink)}
-                  className="flex items-center w-1/2 sm:w-auto px-3 text-center cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all"
+                  className="flex items-center justify-center w-full sm:w-auto px-4 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all text-sm md:text-base"
                 >
                   {data.ctaText}
-                  <FiArrowRight className="hidden md:inline ml-2 w-4 h-4" />
+                  <FiArrowRight className="ml-2 w-4 h-4" />
                 </motion.button>
+
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate("/portfolio")}
-                  className="flex items-center px-3 w-1/2 sm:w-auto text-center cursor-pointer text-sm md:text-md md:px-6 py-2 sm:py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm"
+                  className="flex items-center justify-center w-full sm:w-auto px-4 py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm text-sm md:text-base"
                 >
                   View Portfolio
-                  <FiChevronRight className="hidden md:inline ml-2 w-4 h-4" />
+                  <FiChevronRight className="ml-2 w-4 h-4" />
                 </motion.button>
               </div>
             </motion.div>

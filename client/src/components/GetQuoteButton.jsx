@@ -50,7 +50,7 @@ const GetQuoteButton = () => {
                 d="M8 17l4 4 4-4m-4-5v9"
               />
             </svg>
-            Lets Talk
+            Get a Free Quote
           </span>
         </motion.button>
       )}

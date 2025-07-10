@@ -104,7 +104,7 @@ router.get("/get-blog", async (req, res) => {
   const { id } = req.query;
   try {
     const blog = await Blog.findOne({ blog_id: id })
-      .populate('author', 'email firstName lastName image') // Add author information
+      .populate('author', 'email firstName lastName image description socialLinks') // Add author information
       .lean();;
 
     if (!blog) return res.status(404).json({ error: "Blog not found" });

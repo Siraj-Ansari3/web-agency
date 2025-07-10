@@ -152,7 +152,6 @@ router.get("/get-admins", async (req, res) => {
 
 router.get("/get-admin/:email", async (req, res) => {
   const email = req.params.email;
-  console.log(email)
   try {
     const admin = await Admin.findOne({ email: email });
     if (!admin) {
@@ -166,32 +165,35 @@ router.get("/get-admin/:email", async (req, res) => {
 })
 
 router.put("/update-admin/:id", authMiddleware, async (req, res) => {
-  const { id } = req.params.id;
-
   try {
     const { id } = req.params;
-    const { firstName, lastName, password, image } = req.body;
+    const { 
+      firstName, 
+      lastName, 
+      password, 
+      image, 
+      description,
+      socialLinks // Make sure this is included
+    } = req.body;
 
-    // Find the admin first to check if they exist
     const admin = await Admin.findById(id);
     if (!admin) {
       return res.status(404).json({ error: "Admin not found" });
     }
 
     // Prepare update data
-    const updateData = { firstName, lastName };
+    const updateData = { 
+      firstName, 
+      lastName, 
+      description,
+      socialLinks // Include social links
+    };
 
-    // Update image if provided
-    if (image) {
-      updateData.image = image;
-    }
-
-    // Update password if provided
+    if (image) updateData.image = image;
     if (password && password.trim() !== "") {
       updateData.password = await bcrypt.hash(password, 12);
     }
 
-    // Perform the update
     const updatedAdmin = await Admin.findByIdAndUpdate(
       id,
       { $set: updateData },
@@ -204,12 +206,9 @@ router.put("/update-admin/:id", authMiddleware, async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating admin:", error);
-
-
     res.status(500).json({ error: "Server error" });
   }
-
-})
+});
 
 
 export default router;

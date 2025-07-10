@@ -1,4 +1,3 @@
-// EditAdmin.jsx
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
@@ -14,8 +13,17 @@ const EditAdmin = () => {
         firstName: '',
         lastName: '',
         email: '',
-        image: ''
+        description: '',
+        image: '',
+        socialLinks: {
+            instagram: '',
+            facebook: '',
+            linkedin: '',
+            github: '',
+            twitter: ''
+        }
     });
+
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -34,16 +42,27 @@ const EditAdmin = () => {
                     { withCredentials: true }
                 );
 
+                const adminData = response.data.admin;
+
                 // Ensure we get the _id from the backend
                 setAdmin({
-                    _id: response.data.admin._id,
-                    firstName: response.data.admin.firstName,
-                    lastName: response.data.admin.lastName,
-                    email: response.data.admin.email,
-                    image: response.data.admin.image || ''
+                    _id: adminData._id,
+                    firstName: adminData.firstName,
+                    lastName: adminData.lastName,
+                    description: adminData.description || "",
+                    email: adminData.email,
+                    image: adminData.image || '',
+                    // Handle both new and old schema
+                    socialLinks: adminData.socialLinks || {
+                        instagram: '',
+                        facebook: '',
+                        linkedin: '',
+                        github: '',
+                        twitter: ''
+                    }
                 });
 
-                setImagePreview(response.data.admin.image || '');
+                setImagePreview(adminData.image || '');
                 setLoading(false);
             } catch (error) {
                 toast.error('Failed to fetch admin details');
@@ -56,7 +75,20 @@ const EditAdmin = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setAdmin(prev => ({ ...prev, [name]: value }));
+
+        // Check if it's a social link field
+        if (name.startsWith('socialLinks.')) {
+            const field = name.split('.')[1];
+            setAdmin(prev => ({
+                ...prev,
+                socialLinks: {
+                    ...prev.socialLinks,
+                    [field]: value
+                }
+            }));
+        } else {
+            setAdmin(prev => ({ ...prev, [name]: value }));
+        }
 
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: null }));
@@ -114,11 +146,13 @@ const EditAdmin = () => {
                 }
             }
 
-            // Prepare update data
+            // Prepare update data - INCLUDING SOCIAL LINKS
             const updateData = {
                 firstName: admin.firstName,
                 lastName: admin.lastName,
+                description: admin.description,
                 image: imageUrl,
+                socialLinks: admin.socialLinks,  // Add social links here
                 ...(password && { password })
             };
 
@@ -241,6 +275,23 @@ const EditAdmin = () => {
                             </div>
                         </div>
 
+                        <div>
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Description
+                            </label>
+                            <textarea
+                                name="description"
+                                value={admin.description}
+                                onChange={handleInputChange}
+                                className={`w-full px-3 py-2 border rounded ${errors.description ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                placeholder="suggested description is 200 characters"
+                            />
+                            {errors.lastName && (
+                                <p className="text-red-500 text-xs mt-1">{errors.description}</p>
+                            )}
+                        </div>
+
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Email Address
@@ -285,6 +336,35 @@ const EditAdmin = () => {
                                 Leave blank to keep current password
                             </p>
                         </div>
+
+                        {/* Social Media Links Section */}
+                        <div className="mb-6">
+                            <h3 className="text-lg font-semibold mb-3 text-gray-700">Social Media Links</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {[
+                                    { name: 'instagram', icon: 'fab fa-instagram', color: 'bg-pink-600' },
+                                    { name: 'facebook', icon: 'fab fa-facebook', color: 'bg-blue-700' },
+                                    { name: 'linkedin', icon: 'fab fa-linkedin', color: 'bg-blue-500' },
+                                    { name: 'github', icon: 'fab fa-github', color: 'bg-gray-800' },
+                                    { name: 'twitter', icon: 'fab fa-twitter', color: 'bg-blue-400' }
+                                ].map((platform) => (
+                                    <div key={platform.name} className="flex items-center">
+                                        <div className={`${platform.color} w-10 h-10 rounded-l flex items-center justify-center`}>
+                                            <i className={`${platform.icon} text-white`}></i>
+                                        </div>
+                                        <input
+                                            type="url"
+                                            name={`socialLinks.${platform.name}`}
+                                            value={admin.socialLinks[platform.name] || ''}
+                                            onChange={handleInputChange}
+                                            className="flex-1 px-3 py-2 border border-gray-300 rounded-r"
+                                            placeholder={`https://${platform.name}.com/username`}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
