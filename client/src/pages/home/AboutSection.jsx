@@ -53,14 +53,14 @@ const AboutSection = ({ data }) => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="lg:w-1/3"
+            className="lg:w-1/3 mx-auto"
           >
             
 
             {/* Our Approach */}
             <div
               whileHover={{ y: -5 }}
-              className="bg-black/90 backdrop-blur-sm p-6 rounded-xl border border-red-200 shadow-lg hover:shadow-xl transition-all "
+              className="bg-black/90 backdrop-blur-sm p-6 rounded-xl border border-red-200 shadow-lg hover:shadow-xl transition-all"
             >
               <div className="flex items-center mb-4">
                 <div className="p-3 rounded-lg bg-gradient-to-br from-red-600 to-red-400 text-white mr-4 shadow-md">

@@ -22,6 +22,17 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Utility to detect mobile devices
+function isMobile() {
+  if (typeof navigator !== 'undefined') {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  if (typeof window !== 'undefined') {
+    return window.innerWidth < 768;
+  }
+  return false;
+}
+
 const AppContent = () => {
   const element = useRoutes(routes);
   const { pathname } = useLocation();
@@ -36,7 +47,7 @@ const AppContent = () => {
   return (
     <>
       {loading && <SkeletonLoader />}
-      {!admin && !pathname.startsWith("/admin/dashboard") && <CustomCursor />}
+      {!admin && !pathname.startsWith("/admin/dashboard") && !isMobile() && <CustomCursor />}
       <ScrollToTop />
       {!shouldHideNavbar && <Navbar />}
       {element}
