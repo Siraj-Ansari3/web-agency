@@ -20,8 +20,7 @@ const DashboardLayout = () => {
   const location = useLocation();
   const { admin, signOut } = useAuth();
   
-  // Debug: Log admin state
-  console.log('Admin state in DashboardLayout:', admin);
+
   
   const navItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: <HiHome size={20} /> },

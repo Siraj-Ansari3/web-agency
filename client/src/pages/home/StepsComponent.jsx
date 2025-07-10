@@ -3,7 +3,6 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 const StepsComponent = ({ steps, page = "undefined" }) => {
 
-  console.log(steps.steps)
   return (
 
     <div className="max-w-6xl mx-auto p-6 md:p-10 font-sans">

@@ -13,7 +13,6 @@ const DashboardAddPortfolio = () => {
         setSaveMessage('Saving project...');
 
         try {
-            console.log(formData)
 
             await axios.post(
                 `${import.meta.env.VITE_SERVER_DOMAIN}/project/add`,
@@ -26,7 +25,6 @@ const DashboardAddPortfolio = () => {
                 navigate('/admin/dashboard/portfolios');
             }, 1000);
         } catch (error) {
-            console.error('Save failed:', error);
             setSaveMessage(`Failed to save project: ${error.response?.data?.error || error.message}`);
         } finally {
             setIsSubmitting(false);

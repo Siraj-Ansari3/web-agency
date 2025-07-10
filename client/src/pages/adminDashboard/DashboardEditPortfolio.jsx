@@ -20,7 +20,6 @@ const DashboardEditPortfolio = () => {
         );
         setProject(response.data.project);
       } catch (error) {
-        console.error('Error fetching project:', error);
         setSaveMessage(`Failed to load project: ${error.response?.data?.error || error.message}`);
       } finally {
         setLoading(false);
@@ -46,7 +45,6 @@ const DashboardEditPortfolio = () => {
         navigate('/admin/dashboard/portfolios');
       }, 1500);
     } catch (error) {
-      console.error('Update failed:', error);
       setSaveMessage(`Failed to update project: ${error.response?.data?.error || error.message}`);
     } finally {
       setIsSubmitting(false);

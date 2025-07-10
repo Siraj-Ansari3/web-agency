@@ -20,9 +20,7 @@ const DashboardBlogs = () => {
       const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/blog/get-all-blogs");
       setBlogs(response.data.blogs)
       setIsLoading(false)
-      console.log(response.data.blogs)
     } catch (error) {
-      console.log(error)
       setIsLoading(false)
 
     }

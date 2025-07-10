@@ -238,7 +238,6 @@ const EditHomePage = () => {
 
     try {
       let updatedPageData = { ...pageData };
-      console.log("about page posted", updatedPageData)
 
       // Array to hold all upload promises
       const uploadPromises = [];

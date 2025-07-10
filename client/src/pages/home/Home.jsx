@@ -99,7 +99,6 @@ const Home = () => {
       try {
         const homeData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/homepage")
         setHomeData(homeData.data.data);
-        console.log(homeData.data.data)
       } catch {
         // setError(true); // This line was removed as per the edit hint
       } finally {
@@ -112,16 +111,18 @@ const Home = () => {
   if (loading) return <SkeletonLoader />;
 
   return (
-    <section className="bg-black overflow-hidden lg:px-20 sm:px-8">
-      <Hero data={homeData.hero} />
-      <AboutSection data={homeData.about} />
-      <FeaturesSection features={homeData.features} />
-      <ServicesScroll services={homeData.services}/>
-      <StepsComponent steps={homeData.steps}/>
-      <BlogSection blogMeta={homeData.blog} />
-      <PortfolioSection portfolioMeta={homeData.portfolio} />
-      <Testimonials testimonials={homeData.testimonials}/>
-    </section>
+
+      <section className="bg-black overflow-hidden lg:px-20 sm:px-8">
+        <Hero data={homeData.hero} />
+        <AboutSection data={homeData.about} />
+        <FeaturesSection features={homeData.features} />
+        <ServicesScroll services={homeData.services} />
+        <StepsComponent steps={homeData.steps} />
+        <BlogSection blogMeta={homeData.blog} />
+        <PortfolioSection portfolioMeta={homeData.portfolio} />
+        <Testimonials testimonials={homeData.testimonials} />
+      </section>
+   
   )
 }
 

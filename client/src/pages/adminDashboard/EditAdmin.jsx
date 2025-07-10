@@ -47,7 +47,6 @@ const EditAdmin = () => {
                 setLoading(false);
             } catch (error) {
                 toast.error('Failed to fetch admin details');
-                console.error('Error fetching admin:', error);
                 setLoading(false);
             }
         };
@@ -110,7 +109,6 @@ const EditAdmin = () => {
                     imageUrl = await uploadImage(imageUrl);
                 } catch (uploadError) {
                     toast.error('Image upload failed');
-                    console.error('Image upload error:', uploadError);
                     setIsSubmitting(false);
                     return;
                 }

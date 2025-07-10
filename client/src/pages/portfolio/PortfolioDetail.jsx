@@ -22,7 +22,6 @@ import { getTechIcon } from "./techIcons.jsx";
 
 const PortfolioDetail = () => {
   const { project_id } = useParams();
-  console.log(project_id)
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -35,10 +34,8 @@ const PortfolioDetail = () => {
     const fetchProject = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + `/project/get-project/${project_id}`)
-        console.log(response.data.project)
         setProject(response.data.project);
       } catch (error) {
-        console.log(error)
       }
     }
 

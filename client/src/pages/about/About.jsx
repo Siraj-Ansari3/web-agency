@@ -25,7 +25,6 @@ import {
 import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
-import defaultImg from "../../assets/default-member.png";
 import SkeletonLoader from '../../components/SkeletonLoader';
 
 const iconMap = {
@@ -75,9 +74,7 @@ const About = () => {
       try {
         const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
         setPageData(aboutData.data);
-        console.log(aboutData)
       } catch (err) {
-        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -92,7 +89,6 @@ const About = () => {
         const stepsData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/steps");
         setSteps(stepsData.data.data);
       } catch (err) {
-        console.log(err);
       }
     };
 
@@ -220,7 +216,7 @@ const About = () => {
             >
               <div className="relative overflow-hidden h-80">
                 <img
-                  src={member.img || defaultImg}
+                  src={member.img}
                   alt={member.name}
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                 />
@@ -279,7 +275,7 @@ const About = () => {
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="relative h-full min-h-[400px]">
                   <img
-                    src={selectedMember.img || defaultImg}
+                    src={selectedMember.img}
                     alt={selectedMember.name}
                     className="w-full h-full object-cover object-center"
                   />

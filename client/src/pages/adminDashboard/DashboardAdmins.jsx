@@ -22,7 +22,6 @@ const DashboardAdmins = () => {
       setAdmins(response.data.admins);
     } catch (error) {
       toast.error('Failed to fetch admins');
-      console.error('Error fetching admins:', error);
     } finally {
       setLoading(false);
     }

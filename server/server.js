@@ -10,11 +10,15 @@ import projectRoute from "./routes/projectRoute.js";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 import aws from 'aws-sdk';
+import helmet from 'helmet';
+import compression from 'compression';
 
 dotenv.config();
 const app = express();
 
 // Middleware
+app.use(compression());
+app.use(helmet());
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true

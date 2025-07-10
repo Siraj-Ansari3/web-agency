@@ -19,7 +19,6 @@ const DashboardPortfolio = () => {
                 setProjects(response.data.projects);
             } catch (err) {
                 setError('Failed to load projects');
-                console.error(err);
             } finally {
                 setLoading(false);
             }
@@ -41,7 +40,6 @@ const DashboardPortfolio = () => {
                 toast.success("Project deleted successfully");
             }, 600);
         } catch (err) {
-            console.error('Delete failed:', err);
             alert('Failed to delete project');
         }
     };

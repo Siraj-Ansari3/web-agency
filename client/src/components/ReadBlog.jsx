@@ -57,7 +57,6 @@ const ReadBlog = ({ id }) => {
 
     } catch (err) {
       setError(err.message || 'Failed to load blog');
-      console.error('Error fetching blog:', err);
     } finally {
       setIsLoading(false);
     }
