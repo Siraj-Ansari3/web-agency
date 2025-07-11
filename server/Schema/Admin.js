@@ -18,6 +18,10 @@ const adminSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  tagline: {
+    type: String,
+    default: ""
+  },
   password: {
     type: String,
     required: true

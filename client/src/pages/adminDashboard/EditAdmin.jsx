@@ -14,6 +14,7 @@ const EditAdmin = () => {
         lastName: '',
         email: '',
         description: '',
+        tagline: '',
         image: '',
         socialLinks: {
             instagram: '',
@@ -44,15 +45,14 @@ const EditAdmin = () => {
 
                 const adminData = response.data.admin;
 
-                // Ensure we get the _id from the backend
                 setAdmin({
-                    _id: adminData._id,
-                    firstName: adminData.firstName,
-                    lastName: adminData.lastName,
+                    _id: adminData._id || '',
+                    firstName: adminData.firstName || '',
+                    lastName: adminData.lastName || '',
                     description: adminData.description || "",
-                    email: adminData.email,
+                    email: adminData.email || '',
                     image: adminData.image || '',
-                    // Handle both new and old schema
+                    tagline: adminData.tagline,
                     socialLinks: adminData.socialLinks || {
                         instagram: '',
                         facebook: '',
@@ -151,6 +151,7 @@ const EditAdmin = () => {
                 firstName: admin.firstName,
                 lastName: admin.lastName,
                 description: admin.description,
+                tagline: admin.tagline,
                 image: imageUrl,
                 socialLinks: admin.socialLinks,  // Add social links here
                 ...(password && { password })
@@ -275,7 +276,25 @@ const EditAdmin = () => {
                             </div>
                         </div>
 
-                        <div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Tagline
+                            </label>
+                            <input
+                                type="text"
+                                name="tagline"
+                                value={admin.tagline}
+                                onChange={handleInputChange}
+                                className={`w-full px-3 py-2 border rounded ${errors.tagline ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                placeholder="(e.g., Software Engineer)"
+                            />
+                            {errors.tagline && (
+                                <p className="text-red-500 text-xs mt-1">{errors.tagline}</p>
+                            )}
+                        </div>
+
+                        <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Description
                             </label>
@@ -287,7 +306,7 @@ const EditAdmin = () => {
                                     }`}
                                 placeholder="suggested description is 200 characters"
                             />
-                            {errors.lastName && (
+                            {errors.description && (
                                 <p className="text-red-500 text-xs mt-1">{errors.description}</p>
                             )}
                         </div>

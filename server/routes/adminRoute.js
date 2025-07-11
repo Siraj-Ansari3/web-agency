@@ -128,7 +128,6 @@ router.get("/me", async (req, res) => {
     if (!admin) {
       return res.status(404).json({ error: "Admin not found" });
     }
-    console.log(admin)
 
     res.json(admin);
   } catch (err) {
@@ -173,6 +172,7 @@ router.put("/update-admin/:id", authMiddleware, async (req, res) => {
       password, 
       image, 
       description,
+      tagline,
       socialLinks // Make sure this is included
     } = req.body;
 
@@ -186,6 +186,7 @@ router.put("/update-admin/:id", authMiddleware, async (req, res) => {
       firstName, 
       lastName, 
       description,
+      tagline,
       socialLinks // Include social links
     };
 

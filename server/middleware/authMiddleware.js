@@ -19,6 +19,5 @@ export default function authMiddleware(req, res, next) {
         role: decoded.role
     };
 
-    console.log(req.user)
     next();
 }

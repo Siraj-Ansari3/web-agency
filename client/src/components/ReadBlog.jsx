@@ -9,7 +9,8 @@ const defaultUserIcon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3d
 
 const ReadBlog = ({ id }) => {
   const [blog, setBlog] = useState({
-    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "", author: { email: "", firstName: "", lastName: "", image: "", description: "", socialLinks: [] }
+    blog_id: "", content: {}, publishedAt: "", category: "", image: "", tags: [], title: "", status: "",
+    author: { email: "", firstName: "", lastName: "", image: "", description: "", tagline: "", socialLinks: [] }
   });
   const [relatedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -211,7 +212,7 @@ const ReadBlog = ({ id }) => {
             <div className="flex-1 text-center sm:text-left w-full">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 justify-center sm:justify-start">
                 <span className="text-xl sm:text-2xl font-extrabold text-white">{`${blog?.author?.firstName} ${blog?.author?.lastName}`}</span>
-                <span className="inline-block bg-red-700 text-white text-xs font-semibold px-3 py-1 rounded-full ml-0 sm:ml-3">Full Stack Developer</span>
+                <span className="inline-block bg-red-700 text-white text-xs font-semibold px-3 py-1 rounded-full ml-0 sm:ml-3">{blog?.author?.tagline}</span>
               </div>
               <p className="text-gray-300 mb-4 text-xs sm:text-sm md:text-base max-w-xl mx-auto sm:mx-0">{blog?.author?.description}</p>
               <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
