@@ -22,6 +22,8 @@ import {
   FiTrendingUp,
   FiX
 } from 'react-icons/fi';
+import { FaInstagram } from 'react-icons/fa';
+
 import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';
@@ -134,10 +136,10 @@ const About = () => {
       <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 mb-20">
         {/* Our Story Card */}
         <div
-          className="md:col-span-2 bg-black/90 backdrop-blur-sm p-8 rounded-2xl border border-red-200 shadow-lg hover:shadow-xl transition-all"
+          className="md:col-span-2 bg-black/90 backdrop-blur-sm p-4 sm:p-8 rounded-2xl border border-red-200 shadow-lg hover:shadow-xl transition-all"
         >
           <h2 className="text-2xl font-bold text-red-400 mb-4">Our Story</h2>
-          <p className="text-gray-300 text-lg leading-relaxed mb-4">
+          <p className="text-gray-300 text-md  sm:text-lg leading-relaxed mb-4 text-justify">
             {pageData.storyMission.story}
           </p>
         </div>

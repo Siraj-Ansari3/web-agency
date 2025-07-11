@@ -70,9 +70,9 @@ const SideBar = ({ navItems, isOpen, setisOpen }) => {
               {/* Animated background elements */}
               <div className="absolute inset-0 overflow-hidden">
                 {/* Floating particles */}
-                <div className="absolute top-20 left-10 w-2 h-2 bg-red-500/30 rounded-full animate-pulse" />
-                <div className="absolute top-40 right-20 w-1 h-1 bg-blue-500/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-                <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-purple-500/30 rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+                {/* <div className="absolute top-20 left-10 w-2 h-2 bg-red-500/30 rounded-full animate-pulse" /> */}
+                {/* <div className="absolute top-40 right-20 w-1 h-1 bg-blue-500/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }} /> */}
+                {/* <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-purple-500/30 rounded-full animate-pulse" style={{ animationDelay: '2s' }} /> */}
                 
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/5 to-transparent" />

@@ -102,12 +102,10 @@ const Blog = () => {
                 <div className="flex items-center gap-3">
                   {/* Search Input */}
                   <div className="flex-1 relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <FiSearch className="h-5 w-5 text-gray-400" />
-                    </div>
+                    
                     <input
                       type="text"
-                      className="w-full pl-12 pr-4 py-4 bg-transparent border-none text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600 text-lg rounded-xl"
+                      className="w-full pl-2 pr-4 py-4 bg-transparent border-none text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600 text-lg rounded-xl"
                       placeholder="Search articles, topics, or authors..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -115,7 +113,7 @@ const Blog = () => {
                     {searchQuery && (
                       <button
                         onClick={clearSearch}
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer"
                         tabIndex={-1}
                       >
                         <FiX className="h-5 w-5 text-red-400 hover:text-white transition-colors" />
@@ -146,15 +144,15 @@ const Blog = () => {
           </div>
 
           {/* Mobile Search Bar */}
-          <div className="md:hidden space-y-4">
+          <div className="md:hidden space-y-4 ">
             {/* Mobile Search Input */}
-            <div className="relative">
-              <div className="bg-black border-2 border-gray-700 rounded-xl shadow-lg">
-                <div className="flex items-center px-4 py-3">
-                  <FiSearch className="h-5 w-5 text-gray-400 mr-3" />
+            <div className="relative ">
+              <div className=" border-2 border-gray-700 rounded-xl shadow-lg ">
+                <div className="flex items-center px-0 py-0 ">
+                  {/* <FiSearch className="h-5 w-5 text-gray-400 mr-3" /> */}
                   <input
                     type="text"
-                    className="flex-1 bg-transparent border-none text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-lg"
+                    className="flex-1 bg-transparent px-2 py-3 w-full overflow-hidden border-none text-white placeholder-gray-300 focus:outline-none  focus:ring-2 focus:ring-red-600  rounded-lg"
                     placeholder="Search articles..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -211,18 +209,18 @@ const Blog = () => {
 
           {/* Search Results Info */}
           <div className="mt-6 text-center">
-            <div className="inline-flex items-center gap-4 px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
-              <span className="text-gray-300 text-sm">
+            <div className="inline-flex items-center gap-0 px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
+              <span className="text-gray-300 text-xs sm:text-sm">
                 Showing {Math.min(visibleCount, filteredBlogs?.length)} of {filteredBlogs?.length} articles
               </span>
               {(searchQuery || selectedCategory !== "All") && (
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-400 text-sm">•</span>
+                  {/* <span className="text-gray-400 text-sm">•</span>
                   <span className="text-red-400 text-sm">
                     {searchQuery && `"${searchQuery}"`}
                     {searchQuery && selectedCategory !== "All" && " in "}
                     {selectedCategory !== "All" && selectedCategory}
-                  </span>
+                  </span> */}
                 </div>
               )}
             </div>

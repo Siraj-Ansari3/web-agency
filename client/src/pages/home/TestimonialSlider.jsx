@@ -135,7 +135,7 @@ const TestimonialSlider = ({testimonials}) => {
           {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 sm:-ml-14 bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600  focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
+            className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer -ml-4 sm:-ml-14 bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600  focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
             aria-label="Previous testimonial"
           >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +144,7 @@ const TestimonialSlider = ({testimonials}) => {
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 sm:-mr-14  bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
+            className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer -mr-4 sm:-mr-14  bg-black p-2 sm:p-3 rounded-full shadow-lg hover:scale-110 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all border-2 border-red-600 z-20"
             aria-label="Next testimonial"
           >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
