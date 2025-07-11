@@ -10,6 +10,7 @@ import SocialMediaBar from "./components/SocialMediaBar";
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
 import SkeletonLoader from "./components/SkeletonLoader";
 import GetQuoteButton from "./components/GetQuoteButton";
+import { Helmet } from "react-helmet";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -39,6 +40,14 @@ const AppContent = () => {
   const { admin } = useAuth();
   const { loading } = useLoading();
 
+    useEffect(() => {
+    if (window.gtag) {
+      window.gtag('config', 'G-V7WZJGXP61', {
+        page_path: pathname,
+      });
+    }
+  }, [pathname]);
+
   const shouldHideNavbar = 
     pathname.startsWith("/admin/") ||
     pathname === "/admin-sign-in-portal" ||
@@ -46,6 +55,15 @@ const AppContent = () => {
 
   return (
     <>
+      <Helmet>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V7WZJGXP61"></script>
+        <script>{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-V7WZJGXP61');
+        `}</script>
+      </Helmet>
       {loading && <SkeletonLoader />}
       {!admin && !pathname.startsWith("/admin/dashboard") && !isMobile() && <CustomCursor />}
       <ScrollToTop />
