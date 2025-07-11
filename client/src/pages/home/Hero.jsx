@@ -138,7 +138,7 @@ const Hero = ({ data }) => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate(data.ctaLink)}
-                  className="flex items-center justify-center w-full sm:w-auto px-4 py-3 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all text-sm md:text-base"
+                  className="flex items-center justify-center w-full sm:w-auto px-4 py-3 cursor-pointer bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-medium hover:shadow-xl hover:shadow-red-400/30 transition-all text-sm md:text-base"
 
                 >
                   {data.ctaText}
@@ -149,7 +149,7 @@ const Hero = ({ data }) => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate("/portfolio")}
-                  className="flex items-center justify-center w-full sm:w-auto px-4 py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm text-sm md:text-base"
+                  className="flex items-center justify-center w-full cursor-pointer sm:w-auto px-4 py-3 bg-black text-red-300 rounded-lg font-medium border border-red-300 hover:bg-red-900 transition-all shadow-sm text-sm md:text-base"
 
                 >
                   View Portfolio

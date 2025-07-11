@@ -31,7 +31,7 @@ const GetQuoteButton = () => {
           className="fixed z-50 bottom-6 left-1/2 -translate-x-1/2
                      px-4 py-2.5 rounded-full bg-gradient-to-r
                      from-red-500 via-red-600 to-red-700
-                     text-white font-semibold text-base
+                     text-white font-semibold text-xs 
                      hover:scale-105 active:scale-95
                      transition-all duration-300 focus:outline-none
                      focus:ring-2 focus:ring-red-400/50 subtle-glow cursor-pointer"

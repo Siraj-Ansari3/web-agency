@@ -21,7 +21,7 @@ const Footer = () => {
           <div className="md:col-span-2 lg:col-span-1 flex flex-col items-start justify-start">
             <div className="flex items-center mb-2 ml-[-30px]">
               <img src={logo} alt="Agency Logo" className="w-30  object-contain" />
-              <span className="text-2xl font-bold">Marsev</span>
+              <span className="text-2xl font-bold">Marsev <br />Tech</span>
             </div>
             <p className="text-gray-400 mb-6">
               We create digital experiences that matter. Our team delivers innovative solutions.
@@ -124,6 +124,9 @@ const Footer = () => {
         {/* Copyright - Centered and properly spaced */}
         <div className="border-t border-red-900 mt-8 pt-6 text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} MarsevTech. All rights reserved.</p>
+          <p>
+            <Link to='/privacy-policy'>Privacy Policies</Link>
+          </p>
         </div>
       </div>
     </footer>
