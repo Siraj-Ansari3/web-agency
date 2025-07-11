@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import StepsComponent from '../home/StepsComponent';
 import {
   FiLayers,
   FiUsers,
@@ -20,9 +19,11 @@ import {
   FiSmile,
   FiThumbsUp,
   FiTrendingUp,
-  FiX
+  FiX,
+  FiFacebook,
+  FiInstagram
 } from 'react-icons/fi';
-import { FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
 
 import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
@@ -318,21 +319,22 @@ const About = () => {
                       <h4 className="text-lg font-semibold text-red-400 mb-3">Connect</h4>
                       <div className="flex space-x-4">
                         {Object.entries(selectedMember.social).map(([platform, url]) => (
-                          <a
-                            key={platform}
-                            href={url}
-                            className="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-red-500 rounded-full transition-colors"
-                            aria-label={`${selectedMember.name}'s ${platform}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {platform === 'twitter' && <FiTwitter className="w-5 h-5" />}
-                            {platform === 'github' && <FiGithub className="w-5 h-5" />}
-                            {platform === 'linkedin' && <FiLinkedin className="w-5 h-5" />}
-                            {platform === 'dribbble' && <FiDribbble className="w-5 h-5" />}
-                            {platform === 'behance' && <FiFigma className="w-5 h-5" />}
-                            {platform === 'codepen' && <FiCode className="w-5 h-5" />}
-                          </a>
+                          url && url.trim() !== "" ?
+                            <a
+                              key={platform}
+                              href={url}
+                              className="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-red-500 rounded-full transition-colors"
+                              aria-label={`${selectedMember.name}'s ${platform}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {platform === 'instagram' && <FiInstagram className='w-5 h-5' />}
+                              {platform === 'twitter' && <FiTwitter className="w-5 h-5" />}
+                              {platform === 'github' && <FiGithub className="w-5 h-5" />}
+                              {platform === 'linkedin' && <FiLinkedin className="w-5 h-5" />}
+                              {platform === 'facebook' && <FiFacebook className="w-5 h-5" />}
+                            </a>
+                            : ""
                         ))}
                       </div>
                     </div>
@@ -344,7 +346,7 @@ const About = () => {
         )}
       </AnimatePresence>
 
- 
+
 
       {/* Why Choose Us Section */}
       <div className="max-w-6xl mx-auto px-4 mb-20">

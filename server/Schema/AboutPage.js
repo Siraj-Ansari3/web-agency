@@ -27,10 +27,9 @@ const aboutPageSchema = new mongoose.Schema({
     social: {
       twitter: String,
       github: String,
+      instagram: String,
       linkedin: String,
-      dribbble: String,
-      behance: String,
-      codepen: String
+      facebook: String
     }
   }],
   whyChooseUs: [{

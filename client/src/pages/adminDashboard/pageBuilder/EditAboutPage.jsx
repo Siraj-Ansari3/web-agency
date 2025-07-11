@@ -2,7 +2,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FiX, FiPlus, FiUpload, FiSave, FiTrash2 } from 'react-icons/fi';
-import { TbSparkles } from 'react-icons/tb';
 import { uploadImage } from '../../../common/aws';
 
 const EditAboutPage = () => {
@@ -75,7 +74,7 @@ const EditAboutPage = () => {
   // Handle social media changes
   const handleSocialChange = (index, platform, value) => {
     const updatedTeam = [...pageData.teamMembers];
-    updatedTeam[index].social[platform] = value;
+    updatedTeam[index].social[platform] = value;  // updates the links key = platform and value = value
     setPageData(prev => ({ ...prev, teamMembers: updatedTeam }));
   };
 
@@ -584,13 +583,13 @@ const EditAboutPage = () => {
                           <h4 className="font-medium text-gray-800 mb-2">Social Media</h4>
                           <div className="space-y-3">
                             <div className="flex items-center">
-                              <span className="w-24 text-sm text-gray-600">Twitter:</span>
+                              <span className="w-24 text-sm text-gray-600">Instagram:</span>
                               <input
                                 type="text"
-                                value={pageData.teamMembers[activeTeamMember].social.twitter}
-                                onChange={(e) => handleSocialChange(activeTeamMember, 'twitter', e.target.value)}
+                                value={pageData.teamMembers[activeTeamMember].social.instagram}
+                                onChange={(e) => handleSocialChange(activeTeamMember, 'instagram', e.target.value)}
                                 className="flex-1 px-3 py-1 border border-gray-300 rounded-lg"
-                                placeholder="https://twitter.com/username"
+                                placeholder="https://instagram.com/username"
                               />
                             </div>
                             <div className="flex items-center">
@@ -611,6 +610,26 @@ const EditAboutPage = () => {
                                 onChange={(e) => handleSocialChange(activeTeamMember, 'linkedin', e.target.value)}
                                 className="flex-1 px-3 py-1 border border-gray-300 rounded-lg"
                                 placeholder="https://linkedin.com/in/username"
+                              />
+                            </div>
+                            <div className="flex items-center">
+                              <span className="w-24 text-sm text-gray-600">Facebook:</span>
+                              <input
+                                type="text"
+                                value={pageData.teamMembers[activeTeamMember].social.facebook || ""}
+                                onChange={(e) => handleSocialChange(activeTeamMember, 'facebook', e.target.value)}
+                                className="flex-1 px-3 py-1 border border-gray-300 rounded-lg"
+                                placeholder="https://facebook.com/username"
+                              />
+                            </div>
+                            <div className="flex items-center">
+                              <span className="w-24 text-sm text-gray-600">Twitter:</span>
+                              <input
+                                type="text"
+                                value={pageData.teamMembers[activeTeamMember].social.twitter || ""}
+                                onChange={(e) => handleSocialChange(activeTeamMember, 'twitter', e.target.value)}
+                                className="flex-1 px-3 py-1 border border-gray-300 rounded-lg"
+                                placeholder="https://twitter.com/username"
                               />
                             </div>
                           </div>
