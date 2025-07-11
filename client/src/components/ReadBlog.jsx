@@ -222,9 +222,9 @@ const ReadBlog = ({ id }) => {
                     href={blog.author.socialLinks.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-700 text-white hover:bg-white hover:text-red-700 transition-colors font-semibold text-xs sm:text-sm shadow"
+                    className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 rounded-full border border-red-700 text-white hover:bg-red-700 hover:text-red-700 transition-colors font-semibold text-xs sm:text-sm shadow"
                   >
-                    <FaLinkedin className="text-base sm:text-lg" /> LinkedIn
+                    <FaLinkedin className=" text-base sm:text-lg text-white" /> <span className="hidden sm:inline text-white">LinkedIn</span>
                   </a>
                 )}
 
@@ -234,9 +234,9 @@ const ReadBlog = ({ id }) => {
                     href={blog.author.socialLinks.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                    className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
                   >
-                    <FaGithub className="text-base sm:text-lg" /> GitHub
+                    <FaGithub className="text-base sm:text-lg" /> <span className="hidden sm:inline text-white">Github</span>
                   </a>
                 )}
 
@@ -246,9 +246,9 @@ const ReadBlog = ({ id }) => {
                     href={blog.author.socialLinks.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                    className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
                   >
-                    <FaTwitter className="text-base sm:text-lg" /> Twitter
+                    <FaTwitter className="text-base sm:text-lg" /> <span className="hidden sm:inline text-white">Twitter</span>
                   </a>
                 )}
 
@@ -258,9 +258,9 @@ const ReadBlog = ({ id }) => {
                     href={blog.author.socialLinks.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                    className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
                   >
-                    <FaInstagram className="text-base sm:text-lg" /> Instagram
+                    <FaInstagram className="text-base sm:text-lg text-white" /> <span className="hidden sm:inline text-white">Instagram</span>
                   </a>
                 )}
 
@@ -270,9 +270,9 @@ const ReadBlog = ({ id }) => {
                     href={blog.author.socialLinks.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
+                    className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 rounded-full bg-black border border-red-700 text-red-400 hover:bg-red-700 hover:text-white transition-colors font-semibold text-xs sm:text-sm shadow"
                   >
-                    <FaFacebook className="text-base sm:text-lg" /> Facebook
+                    <FaFacebook className="text-base sm:text-lg text-white" /> <span className="hidden sm:inline text-white">Facebook</span>
                   </a>
                 )}
               </div>
