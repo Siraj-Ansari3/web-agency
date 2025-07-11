@@ -22,6 +22,8 @@ import {
   FiTrendingUp,
   FiX
 } from 'react-icons/fi';
+import { FaInstagram } from 'react-icons/fa';
+
 import { TbSparkles } from 'react-icons/tb';
 import CallToAction from '../../components/CallToAction';
 import axios from 'axios';

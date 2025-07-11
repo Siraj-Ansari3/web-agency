@@ -21,6 +21,8 @@ const categories = [
   'Lifestyle',
   'Business',
   'Travel',
+  'AI',
+  'Web Development',
   'Other',
 ];
 
