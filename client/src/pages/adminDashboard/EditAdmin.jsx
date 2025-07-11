@@ -52,7 +52,7 @@ const EditAdmin = () => {
                     description: adminData.description || "",
                     email: adminData.email || '',
                     image: adminData.image || '',
-                    tagline: adminData.tagline,
+                    tagline: adminData.tagline || '',
                     socialLinks: adminData.socialLinks || {
                         instagram: '',
                         facebook: '',
@@ -198,7 +198,7 @@ const EditAdmin = () => {
 
             <h1 className="text-2xl font-bold mb-6">Edit Admin Profile</h1>
 
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
+            <form onSubmit={handleSubmit} autoComplete="off" className="bg-white rounded-lg shadow p-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     <div className="md:col-span-1 flex flex-col items-center">
                         <div className="mb-4 relative">
@@ -248,6 +248,7 @@ const EditAdmin = () => {
                                     name="firstName"
                                     value={admin.firstName}
                                     onChange={handleInputChange}
+                                    autoComplete="off"
                                     className={`w-full px-3 py-2 border rounded ${errors.firstName ? 'border-red-500' : 'border-gray-300'
                                         }`}
                                     placeholder="John"
@@ -266,6 +267,7 @@ const EditAdmin = () => {
                                     name="lastName"
                                     value={admin.lastName}
                                     onChange={handleInputChange}
+                                    autoComplete="off"
                                     className={`w-full px-3 py-2 border rounded ${errors.lastName ? 'border-red-500' : 'border-gray-300'
                                         }`}
                                     placeholder="Doe"
@@ -283,6 +285,8 @@ const EditAdmin = () => {
                             <input
                                 type="text"
                                 name="tagline"
+                                autoComplete="off"
+                                data-form-type="other"
                                 value={admin.tagline}
                                 onChange={handleInputChange}
                                 className={`w-full px-3 py-2 border rounded ${errors.tagline ? 'border-red-500' : 'border-gray-300'
@@ -302,6 +306,8 @@ const EditAdmin = () => {
                                 name="description"
                                 value={admin.description}
                                 onChange={handleInputChange}
+                                autoComplete="off"
+                                data-form-type="other"
                                 className={`w-full px-3 py-2 border rounded ${errors.description ? 'border-red-500' : 'border-gray-300'
                                     }`}
                                 placeholder="suggested description is 200 characters"
@@ -335,6 +341,8 @@ const EditAdmin = () => {
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
+                                    autoComplete="new-password"
+                                    data-form-type="other"
                                     onChange={(e) => setPassword(e.target.value)}
                                     className={`w-full px-3 py-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'
                                         }`}
@@ -376,6 +384,8 @@ const EditAdmin = () => {
                                             name={`socialLinks.${platform.name}`}
                                             value={admin.socialLinks[platform.name] || ''}
                                             onChange={handleInputChange}
+                                            autoComplete="off"
+                                            data-form-type="other"
                                             className="flex-1 px-3 py-2 border border-gray-300 rounded-r"
                                             placeholder={`https://${platform.name}.com/username`}
                                         />
