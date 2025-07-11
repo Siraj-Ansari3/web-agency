@@ -62,41 +62,29 @@ const About = () => {
   };
 
   const [pageData, setPageData] = useState(initialState);
-  const [steps, setSteps] = useState({
-    title: "",
-    subtitle: "",
-    steps: []
-  });
+
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+
+  const fetchAboutData = async () => {
+    setLoading(true);
+    try {
+      const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
+      setPageData(aboutData.data);
+    } catch (err) {
+      setHasError(true)
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchAboutData = async () => {
-      setLoading(true);
-      try {
-        const aboutData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/about");
-        setPageData(aboutData.data);
-      } catch (err) {
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAboutData();
   }, []);
 
-  useEffect(() => {
-    const fetchStepsData = async () => {
-      try {
-        const stepsData = await axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/admin/edit-page/steps");
-        setSteps(stepsData.data.data);
-      } catch (err) {
-      }
-    };
-
-    fetchStepsData();
-  }, []);
 
   const openMemberModal = (member) => {
     setSelectedMember(member);
@@ -110,6 +98,23 @@ const About = () => {
   };
 
   if (loading) return <SkeletonLoader />;
+
+  if (hasError) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-white text-xl mb-4">Something went wrong</h2>
+          <button
+            onClick={fetchAboutData}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <section className="bg-blac relative min-h-screen pt-8 pb-16">

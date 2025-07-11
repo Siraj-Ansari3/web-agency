@@ -43,7 +43,7 @@ const routes = [
   { path: "/features/:slug", element: <FeatureDetail /> },
   { path: "/privacy-policy", element: <PrivacyPolicy /> },
 
-  { path: "/admin-sign-up-portal", element: <AdminSignupPage /> },
+  // { path: "/admin-sign-up-portal", element: <AdminSignupPage /> },
   { path: "/admin-sign-in-portal", element: <AdminSigninPage /> },
 
   {
