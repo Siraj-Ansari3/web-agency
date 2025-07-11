@@ -20,7 +20,7 @@ const app = express();
 app.use(compression());
 app.use(helmet());
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_DOMAIN,
   credentials: true
 }));
 app.use(express.json());
